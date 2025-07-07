@@ -6,7 +6,7 @@ export function Counter() {
   const [count, setCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchCount = async () => {
       setIsLoading(true);
@@ -19,12 +19,11 @@ export function Counter() {
           );
         }
         const data = await response.json();
-
         if (typeof data.count !== "number") {
           throw new Error("Invalid count received from API");
         }
-
-        setCount(data.count);
+        // เพิ่มค่าเริ่มต้น 1173
+        setCount(data.count + 1173);
       } catch (err) {
         console.error("Error fetching waitlist count:", err);
         setError(
@@ -35,22 +34,21 @@ export function Counter() {
         setIsLoading(false);
       }
     };
-
     fetchCount();
   }, []);
-
+  
   if (isLoading) {
     return <div className="h-6" aria-live="polite"></div>;
   }
-
+  
   if (error) {
     return null;
   }
-
+  
   if (count === null) {
     return null;
   }
-
+  
   return (
     <motion.p
       initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
