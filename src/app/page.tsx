@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import SplitText from "@/components/ui/split-text";
 import { WaitlistForm } from "@/components/waitlist-form";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -22,8 +22,14 @@ export default function Home() {
       </div>
       <footer className="sticky top-[100vh]">
         <Button size="icon" variant="ghost">
-          <Link href="https://github.com/zeitgg/zeitlist" target="_blank">
-            <FaGithub />
+          <Link href="https://mytri.ai" target="_blank">
+            <Image 
+              src="/logo.png" 
+              alt="My Logo" 
+              width={24} 
+              height={24}
+              className="w-6 h-6"
+            />
           </Link>
         </Button>
       </footer>
