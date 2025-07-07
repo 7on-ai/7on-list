@@ -7,42 +7,50 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col h-screen justify-center items-center text-center">
-      {/* Logo ด้านบน */}
-      <div className="mb-4">
-        <Image 
-          src="/logo.png" 
-          alt="Jarvis Logo" 
-          width={110} 
-          height={110}
-          className="w-20 h-20 mx-auto mb-6 hover:scale-150 transition-transform duration-300"
-        />
+    <div className="min-h-screen bg-white text-black">
+      <div className="flex flex-col h-screen justify-center items-center text-center px-4 sm:px-6 lg:px-8">
+        {/* Logo ด้านบน */}
+        <div className="mb-4">
+          <Image 
+            src="/logo.png" 
+            alt="Jarvis Logo" 
+            width={110} 
+            height={110}
+            className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 hover:scale-150 transition-transform duration-300"
+          />
+        </div>
+        
+        <div className="mb-4 max-w-2xl mx-auto">
+          <SplitText className="text-3xl sm:text-4xl lg:text-5xl tracking-tighter font-medium">
+            Get early access
+          </SplitText>
+          <SplitText className="tracking-tight text-lg sm:text-xl mt-2">
+            Be among the first to experience JARVIS in real life.
+          </SplitText>
+        </div>
+        
+        <div className="w-full max-w-md mx-auto">
+          <WaitlistForm />
+        </div>
+        
+        <div className="mt-4">
+          <Counter />
+        </div>
+        
+        <footer className="sticky top-[100vh]">
+          <Button size="icon" variant="ghost">
+            <Link href="https://mytri.ai" target="_blank">
+              <Image 
+                src="/logo.png" 
+                alt="My Logo" 
+                width={24} 
+                height={24}
+                className="w-6 h-6"
+              />
+            </Link>
+          </Button>
+        </footer>
       </div>
-      <div className="mb-4">
-        <SplitText className="text-5xl tracking-tighter font-medium">
-          Get early access
-        </SplitText>
-        <SplitText className="tracking-tight text-xl">
-          Be among the first to experience JARVIS in real life.
-        </SplitText>
-      </div>
-      <WaitlistForm />
-      <div className="mt-4">
-        <Counter />
-      </div>
-      <footer className="sticky top-[100vh]">
-        <Button size="icon" variant="ghost">
-          <Link href="https://mytri.ai" target="_blank">
-            <Image 
-              src="/logo.png" 
-              alt="My Logo" 
-              width={24} 
-              height={24}
-              className="w-6 h-6"
-            />
-          </Link>
-        </Button>
-      </footer>
     </div>
   );
 }
