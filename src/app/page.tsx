@@ -9,22 +9,21 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen justify-center items-center text-center">
       {/* Logo ด้านบน */}
-      <div className="mb-8">
+      <div className="mb-4">
         <Image 
           src="/logo.png" 
           alt="Jarvis Logo" 
-          width={80} 
-          height={80}
-          className="w-20 h-20 mx-auto mb-6 hover:scale-110 transition-transform duration-300"
+          width={110} 
+          height={110}
+          className="w-20 h-20 mx-auto mb-6 hover:scale-150 transition-transform duration-300"
         />
       </div>
-      
-      <div className="mb-8">
+      <div className="mb-4">
         <SplitText className="text-5xl tracking-tighter font-medium">
           Get early access
         </SplitText>
         <SplitText className="tracking-tight text-xl">
-          Be among the first to experience Jarvis in real life.
+          Be among the first to experience JARVIS in real life.
         </SplitText>
       </div>
       <WaitlistForm />
