@@ -25,7 +25,10 @@ export default function Home() {
             Get early access
           </SplitText>
           <SplitText className="tracking-tight text-lg sm:text-xl mt-2">
-            Be among the first to experience JARVIS in real life.
+            Be among the first to experience
+          </SplitText>
+          <SplitText className="tracking-tight text-lg sm:text-xl mt-2">
+            Jarvis in real life
           </SplitText>
         </div>
         
