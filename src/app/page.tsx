@@ -14,9 +14,9 @@ export default function Home() {
           <Image 
             src="/logo.png" 
             alt="Jarvis Logo" 
-            width={110} 
-            height={110}
-            className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 hover:scale-150 transition-transform duration-300"
+            width={80} 
+            height={80}
+            className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 hover:scale-120 transition-transform duration-300"
           />
         </div>
         
@@ -25,7 +25,7 @@ export default function Home() {
             Get early access
           </SplitText>
           <SplitText className="tracking-tight text-lg sm:text-xl mt-2">
-            Be among the first to experience 7onAI,<br />
+            Be among the first to experience 7onAI, <br/>
             the Jarvis in real life.
           </SplitText>
         </div>
