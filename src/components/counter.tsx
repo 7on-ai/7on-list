@@ -22,8 +22,8 @@ export function Counter() {
         if (typeof data.count !== "number") {
           throw new Error("Invalid count received from API");
         }
-        // เพิ่มค่าเริ่มต้น 1176
-        setCount(data.count + 1176);
+        // เพิ่มค่าเริ่มต้น 1178
+        setCount(data.count + 1178);
       } catch (err) {
         console.error("Error fetching waitlist count:", err);
         setError(
