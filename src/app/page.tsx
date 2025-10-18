@@ -22,7 +22,7 @@ export default function Home() {
         
         <div className="mb-4 max-w-2xl mx-auto">
           <SplitText className="text-3xl sm:text-4xl lg:text-5xl tracking-tighter font-medium">
-            Get early access
+            Get 7ON early access
           </SplitText>
           {/*<SplitText className="tracking-tight text-lg sm:text-xl mt-2">
             Be among the first to experience 7onAI, <br/>
