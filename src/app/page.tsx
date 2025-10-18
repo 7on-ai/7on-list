@@ -6,10 +6,10 @@ import SplitText from "@/components/ui/split-text";
 import { WaitlistForm } from "@/components/waitlist-form";
 import Link from "next/link";
 import Image from "next/image";
-import { Space_Grotesk } from "next/font/google";
+import { Orbitron } from "next/font/google";
 
 // ✅ ฟอนต์หลักของหน้า
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = Orbitron({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -31,8 +31,8 @@ export default function Home() {
 
         {/* Headline */}
         <div className="mb-4 max-w-2xl mx-auto">
-          <SplitText className="text-3xl sm:text-4xl lg:text-5xl tracking-tight font-semibold">
-            Get <span className="text-gray-700 font-bold">7on</span> early access
+          <SplitText className="text-3xl sm:text-4xl lg:text-5xl tracking-tight font-medium text-gray-800">
+            Get <span className="text-gray-500 drop-shadow-[0_0_4px_#9ca3af]">7on</span> early access
           </SplitText>
 
           {/* <SplitText className="tracking-tight text-lg sm:text-xl mt-2 text-gray-600">
