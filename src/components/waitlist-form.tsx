@@ -142,7 +142,7 @@ export function WaitlistForm() {
               Joining...
             </>
           ) : (
-            "Join 7ON"
+            "Join Us"
           )}
         </Button>
       </motion.form>
