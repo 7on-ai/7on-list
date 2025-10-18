@@ -24,10 +24,10 @@ export default function Home() {
           <SplitText className="text-3xl sm:text-4xl lg:text-5xl tracking-tighter font-medium">
             Get early access
           </SplitText>
-          <SplitText className="tracking-tight text-lg sm:text-xl mt-2">
+          {/*<SplitText className="tracking-tight text-lg sm:text-xl mt-2">
             Be among the first to experience 7onAI, <br/>
             the Jarvis in real life.
-          </SplitText>
+          </SplitText>*/}
         </div>
         
         <div className="w-full max-w-md mx-auto">
