@@ -54,7 +54,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="sticky top-[100vh]">
           <Button size="icon" variant="ghost">
-            <Link href="https://mytri.ai" target="_blank">
+            <Link href="https://7on.ai" target="_blank">
               <Image
                 src="/logo.png"
                 alt="My Logo"
