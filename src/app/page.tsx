@@ -66,12 +66,6 @@ export default function Home() {
       {/* Warm horizon glow (the lit meadow) */}
       <div className="pointer-events-none absolute -bottom-40 left-1/2 z-0 h-[420px] w-[130%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(closest-side,rgba(214,110,80,0.35),transparent)] blur-[40px] breathe" />
 
-      {/* Drifting sakura petals */}
-      <div className="petals pointer-events-none absolute inset-0 z-[1]" aria-hidden>
-        {Array.from({ length: 14 }).map((_, i) => (
-          <span key={i} className={`petal petal-${i % 7}`} />
-        ))}
-      </div>
 
       {/* ── Top bar ─────────────────────────────────────────────── */}
       <header className="reveal relative z-10 flex items-center justify-between px-6 py-6 sm:px-10">
@@ -161,35 +155,10 @@ export default function Home() {
         .breathe { animation: breathe 7s ease-in-out infinite; }
         @keyframes breathe { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
 
-        /* Petals */
-        .petal {
-          position: absolute; top: -6%;
-          width: 9px; height: 9px;
-          background: radial-gradient(circle at 30% 30%, #ffd5e2, #f9789f 70%);
-          border-radius: 100% 0 100% 0;
-          opacity: 0; filter: blur(.2px);
-          animation: fall linear infinite;
-        }
-        .petal-0 { left: 8%;  animation-duration: 14s; animation-delay: 0s;   }
-        .petal-1 { left: 20%; animation-duration: 18s; animation-delay: 3s;   transform: scale(.7); }
-        .petal-2 { left: 34%; animation-duration: 16s; animation-delay: 6s;   }
-        .petal-3 { left: 48%; animation-duration: 20s; animation-delay: 1.5s; transform: scale(1.2); }
-        .petal-4 { left: 62%; animation-duration: 15s; animation-delay: 8s;   transform: scale(.8); }
-        .petal-5 { left: 76%; animation-duration: 19s; animation-delay: 4s;   }
-        .petal-6 { left: 90%; animation-duration: 17s; animation-delay: 10s;  transform: scale(.9); }
-        .petals span:nth-child(n+8) { top: -14%; opacity: .6; }
-
-        @keyframes fall {
-          0%   { opacity: 0; transform: translateY(-10vh) translateX(0) rotate(0deg); }
-          10%  { opacity: .9; }
-          90%  { opacity: .7; }
-          100% { opacity: 0; transform: translateY(110vh) translateX(60px) rotate(320deg); }
-        }
 
         @media (prefers-reduced-motion: reduce) {
           .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
-          .petal, .breathe { animation: none !important; }
-          .petal { display: none; }
+          .breathe { animation: none !important; }
         }
       `}</style>
     </div>
