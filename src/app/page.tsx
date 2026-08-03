@@ -17,55 +17,57 @@ const spaceGrotesk = Space_Grotesk({
 export default function Home() {
   return (
     <div
-      className={`${spaceGrotesk.className} relative min-h-screen bg-[#030303] text-white selection:bg-cyan-500 selection:text-black overflow-hidden flex flex-col justify-between`}
+      className={`${spaceGrotesk.className} relative min-h-screen bg-[#030303] text-white selection:bg-rose-600 selection:text-white overflow-hidden flex flex-col justify-between`}
     >
-      {/* 🔮 Background Ambient Lighting (แสงฟุ้งด้านหลังเพิ่มความ Luxury) */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
+      {/* 🔮 Crimson Ambient Glow (บรรยากาศแสงแดงเข้ม Crimson ลุ่มลึกด้านหลัง) */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-rose-600/15 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-red-900/20 blur-[140px] rounded-full pointer-events-none" />
 
-      {/* 🕸️ Subtle Grid Overlay (ตารางจางๆ เพิ่มฟีล Tech/AI) */}
+      {/* 🕸️ Subtle Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
       {/* Main Content Area */}
       <main className="relative z-10 flex-1 flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto py-12">
         
-        {/* 🌟 VIP Status Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-8 text-xs font-medium tracking-widest text-zinc-300 uppercase shadow-inner">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+        {/* 🌟 Crimson VIP Status Pill Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-950/30 border border-rose-500/20 backdrop-blur-md mb-8 text-xs font-medium tracking-widest text-zinc-300 uppercase shadow-inner">
+          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse shadow-[0_0_8px_#f43f5e]" />
           Exclusive Priority Access
         </div>
 
-        {/* 🛡️ Logo with Soft Glow */}
-        <div className="relative mb-8 group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500" />
+        {/* 🛡️ Crimson Glowing Orb Behind Logo (วงกลมหลังโลโก้สี Crimson) */}
+        <div className="relative mb-8 group flex items-center justify-center">
+          {/* แสงวงกลม Crimson รัศมีเรืองแสงหลัง Logo */}
+          <div className="absolute w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-tr from-rose-600 via-red-600 to-rose-400 rounded-full blur-xl opacity-80 group-hover:opacity-100 transition-all duration-500 scale-95 group-hover:scale-110" />
+          
           <Image
             src="/logo.png"
-            alt="Jarvis Logo"
+            alt="Sunday AI Logo"
             width={80}
             height={80}
-            className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto transition-transform duration-500 group-hover:scale-105"
+            className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_0_12px_rgba(225,29,72,0.5)]"
           />
         </div>
 
-        {/* ✍️ World-Class Headline */}
+        {/* ✍️ Headline */}
         <div className="mb-6 space-y-4 max-w-3xl">
           <SplitText className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]">
             Be First to Experience{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-400 to-teal-200 drop-shadow-[0_0_25px_rgba(34,211,238,0.4)]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-rose-500 to-red-400 drop-shadow-[0_0_25px_rgba(225,29,72,0.5)]">
               7on
             </span>
           </SplitText>
 
-          {/* Sub-headline สไตล์เรียบหรู */}
+          {/* Sub-headline สไตล์เรียบหรู พร้อมอ้างอิงถึง Agent "Sunday" */}
           <p className="text-base sm:text-lg text-zinc-400 max-w-lg mx-auto font-normal leading-relaxed">
-            Unlocking priority access to the real-life Jarvis. <br className="hidden sm:inline" />
+            Unlocking priority access to <span className="text-zinc-200 font-medium">Sunday</span> — your autonomous real-life agent. <br className="hidden sm:inline" />
             Designed for the select few.
           </p>
         </div>
 
-        {/* ✉️ Glassmorphic Waitlist Form Container */}
-        <div className="w-full max-w-md mx-auto my-4 p-1 rounded-2xl bg-gradient-to-b from-white/10 via-white/5 to-transparent">
-          <div className="bg-black/60 backdrop-blur-xl p-2 rounded-xl border border-white/10 shadow-2xl">
+        {/* ✉️ Crimson Glassmorphic Waitlist Form Container */}
+        <div className="w-full max-w-md mx-auto my-4 p-1 rounded-2xl bg-gradient-to-b from-rose-500/20 via-white/5 to-transparent">
+          <div className="bg-black/70 backdrop-blur-xl p-2 rounded-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
             <WaitlistForm />
           </div>
         </div>
@@ -82,12 +84,12 @@ export default function Home() {
         <Button
           size="icon"
           variant="ghost"
-          className="hover:bg-white/10 rounded-full transition-all duration-300"
+          className="hover:bg-rose-500/10 rounded-full transition-all duration-300"
         >
           <Link href="https://7on.ai" target="_blank" aria-label="Visit 7on.ai">
             <Image
               src="/logo.png"
-              alt="My Logo"
+              alt="7on Logo"
               width={24}
               height={24}
               className="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity"
