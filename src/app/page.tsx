@@ -46,18 +46,6 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_18%_30%,rgba(225,29,72,0.10),transparent_60%)]" />
       </div>
 
-      {/* Sakura tree — bleeds in from the right, like 7on.ai.
-          Drop your uploaded file at /public/sakura.png            */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <Image
-          src="/sakura.png"
-          alt=""
-          fill
-          priority
-          aria-hidden
-          className="object-cover object-right opacity-70 mix-blend-screen [mask-image:linear-gradient(to_left,#000_40%,transparent_92%)]"
-        />
-      </div>
 
       {/* Legibility + vignette overlays */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#0a0605_8%,rgba(10,6,5,0.55)_38%,transparent_72%)]" />
