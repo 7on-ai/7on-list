@@ -9,7 +9,7 @@ import { Orbit } from "@/components/orbit";
 import { Phrases } from "@/components/ui/phrases";
 import SplitText from "@/components/ui/split-text";
 import { WaitlistForm } from "@/components/waitlist-form";
-import { DICTIONARIES, LOCALES } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/dictionaries";
 import { useI18n } from "@/i18n/provider";
 
 /* Logo PNG used as a mask so it renders in brand red, like 7on.ai */
@@ -23,28 +23,24 @@ function Logo({ className = "" }: { className?: string }) {
   );
 }
 
-/* EN · ไทย — each option written in its own language */
-function LanguageSwitch() {
-  const { locale, setLocale } = useI18n();
-  return (
-    <div className="flex items-center gap-1 rounded-full border border-zinc-200 bg-white/80 p-0.5 text-xs backdrop-blur">
-      {LOCALES.map((l) => (
-        <button
-          key={l}
-          type="button"
-          lang={l}
-          onClick={() => setLocale(l)}
-          aria-pressed={l === locale}
-          className={`rounded-full px-2.5 py-1 transition-colors ${
-            l === locale ? "bg-[#111] text-white" : "text-zinc-500 hover:text-[#111]"
-          }`}
-        >
-          {l === "en" ? "EN" : DICTIONARIES[l].languageName}
-        </button>
-      ))}
-    </div>
-  );
-}
+/* Hero size per script: Latin runs big like 7on.ai; longer languages and
+   scripts with tall marks or dense glyphs step down so lines stay whole. */
+const LONG = "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[76px]";
+const COMPACT = "text-[30px] min-[400px]:text-[34px] sm:text-6xl md:text-[72px]";
+const DISPLAY_SIZE: Partial<Record<Locale, string>> = {
+  en: "text-[40px] min-[400px]:text-[46px] sm:text-7xl md:text-[92px]",
+  th: "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[72px]",
+  "zh-Hans": COMPACT,
+  "zh-Hant": COMPACT,
+  ja: COMPACT,
+  ko: COMPACT,
+  vi: LONG,
+  id: LONG,
+  es: LONG,
+  fr: LONG,
+  de: LONG,
+  pt: LONG,
+};
 
 function focusWaitlist() {
   const form = document.getElementById("waitlist");
@@ -54,7 +50,6 @@ function focusWaitlist() {
 
 export default function Home() {
   const { t, locale } = useI18n();
-  const isThai = locale === "th";
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-white text-[#111] selection:bg-[#C41D3B] selection:text-white">
@@ -63,20 +58,13 @@ export default function Home() {
         <Link href="https://7on.ai" target="_blank" aria-label="7on.ai">
           <Logo className="h-9 w-9" />
         </Link>
-        <div className="absolute right-4 top-8 sm:right-8">
-          <LanguageSwitch />
-        </div>
       </header>
 
       {/* ── Hero + orbit ────────────────────────────────────────── */}
       <section className="relative">
         <div className="relative z-10 mx-auto max-w-4xl px-6 pt-36 text-center sm:pt-44">
           <h1
-            className={`t-display font-medium ${
-              isThai
-                ? "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[72px]"
-                : "text-[40px] min-[400px]:text-[46px] sm:text-7xl md:text-[92px]"
-            }`}
+            className={`t-display font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en}`}
           >
             {t.hero.headline.map((line, i) => (
               <SplitText key={line} className="block" delay={i * 0.15}>
@@ -100,7 +88,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative z-0 mt-[calc(var(--orbit)*-0.22)]">
+        <div className="relative z-0 mt-[calc(var(--orbit)*-0.1)] sm:mt-[calc(var(--orbit)*-0.22)]">
           {/* Pink bloom that the orb condenses from */}
           <div className="breathe pointer-events-none absolute left-1/2 top-[calc(var(--orbit)*0.5)] h-[calc(var(--orbit)*0.8)] w-[calc(var(--orbit)*0.8)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(196,29,59,0.16),rgba(196,29,59,0.05)_55%,transparent)]" />
           <Orbit />

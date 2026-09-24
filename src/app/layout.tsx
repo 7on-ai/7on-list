@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
-import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
+import { headers } from "next/headers";
+import { Be_Vietnam_Pro, Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themes/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/i18n/provider";
-import { DICTIONARIES, LOCALE_COOKIE, isLocale, matchLocale, type Locale } from "@/i18n/dictionaries";
+import { DICTIONARIES, matchLocale, type Locale } from "@/i18n/dictionaries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,17 +17,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-/* Loopless Thai that sits comfortably next to Geist */
+/* Script fonts load only when a page uses their glyphs (no preload).
+   Loopless Thai that sits comfortably next to Geist: */
 const notoThai = Noto_Sans_Thai({
   variable: "--font-thai",
   subsets: ["thai"],
   weight: ["400", "500", "600"],
+  preload: false,
 });
 
-/* Explicit choice (cookie) wins; otherwise follow the browser's language */
+/* Geist has no Vietnamese; this grotesk was drawn for it */
+const beVietnam = Be_Vietnam_Pro({
+  variable: "--font-vietnamese",
+  subsets: ["vietnamese"],
+  weight: ["400", "500", "600"],
+  preload: false,
+});
+
+/* Speak the visitor's browser language — no switcher on the page */
 async function resolveLocale(): Promise<Locale> {
-  const saved = (await cookies()).get(LOCALE_COOKIE)?.value;
-  if (isLocale(saved)) return saved;
   return matchLocale((await headers()).get("accept-language"));
 }
 
@@ -46,14 +54,14 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoThai.variable} font-sans antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoThai.variable} ${beVietnam.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
           forcedTheme="light"
           disableTransitionOnChange
         >
-          <I18nProvider initialLocale={locale}>
+          <I18nProvider locale={locale}>
             <Toaster position="bottom-center" />
             {children}
           </I18nProvider>

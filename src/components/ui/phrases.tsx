@@ -7,6 +7,14 @@ export function splitPhrases(text: string) {
   return text.split(/(\s+|​)/).filter(Boolean);
 }
 
+/* Chinese and Japanese may break between any two characters, so a run of
+   them must stay wrappable; everything else is held together per phrase. */
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff\uff00-\uffef]/;
+
+export function phraseClass(part: string) {
+  return CJK.test(part) ? "" : "whitespace-nowrap";
+}
+
 /* Renders text so lines break only between phrases */
 export function Phrases({ text }: { text: string }) {
   return (
@@ -17,7 +25,7 @@ export function Phrases({ text }: { text: string }) {
         ) : /^\s+$/.test(part) ? (
           <Fragment key={i}>{part}</Fragment>
         ) : (
-          <span key={i} className="whitespace-nowrap">
+          <span key={i} className={phraseClass(part)}>
             {part}
           </span>
         )

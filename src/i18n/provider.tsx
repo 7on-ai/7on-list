@@ -1,30 +1,16 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { DICTIONARIES, LOCALE_COOKIE, type Dictionary, type Locale } from "./dictionaries";
+import { createContext, useContext, type ReactNode } from "react";
+import { DICTIONARIES, type Dictionary, type Locale } from "./dictionaries";
 
-type I18n = { locale: Locale; t: Dictionary; setLocale: (locale: Locale) => void };
+type I18n = { locale: Locale; t: Dictionary };
 
 const I18nContext = createContext<I18n | null>(null);
 
-export function I18nProvider({ initialLocale, children }: { initialLocale: Locale; children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
-
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    // Remember an explicit choice for a year; detection is used until then.
-    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.title = DICTIONARIES[locale].meta.title;
-  }, [locale]);
-
+/* Locale is decided on the server from the visitor's browser language */
+export function I18nProvider({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
-    <I18nContext.Provider value={{ locale, t: DICTIONARIES[locale], setLocale }}>
-      {children}
-    </I18nContext.Provider>
+    <I18nContext.Provider value={{ locale, t: DICTIONARIES[locale] }}>{children}</I18nContext.Provider>
   );
 }
 

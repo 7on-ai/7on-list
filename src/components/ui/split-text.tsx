@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { ElementType } from "react";
-import { splitPhrases } from "./phrases";
+import { phraseClass, splitPhrases } from "./phrases";
 
 interface SplitTextProps {
   children: string;
@@ -27,7 +27,7 @@ export default function SplitText({ children, as: Tag = "span", className = "", 
           <motion.span
             key={`${children}-${i}`}
             aria-hidden
-            className="inline-block whitespace-nowrap will-change-[transform,opacity,filter]"
+            className={`inline-block will-change-[transform,opacity,filter] ${phraseClass(part)}`}
             initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ type: "spring", duration: 1.6, bounce: 0, delay: delay + index * 0.06 }}
