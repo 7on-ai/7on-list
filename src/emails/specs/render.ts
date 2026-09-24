@@ -63,7 +63,7 @@ function phrase(text: string): string {
 
 /* Email HTML: tables and inline styles, because that is what Gmail,
    Outlook and Apple Mail all render the same way. */
-function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
+function html(c: SpecsEmail, locale: Locale, logoUrl: string, links?: SpecsLinks) {
   // Letter-spacing pulls Thai and CJK glyphs apart; keep it for Latin only
   const latin = !["th", "ja", "ko", "zh-Hans", "zh-Hant"].includes(locale);
   const tracking = (em: string) => (latin ? `letter-spacing:${em};` : "");
@@ -157,12 +157,24 @@ function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
     </div>
   </td></tr>
 
+  ${
+    links
+      ? block(
+          `${h(c.updates.title, 18, "margin-bottom:6px;")}${p(c.updates.body, "font-size:15px;")}
+    <p style="margin:12px 0 0;font-family:${FONT};font-size:15px;font-weight:600;"><a href="${esc(links.updates)}" style="color:${RED};text-decoration:none;">${esc(c.updates.cta)} &rarr;</a></p>`,
+          "0 40px 36px"
+        )
+      : ""
+  }
+
   ${block(p(`— ${c.signoff}`, `color:${INK};`), "0 40px 36px")}
 </table>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
   <tr><td style="padding:24px 40px 8px;">
-    <p style="margin:0 0 10px;font-family:${FONT};font-size:12px;line-height:1.6;color:#8a8a92;">${esc(c.footer)}</p>
+    <p style="margin:0 0 10px;font-family:${FONT};font-size:12px;line-height:1.6;color:#8a8a92;">${esc(c.footer)}${
+      links ? ` <a href="${esc(links.preferences)}" style="color:#8a8a92;text-decoration:underline;">${esc(c.preferences)}</a>` : ""
+    }</p>
     <p style="margin:0;font-family:${FONT};font-size:12px;line-height:1.6;color:#8a8a92;">${esc(c.disclaimer)} © ${new Date().getFullYear()} 7on</p>
   </td></tr>
 </table>
@@ -173,7 +185,7 @@ function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
 }
 
 /* Plain-text part: some clients show only this, and spam filters expect it */
-function text(c: SpecsEmail) {
+function text(c: SpecsEmail, links?: SpecsLinks) {
   return [
     c.eyebrow.toUpperCase(),
     c.headline,
@@ -201,15 +213,24 @@ function text(c: SpecsEmail) {
     "",
     `${c.cta}: ${SITE}`,
     "",
+    ...(links ? [c.updates.title, c.updates.body, `${c.updates.cta}: ${links.updates}`, ""] : []),
     `— ${c.signoff}`,
     "",
     "—",
     c.footer,
+    ...(links ? [`${c.preferences}: ${links.preferences}`] : []),
     c.disclaimer,
   ].join("\n");
 }
 
-export function renderSpecsEmail(locale: Locale, origin: string) {
+/* Signed links into the preferences page; omitted when no link secret is set */
+export type SpecsLinks = { updates: string; preferences: string };
+
+export function renderSpecsEmail(locale: Locale, origin: string, links?: SpecsLinks) {
   const c = COPY[locale] ?? COPY.en;
-  return { subject: c.subject, html: html(c, locale, `${origin}/logo-email.png`), text: text(c) };
+  return {
+    subject: c.subject,
+    html: html(c, locale, `${origin}/logo-email.png`, links),
+    text: text(c, links),
+  };
 }

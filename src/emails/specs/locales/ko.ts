@@ -51,7 +51,12 @@ export const ko: SpecsEmail = {
   },
   cta: "7on.ai 방문하기",
   signoff: "7on 팀",
-  footer:
-    "7on.ai에서 스펙을 요청하셔서 이 메일을 보내드립니다. 스팸은 없습니다. 기기가 준비되면 메일을 한 통만 더 보내드릴게요. 수신을 원치 않으시면 “unsubscribe”라고 회신해 주세요.",
+  updates: {
+    title: "소식을 받아보시겠어요?",
+    body: "Sunday와 7on ARC의 새 소식을 가끔 전해 드립니다. 원하실 때만요.",
+    cta: "네, 소식 받을게요",
+  },
+  preferences: "이메일 설정",
+  footer: "7on.ai에서 스펙을 요청하셔서 이 메일을 보내드립니다. 스팸은 없습니다. 7on ARC가 준비되면 메일을 한 통만 더 보내드릴게요.",
   disclaimer: "예비 사양이며, 출시 전에 변경될 수 있습니다.",
 };

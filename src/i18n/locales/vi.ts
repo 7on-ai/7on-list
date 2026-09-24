@@ -59,5 +59,21 @@ export const vi: Dictionary = {
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
     cta: "Nhận thông số 7on ARC",
   },
+  prefs: {
+    title: "Tùy chọn email",
+    /* {email} is replaced with the address */
+    intro: "Chọn những gì chúng tôi gửi đến {email}.",
+    options: {
+      updates: { label: "Tin cập nhật", description: "Thỉnh thoảng cập nhật về Sunday và 7on ARC, cùng email khi 7on ARC của bạn sẵn sàng." },
+      launch: { label: "Chỉ ngày ra mắt", description: "Một email khi 7on ARC của bạn sẵn sàng. Không gì khác." },
+      none: { label: "Không nhận", description: "Không nhận thêm email nào từ 7on." },
+    },
+    current: "Hiện tại",
+    choose: "Chọn",
+    confirm: "Có, cập nhật cho tôi",
+    saved: "Đã lưu.",
+    invalid: "Liên kết này không hoạt động. Hãy dùng liên kết trong email mới nhất từ 7on.",
+    back: "Quay lại 7on ARC",
+  },
   footer: "Sinh ra để luôn bật.",
 };

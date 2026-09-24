@@ -59,5 +59,21 @@ export const id: Dictionary = {
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
     cta: "Dapatkan spesifikasi 7on ARC",
   },
+  prefs: {
+    title: "Preferensi email",
+    /* {email} is replaced with the address */
+    intro: "Pilih email yang kami kirim ke {email}.",
+    options: {
+      updates: { label: "Kabar terbaru", description: "Sesekali kabar tentang Sunday dan 7on ARC, plus email saat 7on ARC-mu siap." },
+      launch: { label: "Hanya peluncuran", description: "Satu email saat 7on ARC-mu siap. Tidak ada yang lain." },
+      none: { label: "Tidak ada", description: "Tidak ada email lagi dari 7on." },
+    },
+    current: "Saat ini",
+    choose: "Pilih",
+    confirm: "Ya, kabari saya",
+    saved: "Tersimpan.",
+    invalid: "Tautan ini tidak berfungsi. Gunakan tautan di email terbaru dari 7on.",
+    back: "Kembali ke 7on ARC",
+  },
   footer: "Dibuat untuk selalu menyala.",
 };

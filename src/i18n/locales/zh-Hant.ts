@@ -59,5 +59,21 @@ export const zhHant: Dictionary = {
     body: "Sunday 了解你，別人不會。你的資料絕不會用來訓練任何人的模型。",
     cta: "索取 7on ARC 規格",
   },
+  prefs: {
+    title: "郵件偏好",
+    /* {email} is replaced with the address */
+    intro: "選擇我們寄給 {email} 的內容。",
+    options: {
+      updates: { label: "動態", description: "不定期分享 Sunday 與 7on ARC 的最新消息，以及 7on ARC 就緒時的通知。" },
+      launch: { label: "僅上市通知", description: "7on ARC 就緒時寄一封信，別無其他。" },
+      none: { label: "不接收", description: "不再接收來自 7on 的郵件。" },
+    },
+    current: "目前",
+    choose: "選擇",
+    confirm: "好，請告訴我最新動態",
+    saved: "已儲存。",
+    invalid: "此連結無效。請使用 7on 最近寄給你的郵件中的連結。",
+    back: "返回 7on ARC",
+  },
   footer: "為始終在線而生。",
 };

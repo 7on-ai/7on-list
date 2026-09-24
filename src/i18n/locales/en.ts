@@ -59,5 +59,21 @@ export const en: Dictionary = {
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
     cta: "Get the 7on ARC specs",
   },
+  prefs: {
+    title: "Email preferences",
+    /* {email} is replaced with the address */
+    intro: "Choose what we send to {email}.",
+    options: {
+      updates: { label: "Updates", description: "Occasional news about Sunday and 7on ARC, and the email when your 7on ARC is ready." },
+      launch: { label: "Launch only", description: "One email when your 7on ARC is ready. Nothing else." },
+      none: { label: "Nothing", description: "No more emails from 7on." },
+    },
+    current: "Current",
+    choose: "Choose",
+    confirm: "Yes, keep me posted",
+    saved: "Saved.",
+    invalid: "This link doesn't work. Use the link in your most recent email from 7on.",
+    back: "Back to 7on ARC",
+  },
   footer: "Built to stay on.",
 };

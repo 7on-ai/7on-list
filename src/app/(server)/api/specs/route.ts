@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Email validation failed" }, { status: 403 });
     }
 
-    await recordSpecRequest({
+    const { suppressed } = await recordSpecRequest({
       email,
       locale,
       // Vercel's IP geolocation — used later to send at a sensible local hour
@@ -57,9 +57,10 @@ export async function POST(request: NextRequest) {
       timezone: request.headers.get("x-vercel-ip-timezone"),
     });
 
-    // Send after responding, so the button never waits on the mail server
+    // Send after responding, so the button never waits on the mail server.
+    // Addresses that hard-bounced or reported spam are never mailed again.
     const origin = request.nextUrl.origin;
-    after(async () => {
+    if (!suppressed) after(async () => {
       if (await sendSpecsEmail(email, locale, origin)) {
         await markSpecsSent(email).catch((e) => console.error("markSpecsSent failed:", e));
       }

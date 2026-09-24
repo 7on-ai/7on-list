@@ -23,6 +23,17 @@ export type Dictionary = {
   orbit: { headline: string[]; sub: string };
   day: { eyebrow: string; headline: string; moments: Moment[] };
   machine: { headline: string[]; body: string; cta: string };
+  prefs: {
+    title: string;
+    intro: string;
+    options: Record<"updates" | "launch" | "none", { label: string; description: string }>;
+    current: string;
+    choose: string;
+    confirm: string;
+    saved: string;
+    invalid: string;
+    back: string;
+  };
   footer: string;
 };
 

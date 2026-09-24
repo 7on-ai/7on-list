@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/dictionaries";
 import { renderSpecsEmail } from "@/emails/specs/render";
+import { hasLinkSecret, preferenceToken } from "@/lib/tokens";
 
 const FROM = process.env.EMAIL_FROM || "7on <hello@7on.ai>";
 const REPLY_TO = process.env.EMAIL_REPLY_TO || "hello@7on.ai";
@@ -14,7 +15,17 @@ export async function sendSpecsEmail(to: string, locale: Locale, origin: string)
     return false;
   }
 
-  const { subject, html, text } = renderSpecsEmail(locale, origin);
+  // Without EMAIL_LINK_SECRET the opt-in and preferences links are left out
+  const token = hasLinkSecret() ? preferenceToken(to) : null;
+  const links = token
+    ? {
+        updates: `${origin}/preferences?t=${token}&choose=updates`,
+        preferences: `${origin}/preferences?t=${token}`,
+      }
+    : undefined;
+  if (!links) console.warn("EMAIL_LINK_SECRET is not set; specs email sent without preference links.");
+
+  const { subject, html, text } = renderSpecsEmail(locale, origin, links);
 
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -44,4 +55,14 @@ export async function sendSpecsEmail(to: string, locale: Locale, origin: string)
     console.error("Specs email failed:", error);
     return false;
   }
+}
+
+/* RFC 8058 one-click unsubscribe headers — for campaign emails, which Gmail
+   and Yahoo require to carry them. The transactional specs email does not. */
+export function unsubscribeHeaders(origin: string, email: string) {
+  const token = preferenceToken(email);
+  return {
+    "List-Unsubscribe": `<${origin}/api/unsubscribe?t=${token}>, <mailto:${REPLY_TO}?subject=unsubscribe>`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
 }

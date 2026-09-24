@@ -13,25 +13,39 @@ function sql() {
   return client;
 }
 
-/* Everyone who asked for the specs. The start of the CRM: consent and
-   unsubscribe columns are here so marketing can be added without a
-   migration. Kept in sync with db/schema.sql. */
+/* Kept in sync with db/schema.sql. Idempotent, so it doubles as the
+   migration for databases created before a column existed. */
 let ready: Promise<unknown> | null = null;
 function ensureSchema() {
-  ready ??= sql()`
-    CREATE TABLE IF NOT EXISTS contacts (
-      email                text PRIMARY KEY,
-      locale               text NOT NULL,
-      country              text,
-      timezone             text,
-      source               text NOT NULL DEFAULT 'specs',
-      request_count        integer NOT NULL DEFAULT 1,
-      first_requested_at   timestamptz NOT NULL DEFAULT now(),
-      last_requested_at    timestamptz NOT NULL DEFAULT now(),
-      specs_sent_at        timestamptz,
-      marketing_consent_at timestamptz,
-      unsubscribed_at      timestamptz
-    )`.catch((error) => {
+  ready ??= (async () => {
+    const q = sql();
+    await q`
+      CREATE TABLE IF NOT EXISTS contacts (
+        email                text PRIMARY KEY,
+        locale               text NOT NULL,
+        country              text,
+        timezone             text,
+        source               text NOT NULL DEFAULT 'specs',
+        request_count        integer NOT NULL DEFAULT 1,
+        first_requested_at   timestamptz NOT NULL DEFAULT now(),
+        last_requested_at    timestamptz NOT NULL DEFAULT now(),
+        specs_sent_at        timestamptz,
+        marketing_consent_at timestamptz,
+        unsubscribed_at      timestamptz
+      )`;
+    await q`ALTER TABLE contacts ADD COLUMN IF NOT EXISTS bounced_at timestamptz`;
+    await q`ALTER TABLE contacts ADD COLUMN IF NOT EXISTS complained_at timestamptz`;
+    await q`
+      CREATE TABLE IF NOT EXISTS email_events (
+        id          text PRIMARY KEY,
+        email       text,
+        type        text NOT NULL,
+        message_id  text,
+        created_at  timestamptz NOT NULL DEFAULT now(),
+        data        jsonb
+      )`;
+    await q`CREATE INDEX IF NOT EXISTS email_events_email_idx ON email_events (email)`;
+  })().catch((error) => {
     ready = null; // retry on the next request
     throw error;
   });
@@ -45,11 +59,13 @@ export type SpecRequest = {
   timezone: string | null;
 };
 
-/* Records a spec request. Asking again is allowed — it bumps the count and
-   refreshes language/location, and the specs are sent again. */
-export async function recordSpecRequest(r: SpecRequest) {
+/* Records a spec request. Asking again is allowed — it bumps the count,
+   refreshes language/location and lifts an unsubscribe, since asking is an
+   explicit wish to hear from us. Returns whether sending is still blocked
+   (a hard bounce or a spam complaint). */
+export async function recordSpecRequest(r: SpecRequest): Promise<{ suppressed: boolean }> {
   await ensureSchema();
-  await sql()`
+  const rows = await sql()`
     INSERT INTO contacts (email, locale, country, timezone)
     VALUES (${r.email}, ${r.locale}, ${r.country}, ${r.timezone})
     ON CONFLICT (email) DO UPDATE SET
@@ -57,9 +73,81 @@ export async function recordSpecRequest(r: SpecRequest) {
       country           = COALESCE(EXCLUDED.country, contacts.country),
       timezone          = COALESCE(EXCLUDED.timezone, contacts.timezone),
       request_count     = contacts.request_count + 1,
-      last_requested_at = now()`;
+      last_requested_at = now(),
+      unsubscribed_at   = NULL
+    RETURNING bounced_at, complained_at`;
+  const row = rows[0] as { bounced_at: string | null; complained_at: string | null } | undefined;
+  return { suppressed: Boolean(row?.bounced_at || row?.complained_at) };
 }
 
 export async function markSpecsSent(email: string) {
   await sql()`UPDATE contacts SET specs_sent_at = now() WHERE email = ${email}`;
+}
+
+export type Contact = {
+  email: string;
+  locale: string;
+  marketing_consent_at: string | null;
+  unsubscribed_at: string | null;
+};
+
+export async function getContact(email: string): Promise<Contact | null> {
+  await ensureSchema();
+  const rows = await sql()`
+    SELECT email, locale, marketing_consent_at, unsubscribed_at
+    FROM contacts WHERE email = ${email}`;
+  return (rows[0] as Contact | undefined) ?? null;
+}
+
+/* What the contact has chosen to receive:
+   updates  — the launch email plus occasional news (explicit opt-in)
+   launch   — only the one email when 7on ARC is ready (the default)
+   none     — nothing at all */
+export type Preference = "updates" | "launch" | "none";
+
+export function preferenceOf(c: Contact): Preference {
+  if (c.unsubscribed_at) return "none";
+  return c.marketing_consent_at ? "updates" : "launch";
+}
+
+export async function setPreference(email: string, preference: Preference) {
+  await ensureSchema();
+  if (preference === "updates") {
+    await sql()`
+      UPDATE contacts SET marketing_consent_at = COALESCE(marketing_consent_at, now()), unsubscribed_at = NULL
+      WHERE email = ${email}`;
+  } else if (preference === "launch") {
+    await sql()`UPDATE contacts SET marketing_consent_at = NULL, unsubscribed_at = NULL WHERE email = ${email}`;
+  } else {
+    await sql()`
+      UPDATE contacts SET marketing_consent_at = NULL, unsubscribed_at = COALESCE(unsubscribed_at, now())
+      WHERE email = ${email}`;
+  }
+}
+
+/* Delivery events from Resend's webhook. Idempotent on the event id, since
+   webhooks are retried. Bounces and complaints stop all future sending. */
+export async function recordEmailEvent(e: {
+  id: string;
+  type: string;
+  email: string | null;
+  messageId: string | null;
+  data: unknown;
+}) {
+  await ensureSchema();
+  const inserted = await sql()`
+    INSERT INTO email_events (id, email, type, message_id, data)
+    VALUES (${e.id}, ${e.email}, ${e.type}, ${e.messageId}, ${JSON.stringify(e.data)})
+    ON CONFLICT (id) DO NOTHING
+    RETURNING id`;
+  if (inserted.length === 0 || !e.email) return;
+
+  if (e.type === "email.bounced") {
+    await sql()`UPDATE contacts SET bounced_at = COALESCE(bounced_at, now()) WHERE email = ${e.email}`;
+  } else if (e.type === "email.complained") {
+    await sql()`
+      UPDATE contacts SET complained_at = COALESCE(complained_at, now()),
+        unsubscribed_at = COALESCE(unsubscribed_at, now()), marketing_consent_at = NULL
+      WHERE email = ${e.email}`;
+  }
 }

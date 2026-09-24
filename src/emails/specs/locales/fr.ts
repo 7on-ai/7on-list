@@ -52,7 +52,12 @@ export const fr: SpecsEmail = {
   },
   cta: "Découvrir 7on.ai",
   signoff: "L'équipe 7on",
-  footer:
-    "Vous recevez cet e-mail parce que vous avez demandé la fiche technique sur 7on.ai. Pas de spam — un seul autre e-mail quand votre machine sera prête. Répondez « unsubscribe » pour vous désinscrire.",
+  updates: {
+    title: "Envie d'en savoir plus\u00A0?",
+    body: "De temps en temps, nous partagerons les nouveautés de Sunday et de 7on ARC. Seulement si vous le souhaitez.",
+    cta: "Oui, tenez-moi informé",
+  },
+  preferences: "Préférences e-mail",
+  footer: "Vous recevez cet e-mail parce que vous avez demandé la fiche technique sur 7on.ai. Pas de spam — un seul autre e-mail quand votre 7on ARC sera prêt.",
   disclaimer: "Caractéristiques préliminaires, susceptibles d'évoluer avant le lancement.",
 };

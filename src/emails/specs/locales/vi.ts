@@ -51,7 +51,12 @@ export const vi: SpecsEmail = {
   },
   cta: "Truy cập 7on.ai",
   signoff: "Đội ngũ 7on",
-  footer:
-    "Bạn nhận được email này vì đã yêu cầu thông số tại 7on.ai. Không spam — chỉ thêm một email khi máy của bạn sẵn sàng. Trả lời “unsubscribe” để hủy đăng ký.",
+  updates: {
+    title: "Muốn biết thêm?",
+    body: "Thỉnh thoảng, chúng tôi sẽ chia sẻ điều mới về Sunday và 7on ARC. Chỉ khi bạn muốn.",
+    cta: "Có, cập nhật cho tôi",
+  },
+  preferences: "Tùy chọn email",
+  footer: "Bạn nhận được email này vì đã yêu cầu thông số tại 7on.ai. Không spam — chỉ thêm một email khi 7on ARC của bạn sẵn sàng.",
   disclaimer: "Thông số sơ bộ. Có thể thay đổi trước khi ra mắt.",
 };

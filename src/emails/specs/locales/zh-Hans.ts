@@ -51,7 +51,12 @@ export const zhHans: SpecsEmail = {
   },
   cta: "访问 7on.ai",
   signoff: "7on 团队",
-  footer:
-    "你收到这封邮件，是因为你在 7on.ai 申请了规格资料。绝不打扰——机器准备就绪时，我们只会再发一封邮件。回复“unsubscribe”即可退订。",
+  updates: {
+    title: "想了解更多吗？",
+    body: "我们会不定期分享 Sunday 与 7on ARC 的最新进展。只在你愿意时。",
+    cta: "好的，请告诉我最新动态",
+  },
+  preferences: "邮件偏好",
+  footer: "你收到这封邮件，是因为你在 7on.ai 申请了规格资料。绝不打扰——7on ARC 就绪时，我们只会再发一封邮件。",
   disclaimer: "初步规格，发布前可能有所调整。",
 };

@@ -59,5 +59,21 @@ export const ko: Dictionary = {
     body: "Sunday는 당신을 알아갑니다. 다른 누구도 아닌. 당신의 데이터는 결코 누구의 모델 학습에도 쓰이지 않습니다.",
     cta: "7on ARC 스펙 받아보기",
   },
+  prefs: {
+    title: "이메일 설정",
+    /* {email} is replaced with the address */
+    intro: "{email}(으)로 보낼 메일을 선택하세요.",
+    options: {
+      updates: { label: "소식", description: "Sunday와 7on ARC의 새 소식을 가끔, 그리고 7on ARC가 준비되면 알림 메일." },
+      launch: { label: "출시 알림만", description: "7on ARC가 준비되면 이메일 한 통. 그 외에는 없습니다." },
+      none: { label: "받지 않음", description: "7on에서 더 이상 메일을 보내지 않습니다." },
+    },
+    current: "현재",
+    choose: "선택",
+    confirm: "네, 소식 받을게요",
+    saved: "저장되었습니다.",
+    invalid: "이 링크는 사용할 수 없습니다. 7on에서 받은 최근 메일의 링크를 이용해 주세요.",
+    back: "7on ARC로 돌아가기",
+  },
   footer: "꺼지지 않도록 만들었습니다.",
 };

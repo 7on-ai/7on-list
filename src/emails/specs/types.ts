@@ -18,6 +18,10 @@ export type SpecsEmail = {
   closing: { title: string; body: string };
   cta: string;
   signoff: string;
+  /* Opt-in for occasional news, shown only when signed links are available */
+  updates: { title: string; body: string; cta: string };
+  /* Link text to the email preferences page */
+  preferences: string;
   footer: string;
   disclaimer: string;
 };

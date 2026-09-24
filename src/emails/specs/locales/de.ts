@@ -51,7 +51,12 @@ export const de: SpecsEmail = {
   },
   cta: "Zu 7on.ai",
   signoff: "Das 7on-Team",
-  footer:
-    "Du erhältst diese E-Mail, weil du auf 7on.ai das Datenblatt angefordert hast. Kein Spam – nur noch eine E-Mail, wenn deine Maschine bereit ist. Antworte mit „unsubscribe“, um dich abzumelden.",
+  updates: {
+    title: "Mehr erfahren?",
+    body: "Ab und zu teilen wir Neues zu Sunday und 7on ARC. Nur, wenn du möchtest.",
+    cta: "Ja, halte mich auf dem Laufenden",
+  },
+  preferences: "E-Mail-Einstellungen",
+  footer: "Du erhältst diese E-Mail, weil du auf 7on.ai das Datenblatt angefordert hast. Kein Spam – nur noch eine E-Mail, wenn dein 7on ARC bereit ist.",
   disclaimer: "Vorläufige Angaben. Änderungen bis zum Launch vorbehalten.",
 };

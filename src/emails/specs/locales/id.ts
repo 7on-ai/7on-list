@@ -51,7 +51,12 @@ export const id: SpecsEmail = {
   },
   cta: "Kunjungi 7on.ai",
   signoff: "Tim 7on",
-  footer:
-    "Kamu menerima email ini karena meminta spesifikasi di 7on.ai. Tanpa spam — hanya satu email lagi saat mesinmu siap. Balas “unsubscribe” untuk berhenti berlangganan.",
+  updates: {
+    title: "Mau tahu lebih banyak?",
+    body: "Sesekali, kami akan berbagi kabar terbaru tentang Sunday dan 7on ARC. Hanya jika kamu mau.",
+    cta: "Ya, kabari saya",
+  },
+  preferences: "Preferensi email",
+  footer: "Kamu menerima email ini karena meminta spesifikasi di 7on.ai. Tanpa spam — hanya satu email lagi saat 7on ARC-mu siap.",
   disclaimer: "Spesifikasi awal. Dapat berubah sebelum peluncuran.",
 };

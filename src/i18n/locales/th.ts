@@ -59,5 +59,21 @@ export const th: Dictionary = {
     body: "Sunday เรียนรู้ตัวคุณ ไม่มีใครอื่นได้รู้ ข้อมูลของคุณ\u200Bจะไม่ถูกใช้ฝึกโมเดลของใคร",
     cta: "รับสเปก 7on ARC",
   },
+  prefs: {
+    title: "การรับอีเมล",
+    /* {email} is replaced with the address */
+    intro: "เลือกอีเมล\u200Bที่ต้องการให้เราส่งถึง {email}",
+    options: {
+      updates: { label: "ข่าวสาร", description: "อัปเดตเป็นครั้งคราว\u200Bเกี่ยวกับ Sunday และ 7on ARC และอีเมลแจ้ง\u200Bเมื่อ 7on ARC ของคุณพร้อม" },
+      launch: { label: "เฉพาะวันเปิดตัว", description: "อีเมลฉบับเดียว\u200Bเมื่อ 7on ARC ของคุณพร้อม ไม่มีอย่างอื่น" },
+      none: { label: "ไม่รับอีเมล", description: "ไม่ส่งอีเมล\u200Bจาก 7on อีก" },
+    },
+    current: "ปัจจุบัน",
+    choose: "เลือก",
+    confirm: "ใช่ ส่งข่าวสารให้ฉัน",
+    saved: "บันทึกแล้ว",
+    invalid: "ลิงก์นี้ใช้ไม่ได้ กรุณาใช้ลิงก์\u200Bในอีเมลล่าสุดจาก 7on",
+    back: "กลับไปที่ 7on ARC",
+  },
   footer: "สร้างมาเพื่อไม่หยุดทำงาน",
 };

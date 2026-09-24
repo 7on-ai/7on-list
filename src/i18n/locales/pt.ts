@@ -59,5 +59,21 @@ export const pt: Dictionary = {
     body: "O Sunday aprende sobre você. Mais ninguém. Seus dados nunca treinam o modelo de ninguém.",
     cta: "Receber a ficha do 7on ARC",
   },
+  prefs: {
+    title: "Preferências de e-mail",
+    /* {email} is replaced with the address */
+    intro: "Escolha o que enviamos para {email}.",
+    options: {
+      updates: { label: "Novidades", description: "Notícias ocasionais sobre o Sunday e o 7on ARC, e o e-mail quando seu 7on ARC estiver pronto." },
+      launch: { label: "Só o lançamento", description: "Um e-mail quando seu 7on ARC estiver pronto. Nada mais." },
+      none: { label: "Nada", description: "Nenhum e-mail a mais da 7on." },
+    },
+    current: "Atual",
+    choose: "Escolher",
+    confirm: "Sim, quero novidades",
+    saved: "Salvo.",
+    invalid: "Este link não funciona. Use o link do seu e-mail mais recente da 7on.",
+    back: "Voltar ao 7on ARC",
+  },
   footer: "Feito para ficar ligado.",
 };

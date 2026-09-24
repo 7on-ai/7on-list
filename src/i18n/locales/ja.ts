@@ -59,5 +59,21 @@ export const ja: Dictionary = {
     body: "Sunday はあなたを知っていく。ほかの誰でもなく。あなたのデータが、誰かのモデルの学習に使われることはありません。",
     cta: "7on ARC のスペックを受け取る",
   },
+  prefs: {
+    title: "メール設定",
+    /* {email} is replaced with the address */
+    intro: "{email} にお送りする内容を選んでください。",
+    options: {
+      updates: { label: "最新情報", description: "Sunday と 7on ARC の最新情報をときどき。7on ARC の準備ができたときのお知らせも。" },
+      launch: { label: "発売のお知らせのみ", description: "7on ARC の準備ができたときに一通だけ。それ以外は送りません。" },
+      none: { label: "受け取らない", description: "7on からのメールを今後お送りしません。" },
+    },
+    current: "現在の設定",
+    choose: "選択",
+    confirm: "はい、最新情報を受け取る",
+    saved: "保存しました。",
+    invalid: "このリンクは使用できません。7on からの最新のメールにあるリンクをお使いください。",
+    back: "7on ARC に戻る",
+  },
   footer: "オンであり続けるために。",
 };

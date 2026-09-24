@@ -59,5 +59,21 @@ export const zhHans: Dictionary = {
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
     cta: "获取 7on ARC 规格",
   },
+  prefs: {
+    title: "邮件偏好",
+    /* {email} is replaced with the address */
+    intro: "选择我们发送给 {email} 的内容。",
+    options: {
+      updates: { label: "动态", description: "不定期分享 Sunday 与 7on ARC 的最新消息，以及 7on ARC 就绪时的通知。" },
+      launch: { label: "仅发布通知", description: "7on ARC 就绪时发一封邮件，别无其他。" },
+      none: { label: "不接收", description: "不再接收来自 7on 的邮件。" },
+    },
+    current: "当前",
+    choose: "选择",
+    confirm: "好的，请告诉我最新动态",
+    saved: "已保存。",
+    invalid: "此链接无效。请使用 7on 最近发给你的邮件中的链接。",
+    back: "返回 7on ARC",
+  },
   footer: "为始终在线而生。",
 };

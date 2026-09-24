@@ -51,7 +51,12 @@ export const zhHant: SpecsEmail = {
   },
   cta: "前往 7on.ai",
   signoff: "7on 團隊",
-  footer:
-    "你收到這封信，是因為你在 7on.ai 索取了規格資料。絕不打擾——機器準備就緒時，我們只會再寄一封信。回覆「unsubscribe」即可取消訂閱。",
+  updates: {
+    title: "想了解更多嗎？",
+    body: "我們會不定期分享 Sunday 與 7on ARC 的最新進展。只在你願意時。",
+    cta: "好，請告訴我最新動態",
+  },
+  preferences: "郵件偏好",
+  footer: "你收到這封信，是因為你在 7on.ai 索取了規格資料。絕不打擾——7on ARC 就緒時，我們只會再寄一封信。",
   disclaimer: "初步規格，上市前可能有所調整。",
 };

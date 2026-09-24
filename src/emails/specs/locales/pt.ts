@@ -51,7 +51,12 @@ export const pt: SpecsEmail = {
   },
   cta: "Visite 7on.ai",
   signoff: "Equipe 7on",
-  footer:
-    "Você está recebendo este e-mail porque pediu a ficha técnica em 7on.ai. Sem spam — só mais um e-mail quando sua máquina estiver pronta. Responda “unsubscribe” para cancelar.",
+  updates: {
+    title: "Quer saber mais?",
+    body: "De vez em quando, vamos compartilhar novidades do Sunday e do 7on ARC. Só se você quiser.",
+    cta: "Sim, quero novidades",
+  },
+  preferences: "Preferências de e-mail",
+  footer: "Você está recebendo este e-mail porque pediu a ficha técnica em 7on.ai. Sem spam — só mais um e-mail quando seu 7on ARC estiver pronto.",
   disclaimer: "Especificações preliminares. Sujeitas a alterações antes do lançamento.",
 };
