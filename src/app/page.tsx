@@ -1,9 +1,10 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import arc from "@/assets/7on-arc.webp";
 import { DayWithSunday } from "@/components/day-with-sunday";
-import { Machine } from "@/components/machine";
 import { Orbit } from "@/components/orbit";
 import { Phrases } from "@/components/ui/phrases";
 import SplitText from "@/components/ui/split-text";
@@ -94,37 +95,43 @@ export default function Home() {
       {/* ── Your first day ──────────────────────────────────────── */}
       <DayWithSunday />
 
-      {/* ── Truly yours. ─────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#f6f6f7]">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 md:grid-cols-2">
-          <div className="fade-up">
-            <h2 className="t-heading text-[40px] font-medium sm:text-6xl">
-              {t.machine.headline.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-zinc-700 sm:text-xl">
-              <Phrases text={t.machine.body} />
-            </p>
-            <button
-              type="button"
-              onClick={focusSpecsForm}
-              className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
-            >
-              {t.machine.cta}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
-          </div>
-          <div className="relative flex justify-center md:justify-end">
-            <Machine className="float w-[78%] max-w-[440px] md:w-[115%] md:max-w-none md:translate-x-[18%]" />
-          </div>
+      {/* ── Truly yours. — the product reveal ─────────────────── */}
+      {/* Background matches the photo's own backdrop so the image has no edge */}
+      <section className="relative overflow-hidden bg-[#faf8f6]">
+        <div className="fade-up relative z-10 mx-auto max-w-3xl px-6 pt-24 text-center sm:pt-32">
+          <h2 className="t-heading text-[40px] font-medium sm:text-6xl md:text-7xl">
+            {t.machine.headline.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-700 sm:text-xl">
+            <Phrases text={t.machine.body} />
+          </p>
+          <button
+            type="button"
+            onClick={focusSpecsForm}
+            className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
+          >
+            {t.machine.cta}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </button>
+        </div>
+
+        <div className="reveal-product relative mx-auto -mt-6 max-w-6xl sm:-mt-10">
+          <Image
+            src={arc}
+            alt="7on ARC"
+            sizes="(min-width: 1152px) 1152px, 100vw"
+            placeholder="blur"
+            className="aspect-square w-full object-cover sm:aspect-[16/10] [mask-image:radial-gradient(ellipse_62%_62%_at_50%_46%,#000_58%,transparent_100%)]"
+          />
         </div>
       </section>
 
       {/* ── Footer ─────────────────────────────────────────────── */}
-      <footer className="flex flex-col items-center gap-3 bg-white py-10 text-xs text-zinc-500">
+      <footer className="flex flex-col items-center gap-3 bg-[#faf8f6] py-10 text-xs text-zinc-500">
         <Link href="https://7on.ai" target="_blank" className="opacity-70 transition-opacity hover:opacity-100">
           <Logo className="h-7 w-7" />
         </Link>
@@ -154,15 +161,13 @@ export default function Home() {
         .orbit-counter { animation: spin linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .machine-glow { animation: glow 4s ease-in-out infinite; }
-        @keyframes glow { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
 
-        .float { animation: float 8s ease-in-out infinite; }
-        @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+        .reveal-product { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
+        @keyframes settle { from { opacity: 0; transform: translateY(40px) scale(.96); } to { opacity: 1; transform: none; } }
 
         @media (prefers-reduced-motion: reduce) {
-          .reveal, .fade-up { opacity: 1 !important; transform: none !important; animation: none !important; }
-          .breathe, .orb-breathe, .orbit-ring, .orbit-counter, .machine-glow, .float { animation: none !important; }
+          .reveal, .fade-up, .reveal-product { opacity: 1 !important; transform: none !important; animation: none !important; }
+          .breathe, .orb-breathe, .orbit-ring, .orbit-counter { animation: none !important; }
         }
       `}</style>
     </div>
