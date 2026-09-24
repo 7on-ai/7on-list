@@ -3,15 +3,9 @@ import type { SpecsEmail } from "../types";
 export const de: SpecsEmail = {
   subject: "Sunday, aus der Nähe.",
   preheader: "Ein erster Blick auf deine souveräne KI und die Maschine, auf der sie lebt.",
-  eyebrow: "Vorläufiges Datenblatt",
   headline: "Sunday, aus der Nähe.",
   intro: "Danke, dass du so früh dabei bist. Hier ist ein erster Blick auf Sunday und die Maschine, auf der Sunday lebt.",
-  lead: {
-    title: "Deine souveräne KI. Immer an.",
-    body: "Sunday antwortet nicht nur. Sunday handelt – auf einer eigenen Maschine, für einen einzigen Menschen. Dich.",
-  },
-  featuresTitle: "Weil die Maschine dir gehört.",
-  featuresIntro: "Nichts davon ist für einen Assistenten erreichbar, den sich Millionen Menschen teilen.",
+  lead: "Sunday antwortet nicht nur. Sunday handelt – auf einer eigenen Maschine, für einen einzigen Menschen. Dich.",
   features: [
     {
       title: "Lernt selbst.",
@@ -38,7 +32,6 @@ export const de: SpecsEmail = {
     title: "7on ARC.",
     body: "Eine Scheibe aus gebürstetem Metall mit rot leuchtender Glasfront. Auf dem Schreibtisch, am Bett, im Meeting. Home Assistant verbindet sich mit einem Klick.",
   },
-  statsTitle: "Ohne Kompromisse gebaut.",
   stats: [
     { value: "30.000+", label: "Fähigkeiten, die sich selbst erweitern" },
     { value: "78,57 %", label: "LongMemEval-S – über dem bisherigen Bestwert von 76,88 %" },

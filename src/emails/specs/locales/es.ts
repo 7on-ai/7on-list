@@ -3,15 +3,9 @@ import type { SpecsEmail } from "../types";
 export const es: SpecsEmail = {
   subject: "Sunday, de cerca.",
   preheader: "Un primer vistazo a tu IA soberana y a la máquina en la que vive.",
-  eyebrow: "Ficha técnica preliminar",
   headline: "Sunday, de cerca.",
   intro: "Gracias por llegar pronto. Este es un primer vistazo a Sunday y a la máquina en la que vive.",
-  lead: {
-    title: "Tu IA soberana. Siempre activa.",
-    body: "Sunday no solo responde. Actúa — en una máquina propia, para una sola persona. Tú.",
-  },
-  featuresTitle: "Porque la máquina es tuya.",
-  featuresIntro: "Nada de esto está al alcance de un asistente que comparten millones de personas.",
+  lead: "Sunday no solo responde. Actúa — en una máquina propia, para una sola persona. Tú.",
   features: [
     {
       title: "Autodidacta.",
@@ -38,7 +32,6 @@ export const es: SpecsEmail = {
     title: "7on ARC.",
     body: "Un disco de metal cepillado con una cara de cristal iluminada en rojo. En tu escritorio, en tu mesita de noche, en la reunión. Home Assistant se conecta con un clic.",
   },
-  statsTitle: "Diseñado sin concesiones.",
   stats: [
     { value: "30.000+", label: "Habilidades que se amplían solas" },
     { value: "78,57 %", label: "LongMemEval-S, por encima del mejor resultado anterior (76,88 %)" },

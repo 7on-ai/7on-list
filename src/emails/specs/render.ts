@@ -29,9 +29,9 @@ const COPY: Record<Locale, SpecsEmail> = {
 };
 
 const SITE = "https://7on.ai";
-const RED = "#C41D3B";
-const INK = "#111111";
-const MUTED = "#5f5f66";
+const INK = "#1d1d1f";
+const MUTED = "#6e6e73";
+const HAIR = "#e5e5ea";
 /* System faces only — email clients can't load web fonts reliably, and
    these fall back to each platform's Thai/CJK/Vietnamese glyphs. */
 const FONT =
@@ -46,7 +46,7 @@ function esc(text: string) {
 }
 
 /* Chinese and Japanese wrap between characters, so they are left free */
-const CJK = /[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff\uff00-\uffef]/;
+const CJK = /[぀-ヿ㐀-鿿豈-﫿＀-￯]/;
 
 /* Headings: keep each space-separated phrase whole. Thai has no spaces
    between words, so mail clients would otherwise break mid-word. */
@@ -61,38 +61,23 @@ function phrase(text: string): string {
     .join("");
 }
 
-/* Email HTML: tables and inline styles, because that is what Gmail,
-   Outlook and Apple Mail all render the same way. */
+/* Deliberately plain, like a note from Apple or Stripe: white page, text,
+   one link. Newsletter styling (colour blocks, cards, buttons) is what
+   sends mail to Gmail's Promotions tab. */
 function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
-  // Letter-spacing pulls Thai and CJK glyphs apart; keep it for Latin only
-  const latin = !["th", "ja", "ko", "zh-Hans", "zh-Hant"].includes(locale);
-  const tracking = (em: string) => (latin ? `letter-spacing:${em};` : "");
-  const p = (text: string, style = "") =>
-    `<p style="margin:0;font-family:${FONT};font-size:16px;line-height:1.6;color:${MUTED};${style}">${esc(text)}</p>`;
-  const h = (text: string, size: number, style = "") =>
-    `<h2 style="margin:0 0 8px;font-family:${FONT};font-size:${size}px;line-height:1.3;font-weight:600;${tracking("-0.01em")}color:${INK};${style}">${phrase(text)}</h2>`;
-  const block = (inner: string, pad = "0 40px 36px") => `<tr><td class="pad" style="padding:${pad};">${inner}</td></tr>`;
-  const rule = `<tr><td class="pad" style="padding:0 40px 36px;"><div style="height:1px;background:#ececef;line-height:1px;font-size:0;">&nbsp;</div></td></tr>`;
+  const text = (content: string, style = "") =>
+    `<p style="margin:0 0 16px;font-family:${FONT};font-size:15px;line-height:1.6;color:${INK};${style}">${content}</p>`;
+  // Title on its own line: Thai titles carry no full stop to separate them
+  const item = (title: string, body: string) => text(`<strong>${esc(title)}</strong><br>${esc(body)}`);
+  const hair = `<div style="height:1px;background:${HAIR};margin:28px 0;line-height:1px;font-size:0;">&nbsp;</div>`;
 
-  const features = c.features
+  const numbers = c.stats
     .map(
-      (f) => `<tr><td style="padding:0 0 22px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-          <td valign="top" style="padding:9px 14px 0 0;"><div style="width:6px;height:6px;border-radius:3px;background:${RED};"></div></td>
-          <td valign="top">${h(f.title, 17, "margin-bottom:4px;")}${p(f.body, "font-size:15px;")}</td>
-        </tr></table>
-      </td></tr>`
+      (s) => `<tr>
+        <td valign="top" style="padding:0 16px 8px 0;font-family:${FONT};font-size:15px;line-height:1.5;color:${INK};font-weight:600;white-space:nowrap;">${esc(s.value)}</td>
+        <td valign="top" style="padding:0 0 8px;font-family:${FONT};font-size:15px;line-height:1.5;color:${MUTED};">${esc(s.label)}</td>
+      </tr>`
     )
-    .join("");
-
-  const statCell = (s: { value: string; label: string }) => `<td class="stat" width="50%" valign="top" style="padding:0 8px 16px;">
-      <div style="border:1px solid #ececef;border-radius:14px;padding:18px 18px 16px;">
-        <div style="font-family:${FONT};font-size:26px;line-height:1.2;font-weight:600;${tracking("-0.02em")}color:${INK};white-space:nowrap;">${esc(s.value)}</div>
-        <div style="margin-top:8px;font-family:${FONT};font-size:13px;line-height:1.45;color:${MUTED};">${esc(s.label)}</div>
-      </div>
-    </td>`;
-  const stats = [0, 2]
-    .map((i) => `<tr>${statCell(c.stats[i])}${statCell(c.stats[i + 1])}</tr>`)
     .join("");
 
   return `<!doctype html>
@@ -101,70 +86,32 @@ function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light">
-<style>
-  @media (max-width: 480px) {
-    .stat { display: block !important; width: 100% !important; box-sizing: border-box; }
-    .pad { padding-left: 24px !important; padding-right: 24px !important; }
-    .h1 { font-size: 32px !important; }
-  }
-</style>
 <title>${esc(c.subject)}</title>
 </head>
-<body style="margin:0;padding:0;background:#f6f6f7;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(c.preheader)}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f6f6f7;">
-<tr><td align="center" style="padding:32px 12px;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background:#ffffff;border-radius:20px;overflow:hidden;">
-
-  <tr><td align="center" style="padding:36px 40px 8px;">
-    <a href="${SITE}"><img src="${logoUrl}" width="36" height="36" alt="7on" style="display:block;border:0;"></a>
-  </td></tr>
-
-  ${block(
-    `<p style="margin:0 0 14px;font-family:${FONT};font-size:12px;${tracking("0.18em")}text-transform:uppercase;color:${RED};font-weight:600;">${esc(c.eyebrow)}</p>
-     <h1 class="h1" style="margin:0 0 16px;font-family:${FONT};font-size:40px;line-height:1.15;font-weight:600;${tracking("-0.03em")}color:${INK};">${phrase(c.headline)}</h1>
-     ${p(c.intro, "font-size:17px;")}`,
-    "28px 40px 36px"
-  )}
-
-  <tr><td class="pad" style="padding:0 40px 40px;">
-    <div style="background:${RED};border-radius:16px;padding:28px 28px 26px;">
-      <h2 style="margin:0 0 8px;font-family:${FONT};font-size:22px;line-height:1.3;font-weight:600;color:#ffffff;">${phrase(c.lead.title)}</h2>
-      <p style="margin:0;font-family:${FONT};font-size:16px;line-height:1.6;color:rgba(255,255,255,0.88);">${esc(c.lead.body)}</p>
-    </div>
-  </td></tr>
-
-  ${block(`${h(c.featuresTitle, 24)}${p(c.featuresIntro, "margin-bottom:24px;")}
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${features}</table>`, "0 40px 14px")}
-
-  ${rule}
-  ${block(`${h(c.mindGraph.title, 20)}${p(c.mindGraph.body)}`)}
-  ${block(`${h(c.arc.title, 20)}${p(c.arc.body)}`)}
-  ${rule}
-
-  ${block(`${h(c.statsTitle, 24, "margin-bottom:20px;")}
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 -8px;">${stats}</table>`, "0 40px 24px")}
-
-  <tr><td class="pad" style="padding:0 40px 40px;">
-    <div style="background:#f6f6f7;border-radius:16px;padding:28px;">
-      ${h(c.closing.title, 22)}${p(c.closing.body)}
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;"><tr>
-        <td style="background:${INK};border-radius:10px;">
-          <a href="${SITE}" style="display:inline-block;padding:13px 22px;font-family:${FONT};font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">${esc(c.cta)} &rarr;</a>
-        </td>
-      </tr></table>
-    </div>
-  </td></tr>
-
-  ${block(p(`— ${c.signoff}`, `color:${INK};`), "0 40px 36px")}
-</table>
-
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
-  <tr><td style="padding:24px 40px 8px;">
-    <p style="margin:0 0 10px;font-family:${FONT};font-size:12px;line-height:1.6;color:#8a8a92;">${esc(c.footer)}</p>
-    <p style="margin:0;font-family:${FONT};font-size:12px;line-height:1.6;color:#8a8a92;">${esc(c.disclaimer)} © ${new Date().getFullYear()} 7on</p>
-  </td></tr>
+<body style="margin:0;padding:0;background:#ffffff;">
+<div style="display:none;max-height:0;overflow:hidden;">${esc(c.preheader)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td align="center" style="padding:40px 24px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+<tr><td>
+  <img src="${logoUrl}" width="28" height="28" alt="7on" style="display:block;border:0;margin:0 0 32px;">
+  <h1 style="margin:0 0 20px;font-family:${FONT};font-size:24px;line-height:1.3;font-weight:600;color:${INK};">${phrase(c.headline)}</h1>
+  ${text(esc(c.intro))}
+  ${text(esc(c.lead))}
+  ${hair}
+  ${c.features.map((f) => item(f.title, f.body)).join("")}
+  ${item(c.mindGraph.title, c.mindGraph.body)}
+  ${item(c.arc.title, c.arc.body)}
+  ${hair}
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0">${numbers}</table>
+  ${hair}
+  ${item(c.closing.title, c.closing.body)}
+  ${text(`<a href="${SITE}" style="color:#0066cc;text-decoration:none;">${esc(c.cta)} &rsaquo;</a>`)}
+  ${text(esc(c.signoff), "margin-top:28px;")}
+  ${hair}
+  <p style="margin:0 0 8px;font-family:${FONT};font-size:12px;line-height:1.6;color:${MUTED};">${esc(c.footer)}</p>
+  <p style="margin:0;font-family:${FONT};font-size:12px;line-height:1.6;color:${MUTED};">${esc(c.disclaimer)} © ${new Date().getFullYear()} 7on</p>
+</td></tr>
 </table>
 </td></tr>
 </table>
@@ -175,33 +122,22 @@ function html(c: SpecsEmail, locale: Locale, logoUrl: string) {
 /* Plain-text part: some clients show only this, and spam filters expect it */
 function text(c: SpecsEmail) {
   return [
-    c.eyebrow.toUpperCase(),
-    c.headline,
+    c.headline.replace(/\n/g, ""),
     "",
     c.intro,
     "",
-    c.lead.title,
-    c.lead.body,
+    c.lead,
     "",
-    c.featuresTitle,
-    c.featuresIntro,
+    ...[...c.features, c.mindGraph, c.arc].flatMap((f) => [f.title, f.body, ""]),
     "",
-    ...c.features.flatMap((f) => [`• ${f.title}`, `  ${f.body}`, ""]),
-    c.mindGraph.title,
-    c.mindGraph.body,
-    "",
-    c.arc.title,
-    c.arc.body,
-    "",
-    c.statsTitle,
-    ...c.stats.map((s) => `• ${s.value} — ${s.label}`),
+    ...c.stats.map((s) => `${s.value}  ${s.label}`),
     "",
     c.closing.title,
     c.closing.body,
     "",
     `${c.cta}: ${SITE}`,
     "",
-    `— ${c.signoff}`,
+    c.signoff,
     "",
     "—",
     c.footer,

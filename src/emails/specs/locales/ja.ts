@@ -3,15 +3,9 @@ import type { SpecsEmail } from "../types";
 export const ja: SpecsEmail = {
   subject: "Sunday を、もっと近くで。",
   preheader: "あなただけの AI と、それが住むマシンの最初の紹介です。",
-  eyebrow: "暫定スペック",
   headline: "Sunday を、\nもっと近くで。",
   intro: "いち早くご登録いただき、ありがとうございます。Sunday と、Sunday が住むマシンを最初にご紹介します。",
-  lead: {
-    title: "あなただけの AI。いつでもオン。",
-    body: "Sunday は答えるだけではありません。行動します。自分専用のマシンの上で、ただひとり、あなたのために。",
-  },
-  featuresTitle: "マシンが、あなたのものだから。",
-  featuresIntro: "どれも、何百万人もが共有するアシスタントには手の届かないことです。",
+  lead: "Sunday は答えるだけではありません。行動します。自分専用のマシンの上で、ただひとり、あなたのために。",
   features: [
     {
       title: "自分で学ぶ。",
@@ -38,7 +32,6 @@ export const ja: SpecsEmail = {
     title: "7on ARC。",
     body: "ヘアライン仕上げの金属ディスクに、赤く灯るガラスの顔。デスクにも、枕元にも、会議の席にも。Home Assistant とはワンクリックで接続。",
   },
-  statsTitle: "妥協のないエンジニアリング。",
   stats: [
     { value: "30,000+", label: "自ら増えていくスキル" },
     { value: "78.57%", label: "LongMemEval-S — これまでの最高値 76.88% を上回るスコア" },

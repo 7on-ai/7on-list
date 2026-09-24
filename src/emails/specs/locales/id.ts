@@ -3,15 +3,9 @@ import type { SpecsEmail } from "../types";
 export const id: SpecsEmail = {
   subject: "Sunday, lebih dekat.",
   preheader: "Sekilas pertama tentang AI milikmu dan mesin tempatnya tinggal.",
-  eyebrow: "Spesifikasi awal",
   headline: "Sunday, lebih dekat.",
   intro: "Terima kasih sudah datang lebih awal. Ini sekilas pertama tentang Sunday dan mesin tempatnya tinggal.",
-  lead: {
-    title: "AI milikmu sendiri. Selalu aktif.",
-    body: "Sunday tidak hanya menjawab. Sunday bertindak — di mesinnya sendiri, untuk satu orang. Kamu.",
-  },
-  featuresTitle: "Karena mesinnya milikmu.",
-  featuresIntro: "Semua ini di luar jangkauan asisten yang dipakai bersama oleh jutaan orang.",
+  lead: "Sunday tidak hanya menjawab. Sunday bertindak — di mesinnya sendiri, untuk satu orang. Kamu.",
   features: [
     {
       title: "Belajar sendiri.",
@@ -38,7 +32,6 @@ export const id: SpecsEmail = {
     title: "7on ARC.",
     body: "Cakram logam brushed dengan muka kaca bercahaya merah. Di meja kerja, di samping tempat tidur, di ruang rapat. Home Assistant terhubung dalam satu klik.",
   },
-  statsTitle: "Dirancang tanpa kompromi.",
   stats: [
     { value: "30.000+", label: "Kemampuan yang berkembang sendiri" },
     { value: "78,57%", label: "LongMemEval-S — melampaui rekor sebelumnya, 76,88%" },

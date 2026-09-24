@@ -32,13 +32,6 @@ export async function sendSpecsEmail(to: string, locale: Locale, origin: string)
         subject,
         html,
         text,
-        headers: {
-          "List-Unsubscribe": `<mailto:${REPLY_TO}?subject=unsubscribe>`,
-        },
-        tags: [
-          { name: "type", value: "specs" },
-          { name: "locale", value: locale.replace(/[^a-zA-Z0-9_-]/g, "_") },
-        ],
       }),
     });
 

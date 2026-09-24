@@ -3,15 +3,9 @@ import type { SpecsEmail } from "../types";
 export const zhHant: SpecsEmail = {
   subject: "近看 Sunday",
   preheader: "初識你的主權 AI，以及它所在的機器。",
-  eyebrow: "初步規格",
   headline: "近看 Sunday。",
   intro: "感謝你搶先加入。以下是 Sunday 及其所在機器的初步介紹。",
-  lead: {
-    title: "你的主權 AI。始終在線。",
-    body: "Sunday 不只是回答，它會行動——在一台屬於它自己的機器上，只為一個人：你。",
-  },
-  featuresTitle: "因為這台機器屬於你。",
-  featuresIntro: "以下每一項，都是數百萬人共用的助理做不到的。",
+  lead: "Sunday 不只是回答，它會行動——在一台屬於它自己的機器上，只為一個人：你。",
   features: [
     {
       title: "自我學習。",
@@ -38,7 +32,6 @@ export const zhHant: SpecsEmail = {
     title: "7on ARC。",
     body: "髮絲紋金屬圓盤，紅光玻璃面板。放在桌上、床頭或會議室裡。一鍵連接 Home Assistant。",
   },
-  statsTitle: "毫不妥協的工程。",
   stats: [
     { value: "30,000+", label: "可自我擴充的技能" },
     { value: "78.57%", label: "LongMemEval-S——超越先前最佳成績 76.88%" },
