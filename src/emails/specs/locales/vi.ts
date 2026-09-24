@@ -3,9 +3,15 @@ import type { SpecsEmail } from "../types";
 export const vi: SpecsEmail = {
   subject: "Cận cảnh Sunday.",
   preheader: "Cái nhìn đầu tiên về AI của riêng bạn và chiếc máy nơi nó sống.",
+  eyebrow: "Thông số sơ bộ",
   headline: "Cận cảnh Sunday.",
   intro: "Cảm ơn bạn đã đến sớm. Đây là cái nhìn đầu tiên về Sunday và chiếc máy nơi Sunday sống.",
-  lead: "Sunday không chỉ trả lời. Sunday hành động — trên chiếc máy của riêng mình, cho một người duy nhất. Là bạn.",
+  lead: {
+    title: "AI của riêng bạn. Luôn bật.",
+    body: "Sunday không chỉ trả lời. Sunday hành động — trên chiếc máy của riêng mình, cho một người duy nhất. Là bạn.",
+  },
+  featuresTitle: "Vì chiếc máy là của bạn.",
+  featuresIntro: "Mỗi điều dưới đây đều nằm ngoài tầm với của một trợ lý mà hàng triệu người dùng chung.",
   features: [
     {
       title: "Tự học.",
@@ -32,6 +38,7 @@ export const vi: SpecsEmail = {
     title: "7on ARC.",
     body: "Một chiếc đĩa kim loại xước mờ với mặt kính phát sáng đỏ. Trên bàn làm việc, bên giường ngủ, trong phòng họp. Kết nối Home Assistant chỉ với một cú nhấp.",
   },
+  statsTitle: "Thiết kế không thỏa hiệp.",
   stats: [
     { value: "30.000+", label: "Kỹ năng tự mở rộng" },
     { value: "78,57%", label: "LongMemEval-S — vượt kỷ lục trước đó, 76,88%" },

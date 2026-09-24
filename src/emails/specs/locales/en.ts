@@ -3,9 +3,15 @@ import type { SpecsEmail } from "../types";
 export const en: SpecsEmail = {
   subject: "Sunday, up close.",
   preheader: "A first look at your Sovereign AI and the machine it lives on.",
+  eyebrow: "Preliminary specs",
   headline: "Sunday, up close.",
   intro: "Thank you for being early. Here is a first look at Sunday and the machine it lives on.",
-  lead: "Sunday doesn't just answer. It acts — on a machine of its own, for one person. You.",
+  lead: {
+    title: "Your Sovereign AI. Always on.",
+    body: "Sunday doesn't just answer. It acts — on a machine of its own, for one person. You.",
+  },
+  featuresTitle: "Because the machine is yours.",
+  featuresIntro: "Each of these is out of reach for an assistant that millions of people share.",
   features: [
     {
       title: "Self-taught.",
@@ -32,6 +38,7 @@ export const en: SpecsEmail = {
     title: "7on ARC.",
     body: "A brushed-metal disc with a red-lit glass face. On your desk, at your bedside, in the meeting. Home Assistant connects in one click.",
   },
+  statsTitle: "Engineered without compromise.",
   stats: [
     { value: "30,000+", label: "Self-expanding skills" },
     { value: "78.57%", label: "LongMemEval-S — ahead of the previous best, 76.88%" },
