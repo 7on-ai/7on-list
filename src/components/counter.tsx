@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import * as motion from "motion/react-client";
+import { Phrases } from "@/components/ui/phrases";
+import { useI18n } from "@/i18n/provider";
 
 export function Counter() {
+  const { t, locale } = useI18n();
   const [count, setCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,10 +60,18 @@ export function Counter() {
       className="text-sm text-zinc-500"
       aria-live="polite"
     >
-      <span className="font-semibold text-[#111] tabular-nums">
-        {count.toLocaleString()}+
-      </span>{" "}
-      people are already waiting for theirs
+      {t.hero.counter.split("{count}").map((chunk, i) =>
+        i === 0 ? (
+          <Phrases key={i} text={chunk} />
+        ) : (
+          <span key={i}>
+            <span className="font-semibold text-[#111] tabular-nums">
+              {count.toLocaleString(locale)}
+            </span>
+            <Phrases text={chunk} />
+          </span>
+        )
+      )}
     </motion.p>
   );
 }

@@ -6,8 +6,11 @@ import { Counter } from "@/components/counter";
 import { DayWithSunday } from "@/components/day-with-sunday";
 import { Machine } from "@/components/machine";
 import { Orbit } from "@/components/orbit";
+import { Phrases } from "@/components/ui/phrases";
 import SplitText from "@/components/ui/split-text";
 import { WaitlistForm } from "@/components/waitlist-form";
+import { DICTIONARIES, LOCALES } from "@/i18n/dictionaries";
+import { useI18n } from "@/i18n/provider";
 
 /* Logo PNG used as a mask so it renders in brand red, like 7on.ai */
 function Logo({ className = "" }: { className?: string }) {
@@ -20,6 +23,29 @@ function Logo({ className = "" }: { className?: string }) {
   );
 }
 
+/* EN · ไทย — each option written in its own language */
+function LanguageSwitch() {
+  const { locale, setLocale } = useI18n();
+  return (
+    <div className="flex items-center gap-1 rounded-full border border-zinc-200 bg-white/80 p-0.5 text-xs backdrop-blur">
+      {LOCALES.map((l) => (
+        <button
+          key={l}
+          type="button"
+          lang={l}
+          onClick={() => setLocale(l)}
+          aria-pressed={l === locale}
+          className={`rounded-full px-2.5 py-1 transition-colors ${
+            l === locale ? "bg-[#111] text-white" : "text-zinc-500 hover:text-[#111]"
+          }`}
+        >
+          {l === "en" ? "EN" : DICTIONARIES[l].languageName}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function focusWaitlist() {
   const form = document.getElementById("waitlist");
   form?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -27,6 +53,9 @@ function focusWaitlist() {
 }
 
 export default function Home() {
+  const { t, locale } = useI18n();
+  const isThai = locale === "th";
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-white text-[#111] selection:bg-[#C41D3B] selection:text-white">
       {/* ── Top bar ─────────────────────────────────────────────── */}
@@ -34,25 +63,38 @@ export default function Home() {
         <Link href="https://7on.ai" target="_blank" aria-label="7on.ai">
           <Logo className="h-9 w-9" />
         </Link>
+        <div className="absolute right-4 top-8 sm:right-8">
+          <LanguageSwitch />
+        </div>
       </header>
 
       {/* ── Hero + orbit ────────────────────────────────────────── */}
       <section className="relative">
         <div className="relative z-10 mx-auto max-w-4xl px-6 pt-36 text-center sm:pt-44">
-          <h1 className="text-[38px] font-medium min-[400px]:text-[44px] leading-[1.02] tracking-[-0.045em] sm:text-7xl md:text-[92px]">
-            <SplitText as="span" className="block">Your Sovereign AI.</SplitText>
-            <SplitText as="span" className="block">Always-On Agent.</SplitText>
+          <h1
+            className={`t-display font-medium ${
+              isThai
+                ? "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[72px]"
+                : "text-[40px] min-[400px]:text-[46px] sm:text-7xl md:text-[92px]"
+            }`}
+          >
+            {t.hero.headline.map((line, i) => (
+              <SplitText key={line} className="block" delay={i * 0.15}>
+                {line}
+              </SplitText>
+            ))}
           </h1>
 
-          <p className="reveal reveal-2 mt-7 text-lg text-zinc-600 sm:text-2xl">
-            It doesn&rsquo;t just answer. It acts.
+          <p className="reveal reveal-2 mx-auto mt-7 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl">
+            <Phrases text={t.hero.sub} />
           </p>
 
           <div id="waitlist" className="reveal reveal-3 mx-auto mt-10 w-full max-w-md scroll-mt-40">
             <div className="rounded-2xl border border-zinc-200 bg-white/85 p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)] backdrop-blur-md">
               <WaitlistForm />
             </div>
-            <div className="mt-5 text-sm text-zinc-500">
+            <p className="mt-3 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
+            <div className="mt-6 text-sm text-zinc-500">
               <Counter />
             </div>
           </div>
@@ -65,27 +107,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── One day ─────────────────────────────────────────────── */}
+      {/* ── Your first day ──────────────────────────────────────── */}
       <DayWithSunday />
 
-      {/* ── A machine of your own ───────────────────────────────── */}
+      {/* ── Yours. Not rented. ─────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[#f6f6f7]">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 md:grid-cols-2">
           <div className="fade-up">
-            <h2 className="text-5xl font-medium leading-[1.05] tracking-[-0.04em] sm:text-6xl">
-              A machine
-              <br />
-              of your own.
+            <h2 className="t-heading text-5xl font-medium sm:text-6xl">
+              {t.machine.headline.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </h2>
-            <p className="mt-6 max-w-sm text-lg leading-relaxed text-zinc-700 sm:text-xl">
-              Your data stays yours. In a dedicated space untouched by anyone else.
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-zinc-700 sm:text-xl">
+              <Phrases text={t.machine.body} />
             </p>
+            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-600">
+              {t.machine.points.map((point) => (
+                <li key={point} className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#C41D3B]" />
+                  {point}
+                </li>
+              ))}
+            </ul>
             <button
               type="button"
               onClick={focusWaitlist}
               className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
             >
-              Claim your machine
+              {t.machine.cta}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </button>
           </div>
@@ -100,7 +152,9 @@ export default function Home() {
         <Link href="https://7on.ai" target="_blank" className="opacity-70 transition-opacity hover:opacity-100">
           <Logo className="h-7 w-7" />
         </Link>
-        <span>© {new Date().getFullYear()} 7on. Always on, never off.</span>
+        <span>
+          © {new Date().getFullYear()} 7on. {t.footer}
+        </span>
       </footer>
 
       {/* ── Motion (reduced-motion aware) ──────────────────────── */}

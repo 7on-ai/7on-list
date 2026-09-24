@@ -16,6 +16,8 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
+import { Phrases } from "@/components/ui/phrases";
+import { useI18n } from "@/i18n/provider";
 
 /* Ring diameters as a fraction of the orbit square — mirrors 7on.ai */
 const RINGS = [1, 0.76, 0.56];
@@ -41,6 +43,7 @@ const SATELLITES: Satellite[] = [
 export function Orbit() {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const { t } = useI18n();
 
   /* 0 → orbit top enters the viewport, 1 → orbit centred on screen */
   const { scrollYProgress } = useScroll({
@@ -59,7 +62,6 @@ export function Orbit() {
   return (
     <div
       ref={ref}
-      aria-hidden
       className="orbit relative aspect-square"
       style={{ width: "var(--orbit)", marginLeft: "calc(50% - var(--orbit) / 2)" }}
     >
@@ -91,10 +93,23 @@ export function Orbit() {
         }}
       >
         <div className="orb-breathe absolute inset-0 rounded-full shadow-[0_0_120px_20px_rgba(196,29,59,0.25)]" />
+        <div className="absolute inset-[9%] flex flex-col items-center justify-center text-center text-white">
+          <h2 className="t-heading text-[clamp(17px,calc(var(--orbit)*0.026),28px)] font-medium">
+            {t.orbit.headline.map((line) => (
+              <span key={line} className="block whitespace-nowrap">
+                {line}
+              </span>
+            ))}
+          </h2>
+          <p className="mt-[0.9em] max-w-[30ch] text-[clamp(12px,calc(var(--orbit)*0.0145),15px)] leading-snug text-white/80">
+            <Phrases text={t.orbit.sub} />
+          </p>
+        </div>
       </motion.div>
 
-      {/* Satellites — each ring drifts slowly; icons counter-rotate to stay upright */}
+      {/* Satellites (decorative) — each ring drifts slowly; icons counter-rotate to stay upright */}
       <motion.div
+        aria-hidden
         className="absolute inset-0"
         style={{ opacity: reduce ? 1 : iconsOpacity, rotate: reduce ? 0 : spin }}
       >

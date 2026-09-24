@@ -5,97 +5,55 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import * as motion from "motion/react-client";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useI18n } from "@/i18n/provider";
 
-const formSchema = z.object({
-  email: z
-    .string({ required_error: "Email address is required." })
-    .email("Please enter a valid email address."),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = { email: string };
 
 export function WaitlistForm() {
+  const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<FormValues>({
-    defaultValues: {
-      email: "",
-    },
-  });
+  const form = useForm<FormValues>({ defaultValues: { email: "" } });
 
   async function onSubmit(data: FormValues) {
-    setIsSubmitting(true);
-    form.clearErrors(); // clear errors
+    form.clearErrors();
 
-    const validationResult = formSchema.safeParse(data);
-
-    if (!validationResult.success) {
-      validationResult.error.errors.forEach((error) => {
-        form.setError(error.path[0] as keyof FormValues, {
-          type: "manual",
-          message: error.message,
-        });
-      });
-      setIsSubmitting(false);
+    const schema = z.object({
+      email: z.string().trim().min(1, t.form.required).email(t.form.invalid),
+    });
+    const parsed = schema.safeParse(data);
+    if (!parsed.success) {
+      form.setError("email", { type: "manual", message: parsed.error.errors[0]?.message });
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(validationResult.data),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed.data),
       });
 
-      let responseBody = {};
-      try {
-        // 204
-        const text = await response.text();
-        if (text) {
-          responseBody = JSON.parse(text);
-        }
-      } catch (parseError) {
-        console.error("Failed to parse response body:", parseError);
-        if (!response.ok) {
-          throw new Error(
-            `HTTP error ${response.status}: ${
-              response.statusText || "Request failed"
-            }`
-          );
-        }
+      // The API speaks English; the visitor hears their own language.
+      if (response.ok) {
+        toast.success(t.form.success);
+        form.reset();
+      } else if (response.status === 409) {
+        toast(t.form.duplicate);
+      } else if (response.status === 400 || response.status === 403) {
+        form.setError("email", { type: "server", message: t.form.invalid });
+      } else {
+        toast.error(t.form.error);
       }
-
-      if (!response.ok) {
-        throw new Error(
-          (responseBody as { message?: string })?.message ||
-            `Request failed with status: ${response.status}`
-        );
-      }
-
-      toast.success(
-        (responseBody as { message?: string })?.message ||
-          "You're on the list. We'll be in touch."
-      );
-      form.reset();
     } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "An unexpected error occurred. Please try again."
-      );
+      console.error("Waitlist submission failed:", error);
+      toast.error(t.form.error);
     } finally {
       setIsSubmitting(false);
     }
@@ -104,8 +62,9 @@ export function WaitlistForm() {
   return (
     <Form {...form}>
       <motion.form
+        noValidate
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative flex w-full max-w-md flex-col gap-2 sm:flex-row"
+        className="relative flex w-full flex-col gap-2 sm:flex-row"
         initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1.2, delay: 0.7, type: "spring", bounce: 0 }}
@@ -117,11 +76,11 @@ export function WaitlistForm() {
             <FormItem className="flex-1">
               <FormControl>
                 <Input
-                  placeholder="you@email.com"
+                  placeholder={t.hero.placeholder}
                   type="email"
                   autoComplete="email"
                   className="h-11 rounded-lg border-transparent bg-transparent px-4 text-base text-[#111] shadow-none placeholder:text-zinc-400 focus-visible:border-transparent focus-visible:ring-0 md:text-sm"
-                  aria-label="Email address for waitlist"
+                  aria-label={t.form.emailLabel}
                   aria-invalid={!!form.formState.errors.email}
                   {...field}
                 />
@@ -139,11 +98,11 @@ export function WaitlistForm() {
           {isSubmitting ? (
             <>
               <Loader2 className="animate-spin" />
-              Joining...
+              {t.form.sending}
             </>
           ) : (
             <>
-              Claim your machine
+              {t.hero.cta}
               <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
             </>
           )}

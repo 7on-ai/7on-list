@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { cookies, headers } from "next/headers";
+import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themes/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { I18nProvider } from "@/i18n/provider";
+import { DICTIONARIES, LOCALE_COOKIE, isLocale, matchLocale, type Locale } from "@/i18n/dictionaries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,29 +17,46 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "7on — Join the waitlist",
-  description:
-    "Your Sovereign AI. Always-On Agent. It doesn't just answer. It acts. Claim your machine.",
-};
+/* Loopless Thai that sits comfortably next to Geist */
+const notoThai = Noto_Sans_Thai({
+  variable: "--font-thai",
+  subsets: ["thai"],
+  weight: ["400", "500", "600"],
+});
 
-export default function RootLayout({
+/* Explicit choice (cookie) wins; otherwise follow the browser's language */
+async function resolveLocale(): Promise<Locale> {
+  const saved = (await cookies()).get(LOCALE_COOKIE)?.value;
+  if (isLocale(saved)) return saved;
+  return matchLocale((await headers()).get("accept-language"));
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { title, description } = DICTIONARIES[await resolveLocale()].meta;
+  return { title, description, openGraph: { title, description }, twitter: { title, description } };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await resolveLocale();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.className} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoThai.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
           forcedTheme="light"
           disableTransitionOnChange
         >
-          <Toaster position="bottom-center" />
-          {children}
+          <I18nProvider initialLocale={locale}>
+            <Toaster position="bottom-center" />
+            {children}
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

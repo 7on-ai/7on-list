@@ -2,52 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { CalendarDays, House, PhoneCall, Sunrise, type LucideIcon } from "lucide-react";
+import { Mail, MoonStar, Package, Sunrise, type LucideIcon } from "lucide-react";
+import { Phrases } from "@/components/ui/phrases";
+import { useI18n } from "@/i18n/provider";
 
-type Moment = {
-  time: string;
-  icon: LucideIcon;
-  tag: string;
-  title: string;
-  line: string;
-};
-
-const MOMENTS: Moment[] = [
-  {
-    time: "04:11",
-    icon: Sunrise,
-    tag: "Before the alarm",
-    title: "Waking you up",
-    line: "Morning. It's raining until six, so I've moved your run to the evening.",
-  },
-  {
-    time: "09:40",
-    icon: CalendarDays,
-    tag: "On the way in",
-    title: "Clearing your day",
-    line: "Your 11:00 slipped to Thursday. I've told everyone and booked the room.",
-  },
-  {
-    time: "14:25",
-    icon: PhoneCall,
-    tag: "While you focus",
-    title: "Taking the call",
-    line: "The clinic called back. You're confirmed for Friday at 3pm.",
-  },
-  {
-    time: "21:30",
-    icon: House,
-    tag: "Winding down",
-    title: "Closing the house",
-    line: "Doors locked, lights dimmed, alarm set for 6:15. Sleep well.",
-  },
-];
+/* Copy lives in the dictionary; icons stay with the moment's position */
+const ICONS: LucideIcon[] = [Sunrise, Mail, Package, MoonStar];
 
 const STEP_MS = 5200;
 
 export function DayWithSunday() {
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
+  const { t } = useI18n();
+  const MOMENTS = t.day.moments;
 
   useEffect(() => {
     if (reduce) return;
@@ -56,10 +24,10 @@ export function DayWithSunday() {
       STEP_MS
     );
     return () => clearTimeout(id);
-  }, [index, reduce]);
+  }, [index, reduce, MOMENTS.length]);
 
   const m = MOMENTS[index];
-  const Icon = m.icon;
+  const Icon = ICONS[index];
 
   return (
     <section className="relative overflow-hidden bg-[#C41D3B] px-6 py-24 text-white sm:py-32">
@@ -67,11 +35,11 @@ export function DayWithSunday() {
       <div className="pointer-events-none absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.18),transparent)] blur-2xl" />
 
       <div className="relative mx-auto max-w-5xl text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/70">
-          One day
+        <p className="t-eyebrow text-xs font-medium text-white/70">
+          {t.day.eyebrow}
         </p>
-        <h2 className="mt-4 text-4xl font-medium tracking-[-0.03em] sm:text-6xl">
-          A day with Sunday
+        <h2 className="t-heading mt-4 text-4xl font-medium sm:text-6xl">
+          <Phrases text={t.day.headline} />
         </h2>
 
         <div className="mx-auto mt-12 max-w-md text-left">
@@ -98,7 +66,9 @@ export function DayWithSunday() {
               </h3>
               <p className="mt-4 flex gap-3 leading-relaxed text-white/90">
                 <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff5a74]" />
-                {m.line}
+                <span>
+                  <Phrases text={m.line} />
+                </span>
               </p>
             </motion.div>
           </AnimatePresence>

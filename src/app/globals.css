@@ -6,7 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), var(--font-thai), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-brand: #c41d3b;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -123,5 +123,38 @@
   }
   html {
     scroll-behavior: smooth;
+  }
+}
+
+/* ── Display type ─────────────────────────────────────────────
+   Latin runs tight like 7on.ai; Thai needs air for its vowels and
+   tone marks, so it gets looser tracking and taller lines. */
+@layer components {
+  .t-display {
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .t-heading {
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+  html[lang="th"] .t-display {
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+  }
+  html[lang="th"] .t-heading {
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+  .t-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+  }
+  /* Tracking pulls Thai glyphs apart from their marks */
+  html[lang="th"] .t-eyebrow {
+    letter-spacing: 0.02em;
+  }
+  html[lang="th"] body {
+    line-height: 1.7;
   }
 }

@@ -1,77 +1,41 @@
 "use client";
 
-import { animate, stagger } from "motion";
-import { splitText } from "motion-plus";
-import React, { useEffect, useRef, ReactNode, ElementType } from "react";
-
-function Stylesheet() {
-  return (
-    <style>{`
-      .split-word {
-          will-change: transform, opacity, filter;
-          display: inline-block;
-      }
-      /* Lines as blocks so wrapped lines don't lose their word gap */
-      .split-line { display: block !important; }
-    `}</style>
-  );
-}
+import { motion, useReducedMotion } from "motion/react";
+import type { ElementType } from "react";
+import { splitPhrases } from "./phrases";
 
 interface SplitTextProps {
-  children: ReactNode;
+  children: string;
   as?: ElementType;
   className?: string;
+  delay?: number;
 }
 
-export default function SplitText({
-  children,
-  as: Tag = "h1",
-  className = "",
-}: SplitTextProps) {
-  const elementRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
-
-    document.fonts.ready.then(() => {
-      if (!element) return;
-
-      element.style.visibility = "visible";
-
-      const { words } = splitText(element); // Removed the options object
-
-      if (!words || words.length === 0) {
-        return;
-      }
-
-      animate(
-        words,
-        {
-          opacity: [0, 1],
-          transform: ["translateY(10px)", "translateY(0px)"],
-          filter: ["blur(8px)", "blur(0px)"],
-        },
-        {
-          type: "spring",
-          duration: 2,
-          bounce: 0,
-          delay: stagger(0.05),
-        }
-      );
-    });
-  }, [children]);
+/* Words (or Thai phrases) rise out of a soft blur, one after another.
+   Never split per character — that would detach Thai vowels and tone marks. */
+export default function SplitText({ children, as: Tag = "span", className = "", delay = 0 }: SplitTextProps) {
+  const reduce = useReducedMotion();
+  let word = 0;
 
   return (
-    <>
-      <Tag
-        ref={elementRef as any}
-        className={className}
-        style={{ visibility: "hidden" }}
-      >
-        {children}
-      </Tag>
-      <Stylesheet />
-    </>
+    <Tag className={className} aria-label={children.replace(/​/g, "")}>
+      {splitPhrases(children).map((part, i) => {
+        if (part === "​") return <wbr key={i} />;
+        if (/^\s+$/.test(part)) return part;
+        const index = word++;
+        return (
+          <motion.span
+            key={`${children}-${i}`}
+            aria-hidden
+            className="inline-block whitespace-nowrap will-change-[transform,opacity,filter]"
+            initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ type: "spring", duration: 1.6, bounce: 0, delay: delay + index * 0.06 }}
+          >
+            {part}
+          </motion.span>
+        );
+      })}
+    </Tag>
   );
 }
