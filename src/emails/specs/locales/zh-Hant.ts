@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const zhHant: SpecsEmail = {
-  subject: "近看 Sunday",
-  preheader: "初識你的主權 AI，以及它所在的機器。",
+  subject: "近看 7on ARC",
+  preheader: "初識 7on ARC，以及住在裡面的 AI——Sunday。",
   eyebrow: "初步規格",
-  headline: "近看 Sunday。",
-  intro: "感謝你搶先加入。以下是 Sunday 及其所在機器的初步介紹。",
+  headline: "近看 7on ARC。",
+  intro: "感謝你搶先加入。以下是 7on ARC，以及住在其中的 AI——Sunday 的初步介紹。",
   lead: {
     title: "你的主權 AI。始終在線。",
     body: "Sunday 不只是回答，它會行動——在一台屬於它自己的機器上，只為一個人：你。",

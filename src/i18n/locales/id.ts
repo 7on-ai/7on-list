@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const id: Dictionary = {
   meta: {
-    title: "7on — Jadilah yang pertama memiliki Sunday",
-    description: "Dapatkan spesifikasi awal Sunday — AI Agent yang selalu aktif, tinggal di mesin milikmu sendiri.",
+    title: "7on ARC — Jadilah yang pertama memiliki Sunday",
+    description: "Dapatkan spesifikasi awal 7on ARC — rumah bagi Sunday, AI Agent yang selalu aktif.",
   },
   hero: {
     headline: ["Jadilah yang pertama", "memiliki Sunday."],
-    sub: "AI pribadi yang tinggal di mesin milikmu sendiri dan menyelesaikan berbagai hal selagi kamu menjalani harimu.",
+    sub: "AI pribadi yang tinggal di 7on ARC, mesin milikmu sendiri, dan menyelesaikan berbagai hal selagi kamu menjalani harimu.",
     placeholder: "Email kamu",
-    cta: "Kirimkan spesifikasinya",
-    note: "Tanpa spam. Spesifikasinya sekarang, dan satu email lagi saat mesinmu siap.",
+    cta: "Dapatkan spesifikasi 7on ARC",
+    note: "Tanpa spam. Spesifikasinya sekarang, dan satu email lagi saat 7on ARC-mu siap.",
   },
   form: {
     success: "Kamu sudah terdaftar. Spesifikasinya sedang dikirim ke email kamu.",
@@ -26,7 +26,7 @@ export const id: Dictionary = {
   },
   day: {
     eyebrow: "Hari pertamamu",
-    headline: "Hari mesinmu tiba",
+    headline: "Hari 7on ARC-mu tiba",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const id: Dictionary = {
   machine: {
     headline: ["Sungguh milikmu."],
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
-    cta: "Kirimkan spesifikasinya",
+    cta: "Dapatkan spesifikasi 7on ARC",
   },
   footer: "Dibuat untuk selalu menyala.",
 };

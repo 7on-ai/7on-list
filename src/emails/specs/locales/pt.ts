@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const pt: SpecsEmail = {
-  subject: "Sunday, de perto.",
-  preheader: "Um primeiro olhar sobre a sua IA soberana e a máquina onde ela vive.",
+  subject: "7on ARC, de perto.",
+  preheader: "Um primeiro olhar sobre o 7on ARC e o Sunday, a IA que vive nele.",
   eyebrow: "Ficha técnica preliminar",
-  headline: "Sunday, de perto.",
-  intro: "Obrigado por chegar cedo. Aqui está um primeiro olhar sobre o Sunday e a máquina onde ele vive.",
+  headline: "7on ARC, de perto.",
+  intro: "Obrigado por chegar cedo. Aqui está um primeiro olhar sobre o 7on ARC, e o Sunday, a IA que vive nele.",
   lead: {
     title: "Sua IA soberana. Sempre ligada.",
     body: "O Sunday não apenas responde. Ele age — em uma máquina só dele, para uma única pessoa. Você.",

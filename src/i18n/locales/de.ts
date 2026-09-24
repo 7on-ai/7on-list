@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const de: Dictionary = {
   meta: {
-    title: "7on — Dein Sunday. Vor allen anderen.",
-    description: "Hol dir das vorläufige Datenblatt von Sunday – dem KI-Agenten, der immer an ist und auf deiner eigenen Maschine lebt.",
+    title: "7on ARC — Dein Sunday. Vor allen anderen.",
+    description: "Hol dir das vorläufige Datenblatt von 7on ARC – dem Zuhause von Sunday, dem KI-Agenten, der immer an ist.",
   },
   hero: {
     headline: ["Dein Sunday.", "Vor allen anderen."],
-    sub: "Eine private KI, die auf deiner eigenen Maschine lebt und Dinge erledigt, während du deinen Tag lebst.",
+    sub: "Eine private KI, die auf 7on ARC lebt, deiner eigenen Maschine, und Dinge erledigt, während du deinen Tag lebst.",
     placeholder: "Deine E-Mail",
-    cta: "Schick mir das Datenblatt",
-    note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn deine Maschine bereit ist.",
+    cta: "7on ARC-Datenblatt anfordern",
+    note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn dein 7on ARC bereit ist.",
   },
   form: {
     success: "Du bist dabei. Das Datenblatt ist unterwegs.",
@@ -26,7 +26,7 @@ export const de: Dictionary = {
   },
   day: {
     eyebrow: "Dein erster Tag",
-    headline: "Der Tag, an dem deine Maschine ankommt",
+    headline: "Der Tag, an dem dein 7on ARC ankommt",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const de: Dictionary = {
   machine: {
     headline: ["Wirklich deins."],
     body: "Sunday lernt dich kennen. Niemand sonst. Deine Daten trainieren nie das Modell eines anderen.",
-    cta: "Schick mir das Datenblatt",
+    cta: "7on ARC-Datenblatt anfordern",
   },
   footer: "Gebaut, um an zu bleiben.",
 };

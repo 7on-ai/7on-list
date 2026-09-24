@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const ja: Dictionary = {
   meta: {
-    title: "7on — いち早く、あなたの Sunday を",
-    description: "Sunday の暫定スペックを受け取る。あなた自身のマシンに住む、常時稼働の AI Agent。",
+    title: "7on ARC — いち早く、あなたの Sunday を",
+    description: "7on ARC の暫定スペックを受け取る。常時稼働の AI Agent、Sunday が住むマシン。",
   },
   hero: {
     headline: ["いち早く、", "あなたの Sunday を。"],
-    sub: "あなた自身のマシンに住むプライベート AI。あなたが毎日を過ごしているあいだに、やるべきことを片づけます。",
+    sub: "あなただけのマシン、7on ARC に住むプライベート AI。あなたが毎日を過ごしているあいだに、やるべきことを片づけます。",
     placeholder: "メールアドレス",
-    cta: "スペックを受け取る",
-    note: "スパムは送りません。今すぐスペックを、マシンの準備ができたらもう一通だけ。",
+    cta: "7on ARC のスペックを受け取る",
+    note: "スパムは送りません。今すぐスペックを、7on ARC の準備ができたらもう一通だけ。",
   },
   form: {
     success: "登録しました。スペックがまもなく届きます。",
@@ -26,7 +26,7 @@ export const ja: Dictionary = {
   },
   day: {
     eyebrow: "最初の一日",
-    headline: "マシンが届く日",
+    headline: "7on ARC が届く日",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const ja: Dictionary = {
   machine: {
     headline: ["本当に、", "あなたのもの。"],
     body: "Sunday はあなたを知っていく。ほかの誰でもなく。あなたのデータが、誰かのモデルの学習に使われることはありません。",
-    cta: "スペックを受け取る",
+    cta: "7on ARC のスペックを受け取る",
   },
   footer: "オンであり続けるために。",
 };

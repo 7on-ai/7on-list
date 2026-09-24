@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const ja: SpecsEmail = {
-  subject: "Sunday を、もっと近くで。",
-  preheader: "あなただけの AI と、それが住むマシンの最初の紹介です。",
+  subject: "7on ARC を、もっと近くで。",
+  preheader: "7on ARC と、そこに住む AI、Sunday の最初の紹介です。",
   eyebrow: "暫定スペック",
-  headline: "Sunday を、\nもっと近くで。",
-  intro: "いち早くご登録いただき、ありがとうございます。Sunday と、Sunday が住むマシンを最初にご紹介します。",
+  headline: "7on ARC を、\nもっと近くで。",
+  intro: "いち早くご登録いただき、ありがとうございます。7on ARC と、そこに住む AI、Sunday を最初にご紹介します。",
   lead: {
     title: "あなただけの AI。いつでもオン。",
     body: "Sunday は答えるだけではありません。行動します。自分専用のマシンの上で、ただひとり、あなたのために。",

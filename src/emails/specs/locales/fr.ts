@@ -2,11 +2,11 @@ import type { SpecsEmail } from "../types";
 
 /* French typography: non-breaking spaces ( ) before : ; ! ? % and inside numbers */
 export const fr: SpecsEmail = {
-  subject: "Sunday, de près.",
-  preheader: "Un premier regard sur votre IA souveraine et la machine où elle vit.",
+  subject: "7on ARC, de près.",
+  preheader: "Un premier regard sur 7on ARC et sur Sunday, l'IA qui y vit.",
   eyebrow: "Fiche technique préliminaire",
-  headline: "Sunday, de près.",
-  intro: "Merci d'être parmi les premiers. Voici un premier regard sur Sunday et la machine où elle vit.",
+  headline: "7on ARC, de près.",
+  intro: "Merci d'être parmi les premiers. Voici un premier regard sur 7on ARC, et sur Sunday, l'IA qui y vit.",
   lead: {
     title: "Votre IA souveraine. Toujours active.",
     body: "Sunday ne se contente pas de répondre. Elle agit — sur une machine bien à elle, pour une seule personne. Vous.",

@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const pt: Dictionary = {
   meta: {
-    title: "7on — Seu Sunday, antes de todo mundo",
-    description: "Receba a ficha técnica preliminar do Sunday, o agente de IA sempre ligado que vive em uma máquina sua.",
+    title: "7on ARC — Seu Sunday, antes de todo mundo",
+    description: "Receba a ficha técnica preliminar do 7on ARC, a casa do Sunday, o agente de IA sempre ligado.",
   },
   hero: {
     headline: ["Seu Sunday,", "antes de todo mundo."],
-    sub: "Uma IA privada que vive na sua própria máquina e resolve as coisas enquanto você vive o seu dia.",
+    sub: "Uma IA privada que vive no 7on ARC, uma máquina só sua, e resolve as coisas enquanto você vive o seu dia.",
     placeholder: "Seu e-mail",
-    cta: "Quero a ficha técnica",
-    note: "Sem spam. A ficha técnica agora, e só mais um e-mail quando sua máquina estiver pronta.",
+    cta: "Receber a ficha do 7on ARC",
+    note: "Sem spam. A ficha técnica agora, e só mais um e-mail quando seu 7on ARC estiver pronto.",
   },
   form: {
     success: "Pronto. A ficha técnica está a caminho do seu e-mail.",
@@ -26,7 +26,7 @@ export const pt: Dictionary = {
   },
   day: {
     eyebrow: "Seu primeiro dia",
-    headline: "O dia em que sua máquina chega",
+    headline: "O dia em que seu 7on ARC chega",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const pt: Dictionary = {
   machine: {
     headline: ["Verdadeiramente", "seu."],
     body: "O Sunday aprende sobre você. Mais ninguém. Seus dados nunca treinam o modelo de ninguém.",
-    cta: "Quero a ficha técnica",
+    cta: "Receber a ficha do 7on ARC",
   },
   footer: "Feito para ficar ligado.",
 };

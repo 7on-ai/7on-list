@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const en: Dictionary = {
   meta: {
-    title: "7on — Be first to own your Sunday",
-    description: "Get the preliminary specs for Sunday, the always-on AI agent that lives on a machine you own.",
+    title: "7on ARC — Be first to own your Sunday",
+    description: "Get the preliminary specs for 7on ARC, home of Sunday, the always-on AI agent.",
   },
   hero: {
     headline: ["Be first to own", "your Sunday."],
-    sub: "A private AI that lives on your own machine and gets things done while you live your day.",
+    sub: "A private AI that lives on 7on ARC, a machine of your own, and gets things done while you live your day.",
     placeholder: "Your email",
-    cta: "Send me the specs",
-    note: "No spam. The specs now, and one email when your machine is ready.",
+    cta: "Get the 7on ARC specs",
+    note: "No spam. The specs now, and one email when your 7on ARC is ready.",
   },
   form: {
     success: "You're in. The specs are on their way.",
@@ -26,7 +26,7 @@ export const en: Dictionary = {
   },
   day: {
     eyebrow: "Your first day",
-    headline: "The day your machine arrives",
+    headline: "The day your 7on ARC arrives",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const en: Dictionary = {
   machine: {
     headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
-    cta: "Send me the specs",
+    cta: "Get the 7on ARC specs",
   },
   footer: "Built to stay on.",
 };

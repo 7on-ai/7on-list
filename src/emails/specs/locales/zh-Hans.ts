@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const zhHans: SpecsEmail = {
-  subject: "近看 Sunday",
-  preheader: "初识你的主权 AI，以及它所在的机器。",
+  subject: "近看 7on ARC",
+  preheader: "初识 7on ARC，以及住在里面的 AI——Sunday。",
   eyebrow: "初步规格",
-  headline: "近看 Sunday。",
-  intro: "感谢你的率先加入。以下是 Sunday 及其所在机器的初步介绍。",
+  headline: "近看 7on ARC。",
+  intro: "感谢你的率先加入。以下是 7on ARC，以及住在其中的 AI——Sunday 的初步介绍。",
   lead: {
     title: "你的主权 AI。始终在线。",
     body: "Sunday 不只是回答，它会行动——在一台属于它自己的机器上，只为一个人：你。",

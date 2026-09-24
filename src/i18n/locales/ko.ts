@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const ko: Dictionary = {
   meta: {
-    title: "7on — 가장 먼저, 나만의 Sunday",
-    description: "Sunday 예비 스펙을 받아보세요. 당신의 기기에 사는, 늘 켜져 있는 AI Agent.",
+    title: "7on ARC — 가장 먼저, 나만의 Sunday",
+    description: "7on ARC 예비 스펙을 받아보세요. 늘 켜져 있는 AI Agent, Sunday가 사는 기기.",
   },
   hero: {
     headline: ["가장 먼저,", "나만의 Sunday."],
-    sub: "당신의 기기에 사는 프라이빗 AI. 당신이 하루를 사는 동안, 할 일을 끝내 둡니다.",
+    sub: "당신만의 기기, 7on ARC에 사는 프라이빗 AI. 당신이 하루를 사는 동안, 할 일을 끝내 둡니다.",
     placeholder: "이메일 주소",
-    cta: "스펙 받아보기",
-    note: "스팸은 없습니다. 지금은 스펙을, 기기가 준비되면 이메일 한 통만 더 보내드립니다.",
+    cta: "7on ARC 스펙 받아보기",
+    note: "스팸은 없습니다. 지금은 스펙을, 7on ARC가 준비되면 이메일 한 통만 더 보내드립니다.",
   },
   form: {
     success: "등록되었습니다. 스펙이 곧 도착합니다.",
@@ -26,7 +26,7 @@ export const ko: Dictionary = {
   },
   day: {
     eyebrow: "당신의 첫날",
-    headline: "기기가 도착하는 날",
+    headline: "7on ARC가 도착하는 날",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const ko: Dictionary = {
   machine: {
     headline: ["진정한 당신의 것."],
     body: "Sunday는 당신을 알아갑니다. 다른 누구도 아닌. 당신의 데이터는 결코 누구의 모델 학습에도 쓰이지 않습니다.",
-    cta: "스펙 받아보기",
+    cta: "7on ARC 스펙 받아보기",
   },
   footer: "꺼지지 않도록 만들었습니다.",
 };

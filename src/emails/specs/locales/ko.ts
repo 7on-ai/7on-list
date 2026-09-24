@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const ko: SpecsEmail = {
-  subject: "Sunday, 가까이에서.",
-  preheader: "당신만의 AI, 그리고 그 AI가 사는 기기를 처음으로 소개합니다.",
+  subject: "7on ARC, 가까이에서.",
+  preheader: "7on ARC와, 그 안에 사는 AI Sunday를 처음으로 소개합니다.",
   eyebrow: "예비 스펙",
-  headline: "Sunday, 가까이에서.",
-  intro: "먼저 함께해 주셔서 감사합니다. Sunday와, Sunday가 사는 기기를 처음으로 소개합니다.",
+  headline: "7on ARC, 가까이에서.",
+  intro: "먼저 함께해 주셔서 감사합니다. 7on ARC와, 그 안에 사는 AI Sunday를 처음으로 소개합니다.",
   lead: {
     title: "당신만의 AI. 언제나 켜져 있습니다.",
     body: "Sunday는 답하는 데서 그치지 않고 행동합니다. 자신만의 기기 위에서, 단 한 사람, 당신을 위해.",

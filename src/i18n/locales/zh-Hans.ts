@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const zhHans: Dictionary = {
   meta: {
-    title: "7on — 率先拥有你的 Sunday",
-    description: "获取 Sunday 的初步规格——一个始终在线、住在你自己机器上的 AI Agent。",
+    title: "7on ARC — 率先拥有你的 Sunday",
+    description: "获取 7on ARC 的初步规格——Sunday 的家，一个始终在线的 AI Agent。",
   },
   hero: {
     headline: ["率先拥有", "你的 Sunday。"],
-    sub: "一个私人 AI，住在你自己的机器上，在你过好每一天的同时，把事情办妥。",
+    sub: "一个私人 AI，住在 7on ARC——一台属于你自己的机器上，在你过好每一天的同时，把事情办妥。",
     placeholder: "你的邮箱",
-    cta: "把规格发给我",
-    note: "绝不打扰。现在发送规格，机器就绪时再发一封邮件。",
+    cta: "获取 7on ARC 规格",
+    note: "绝不打扰。现在发送规格，7on ARC 就绪时再发一封邮件。",
   },
   form: {
     success: "已加入。规格正在发往你的邮箱。",
@@ -26,7 +26,7 @@ export const zhHans: Dictionary = {
   },
   day: {
     eyebrow: "你的第一天",
-    headline: "机器到家的那一天",
+    headline: "7on ARC 到家的那一天",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const zhHans: Dictionary = {
   machine: {
     headline: ["真正属于你。"],
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
-    cta: "把规格发给我",
+    cta: "获取 7on ARC 规格",
   },
   footer: "为始终在线而生。",
 };

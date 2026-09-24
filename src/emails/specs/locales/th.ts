@@ -1,11 +1,11 @@
 import type { SpecsEmail } from "../types";
 
 export const th: SpecsEmail = {
-  subject: "Sunday แบบใกล้ชิด",
-  preheader: "สัมผัสแรกของ AI ที่เป็นของคุณ และเครื่องที่ Sunday อาศัยอยู่",
+  subject: "7on ARC แบบใกล้ชิด",
+  preheader: "สัมผัสแรกของ 7on ARC และ Sunday AI ที่อาศัยอยู่ในเครื่องนี้",
   eyebrow: "สเปกเบื้องต้น",
-  headline: "Sunday แบบใกล้ชิด",
-  intro: "ขอบคุณที่มาก่อนใคร นี่คือสัมผัสแรกของ Sunday และเครื่องที่ Sunday อาศัยอยู่",
+  headline: "7on ARC แบบใกล้ชิด",
+  intro: "ขอบคุณที่มาก่อนใคร นี่คือสัมผัสแรกของ 7on ARC และ Sunday AI ที่อาศัยอยู่ในเครื่องนี้",
   lead: {
     title: "AI ที่เป็นของคุณ ทำงานตลอดเวลา",
     body: "Sunday ไม่ได้แค่ตอบ แต่ลงมือทำ บนเครื่องของตัวเอง เพื่อคนคนเดียว คือคุณ",

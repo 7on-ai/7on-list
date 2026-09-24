@@ -3,15 +3,15 @@ import type { Dictionary } from "../types";
 /* French typography: non-breaking spaces ( ) keep "9 h" and "6 h 30" together */
 export const fr: Dictionary = {
   meta: {
-    title: "7on — Votre Sunday, avant tout le monde",
-    description: "Recevez la fiche technique préliminaire de Sunday, l'agent IA toujours actif qui vit sur une machine à vous.",
+    title: "7on ARC — Votre Sunday, avant tout le monde",
+    description: "Recevez la fiche technique préliminaire de 7on ARC, là où vit Sunday, l'agent IA toujours actif.",
   },
   hero: {
     headline: ["Votre Sunday,", "avant tout le monde."],
-    sub: "Une IA privée qui vit sur votre propre machine et s'occupe de tout pendant que vous vivez votre journée.",
+    sub: "Une IA privée qui vit sur 7on ARC, une machine bien à vous, et s'occupe de tout pendant que vous vivez votre journée.",
     placeholder: "Votre e-mail",
-    cta: "Recevoir la fiche technique",
-    note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre machine sera prête.",
+    cta: "Recevoir la fiche 7on ARC",
+    note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre 7on ARC sera prêt.",
   },
   form: {
     success: "C'est noté. La fiche technique est en route.",
@@ -27,7 +27,7 @@ export const fr: Dictionary = {
   },
   day: {
     eyebrow: "Votre premier jour",
-    headline: "Le jour où votre machine arrive",
+    headline: "Le jour où votre 7on ARC arrive",
     moments: [
       {
         time: "07:00",
@@ -58,7 +58,7 @@ export const fr: Dictionary = {
   machine: {
     headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
-    cta: "Recevoir la fiche technique",
+    cta: "Recevoir la fiche 7on ARC",
   },
   footer: "Conçu pour rester allumé.",
 };

@@ -2,15 +2,15 @@ import type { Dictionary } from "../types";
 
 export const vi: Dictionary = {
   meta: {
-    title: "7on — Hãy là người đầu tiên sở hữu Sunday",
-    description: "Nhận thông số sơ bộ của Sunday — AI Agent luôn bật, sống trên chính chiếc máy của bạn.",
+    title: "7on ARC — Hãy là người đầu tiên sở hữu Sunday",
+    description: "Nhận thông số sơ bộ của 7on ARC — ngôi nhà của Sunday, AI Agent luôn bật.",
   },
   hero: {
     headline: ["Hãy là người đầu tiên", "sở hữu Sunday."],
-    sub: "Một AI riêng tư sống trên chính chiếc máy của bạn, lo liệu mọi việc trong khi bạn sống trọn ngày của mình.",
+    sub: "Một AI riêng tư sống trên 7on ARC, chiếc máy của riêng bạn, lo liệu mọi việc trong khi bạn sống trọn ngày của mình.",
     placeholder: "Email của bạn",
-    cta: "Gửi tôi thông số",
-    note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi máy của bạn sẵn sàng.",
+    cta: "Nhận thông số 7on ARC",
+    note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi 7on ARC của bạn sẵn sàng.",
   },
   form: {
     success: "Bạn đã có tên. Thông số đang được gửi đến hộp thư của bạn.",
@@ -26,7 +26,7 @@ export const vi: Dictionary = {
   },
   day: {
     eyebrow: "Ngày đầu tiên của bạn",
-    headline: "Ngày chiếc máy của bạn đến",
+    headline: "Ngày 7on ARC của bạn đến",
     moments: [
       {
         time: "07:00",
@@ -57,7 +57,7 @@ export const vi: Dictionary = {
   machine: {
     headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
-    cta: "Gửi tôi thông số",
+    cta: "Nhận thông số 7on ARC",
   },
   footer: "Sinh ra để luôn bật.",
 };
