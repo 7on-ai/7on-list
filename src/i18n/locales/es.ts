@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const es: Dictionary = {
   meta: {
     title: "7on ARC — Ten tu Sunday antes que nadie",
-    description: "Recibe la ficha técnica preliminar de 7on ARC, el hogar de Sunday, el agente de IA siempre activo.",
+    description: "7on ARC, IA siempre contigo. Recibe la ficha técnica preliminar del hogar de Sunday, el agente de IA siempre activo.",
     ogLine: "Sunday vive en 7on ARC.",
   },
   hero: {
@@ -56,6 +56,7 @@ export const es: Dictionary = {
     ],
   },
   machine: {
+    tagline: "IA siempre contigo",
     headline: ["Verdaderamente", "tuyo."],
     body: "Sunday te conoce. Nadie más. Tus datos nunca entrenan el modelo de nadie.",
     cta: "Recibe la ficha de 7on ARC",

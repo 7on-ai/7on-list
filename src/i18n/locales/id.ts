@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const id: Dictionary = {
   meta: {
     title: "7on ARC — Jadilah yang pertama memiliki Sunday",
-    description: "Dapatkan spesifikasi awal 7on ARC — rumah bagi Sunday, AI Agent yang selalu aktif.",
+    description: "7on ARC, AI ke mana pun kamu pergi. Dapatkan spesifikasi awal rumah bagi Sunday, AI Agent yang selalu aktif.",
     ogLine: "Sunday tinggal di 7on ARC.",
   },
   hero: {
@@ -56,6 +56,7 @@ export const id: Dictionary = {
     ],
   },
   machine: {
+    tagline: "AI ke mana pun kamu pergi",
     headline: ["Sungguh milikmu."],
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
     cta: "Dapatkan spesifikasi 7on ARC",

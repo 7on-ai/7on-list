@@ -142,8 +142,12 @@ export default function Home() {
       {/* Background matches the photo's own backdrop so the image has no edge */}
       <section data-section="machine" className="relative overflow-hidden bg-[#faf8f6]">
         <div className="fade-up relative z-10 mx-auto max-w-3xl px-6 pt-24 text-center sm:pt-32">
-          {/* Product name — the same in every language */}
-          <p className="mb-4 text-base font-medium text-[#C41D3B] sm:text-lg">7on ARC</p>
+          {/* Product name (the same in every language) and what it is */}
+          <p className="mb-4 text-base font-medium text-[#C41D3B] sm:text-lg">
+            <span className="whitespace-nowrap">7on ARC</span>
+            <span aria-hidden className="mx-2 text-[#C41D3B]/40">·</span>
+            <span className="whitespace-nowrap">{t.machine.tagline}</span>
+          </p>
           <h2 className="t-heading text-[40px] font-medium sm:text-6xl md:text-7xl">
             {t.machine.headline.map((line) => (
               <span key={line} className="block">

@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const zhHans: Dictionary = {
   meta: {
     title: "7on ARC — 率先拥有你的 Sunday",
-    description: "获取 7on ARC 的初步规格——Sunday 的家，一个始终在线的 AI Agent。",
+    description: "7on ARC，随身 AI。获取 Sunday 之家的初步规格——一个始终在线的 AI Agent。",
     ogLine: "Sunday 住在 7on ARC 里。",
   },
   hero: {
@@ -56,6 +56,7 @@ export const zhHans: Dictionary = {
     ],
   },
   machine: {
+    tagline: "随身 AI",
     headline: ["真正属于你。"],
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
     cta: "获取 7on ARC 规格",

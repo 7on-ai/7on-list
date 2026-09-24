@@ -4,7 +4,7 @@ import type { Dictionary } from "../types";
 export const fr: Dictionary = {
   meta: {
     title: "7on ARC — Votre Sunday, avant tout le monde",
-    description: "Recevez la fiche technique préliminaire de 7on ARC, là où vit Sunday, l'agent IA toujours actif.",
+    description: "7on ARC, l'IA partout avec vous. Recevez la fiche technique préliminaire de l'appareil où vit Sunday, l'agent IA toujours actif.",
     ogLine: "Sunday vit sur 7on ARC.",
   },
   hero: {
@@ -57,6 +57,7 @@ export const fr: Dictionary = {
     ],
   },
   machine: {
+    tagline: "L'IA partout avec vous",
     headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
     cta: "Recevoir la fiche 7on ARC",

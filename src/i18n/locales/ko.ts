@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const ko: Dictionary = {
   meta: {
     title: "7on ARC — 가장 먼저, 나만의 Sunday",
-    description: "7on ARC 예비 스펙을 받아보세요. 늘 켜져 있는 AI Agent, Sunday가 사는 기기.",
+    description: "7on ARC, 어디서나 함께하는 AI. 늘 켜져 있는 AI Agent, Sunday가 사는 기기의 예비 스펙을 받아보세요.",
     ogLine: "Sunday는 7on ARC에 삽니다.",
   },
   hero: {
@@ -56,6 +56,7 @@ export const ko: Dictionary = {
     ],
   },
   machine: {
+    tagline: "어디서나 함께하는 AI",
     headline: ["진정한 당신의 것."],
     body: "Sunday는 당신을 알아갑니다. 다른 누구도 아닌. 당신의 데이터는 결코 누구의 모델 학습에도 쓰이지 않습니다.",
     cta: "7on ARC 스펙 받아보기",

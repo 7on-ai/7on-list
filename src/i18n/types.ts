@@ -27,7 +27,13 @@ export type Dictionary = {
   };
   orbit: { headline: string[]; sub: string };
   day: { eyebrow: string; headline: string; moments: Moment[] };
-  machine: { headline: string[]; body: string; cta: string };
+  machine: {
+    /* Follows the product name above the photo: "7on ARC · AI on the go" */
+    tagline: string;
+    headline: string[];
+    body: string;
+    cta: string;
+  };
   prefs: {
     title: string;
     intro: string;

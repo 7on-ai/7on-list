@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const en: Dictionary = {
   meta: {
     title: "7on ARC — Be first to own your Sunday",
-    description: "Get the preliminary specs for 7on ARC, home of Sunday, the always-on AI agent.",
+    description: "7on ARC, AI on the go. Get the preliminary specs for the home of Sunday, the always-on AI agent.",
     ogLine: "Sunday lives on 7on ARC.",
   },
   hero: {
@@ -56,6 +56,7 @@ export const en: Dictionary = {
     ],
   },
   machine: {
+    tagline: "AI on the go",
     headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
     cta: "Get the 7on ARC specs",

@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const vi: Dictionary = {
   meta: {
     title: "7on ARC — Hãy là người đầu tiên sở hữu Sunday",
-    description: "Nhận thông số sơ bộ của 7on ARC — ngôi nhà của Sunday, AI Agent luôn bật.",
+    description: "7on ARC, AI theo bạn mọi nơi. Nhận thông số sơ bộ của nơi Sunday sống — AI Agent luôn bật.",
     ogLine: "Sunday sống trên 7on ARC.",
   },
   hero: {
@@ -56,6 +56,7 @@ export const vi: Dictionary = {
     ],
   },
   machine: {
+    tagline: "AI theo bạn mọi nơi",
     headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
     cta: "Nhận thông số 7on ARC",
