@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useI18n } from "@/i18n/provider";
+import { readAttribution } from "@/lib/attribution";
+import { track } from "@/lib/track";
 
 type FormValues = { email: string };
 
@@ -29,29 +31,35 @@ export function SpecsForm() {
     const parsed = schema.safeParse(data);
     if (!parsed.success) {
       form.setError("email", { type: "manual", message: parsed.error.errors[0]?.message });
+      track("form_error", { reason: "invalid" });
       return;
     }
+    track("cta_click", { location: "hero" });
 
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/specs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...parsed.data, locale }),
+        body: JSON.stringify({ ...parsed.data, locale, attribution: readAttribution() }),
       });
 
       // The API speaks English; the visitor hears their own language.
       if (response.ok) {
         toast.success(t.form.success);
         form.reset();
+        track("spec_requested", { locale });
       } else if (response.status === 400 || response.status === 403) {
         form.setError("email", { type: "server", message: t.form.invalid });
+        track("form_error", { reason: "rejected" });
       } else {
         toast.error(t.form.error);
+        track("form_error", { reason: "server" });
       }
     } catch (error) {
       console.error("Spec request failed:", error);
       toast.error(t.form.error);
+      track("form_error", { reason: "network" });
     } finally {
       setIsSubmitting(false);
     }

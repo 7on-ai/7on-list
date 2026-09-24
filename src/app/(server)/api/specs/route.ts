@@ -15,9 +15,26 @@ const aj = arcjet({
   ],
 });
 
+// Attribution comes from the browser: accept only short strings, never fail on it
+const field = z.string().transform((v) => v.slice(0, 300)).optional().catch(undefined);
+const attributionSchema = z
+  .object({
+    utm_source: field,
+    utm_medium: field,
+    utm_campaign: field,
+    utm_content: field,
+    utm_term: field,
+    ref: field,
+    referrer: field,
+    landing_path: field,
+  })
+  .optional()
+  .catch(undefined);
+
 const requestSchema = z.object({
   email: z.string().trim().toLowerCase().email("Please enter a valid email address format."),
   locale: z.string().optional(),
+  attribution: attributionSchema,
 });
 
 /* A visitor asks for the preliminary specs. Asking again simply sends them
@@ -55,6 +72,7 @@ export async function POST(request: NextRequest) {
       // Vercel's IP geolocation — used later to send at a sensible local hour
       country: request.headers.get("x-vercel-ip-country"),
       timezone: request.headers.get("x-vercel-ip-timezone"),
+      attribution: result.data.attribution ?? {},
     });
 
     // Send after responding, so the button never waits on the mail server.

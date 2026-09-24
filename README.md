@@ -23,14 +23,26 @@ email; the specs arrive in their inbox, in the language they read the page in.
   add it with `unsubscribeHeaders()` from `src/lib/email.ts`.
 - `POST /api/webhooks/resend` records delivery events (Svix-signed) and suppresses
   hard bounces and spam complaints.
+- Every preference change is written to `consent_events` with where it came from
+  and the version of the wording shown (`CONSENT_COPY_VERSION` in `src/lib/db.ts`).
+
+## Attribution and analytics
+
+- The first visit of a session keeps its `utm_*`, `ref`, external referrer and
+  landing path (`src/lib/attribution.ts`); they are saved on the contact when it
+  is created and never overwritten. Tag campaign links, e.g.
+  `?utm_source=instagram&utm_medium=social&utm_campaign=launch`.
+- Vercel Web Analytics (cookieless) counts page views. Custom events —
+  `cta_click`, `section_view`, `spec_requested`, `form_error` (`src/lib/track.ts`) —
+  appear on Vercel Pro. No event carries an email.
 
 The page language follows the visitor's browser (`src/i18n/`). Every visible string
 lives in `src/i18n/locales/<language>.ts`.
 
 ## Database
 
-Table `contacts` — see `db/schema.sql`. The app creates it on first use; you can also
-run that file in the Neon SQL editor.
+Tables `contacts`, `consent_events` and `email_events` — see `db/schema.sql`. The app
+creates them on first use; you can also run that file in the Neon SQL editor.
 
 ## Local setup
 
@@ -44,7 +56,7 @@ Without `RESEND_API_KEY` the email step is skipped and requests are still saved.
 
 ## Tech
 
-Next.js · Neon Postgres · Resend · Arcjet · Tailwind CSS · Motion
+Next.js · Neon Postgres · Resend · Arcjet · Vercel Analytics · Tailwind CSS · Motion
 
 ## License
 

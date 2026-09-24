@@ -7,6 +7,6 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
   const email = verifyPreferenceToken(request.nextUrl.searchParams.get("t"));
   if (!email) return NextResponse.json({ error: "Invalid link" }, { status: 400 });
-  await setPreference(email, "none");
+  await setPreference(email, "none", "one_click");
   return NextResponse.json({ ok: true });
 }

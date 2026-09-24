@@ -35,6 +35,30 @@ function ensureSchema() {
       )`;
     await q`ALTER TABLE contacts ADD COLUMN IF NOT EXISTS bounced_at timestamptz`;
     await q`ALTER TABLE contacts ADD COLUMN IF NOT EXISTS complained_at timestamptz`;
+    // First-touch attribution: set when the contact is created, never overwritten
+    await q`
+      ALTER TABLE contacts
+        ADD COLUMN IF NOT EXISTS utm_source text,
+        ADD COLUMN IF NOT EXISTS utm_medium text,
+        ADD COLUMN IF NOT EXISTS utm_campaign text,
+        ADD COLUMN IF NOT EXISTS utm_content text,
+        ADD COLUMN IF NOT EXISTS utm_term text,
+        ADD COLUMN IF NOT EXISTS ref text,
+        ADD COLUMN IF NOT EXISTS referrer text,
+        ADD COLUMN IF NOT EXISTS landing_path text`;
+    // Every change to what someone agreed to receive — proof of consent
+    await q`
+      CREATE TABLE IF NOT EXISTS consent_events (
+        id            bigserial PRIMARY KEY,
+        email         text NOT NULL,
+        from_pref     text,
+        to_pref       text NOT NULL,
+        source        text NOT NULL,
+        locale        text,
+        copy_version  text NOT NULL,
+        created_at    timestamptz NOT NULL DEFAULT now()
+      )`;
+    await q`CREATE INDEX IF NOT EXISTS consent_events_email_idx ON consent_events (email)`;
     await q`
       CREATE TABLE IF NOT EXISTS email_events (
         id          text PRIMARY KEY,
@@ -52,12 +76,24 @@ function ensureSchema() {
   return ready;
 }
 
+export type Attribution = Partial<
+  Record<
+    "utm_source" | "utm_medium" | "utm_campaign" | "utm_content" | "utm_term" | "ref" | "referrer" | "landing_path",
+    string
+  >
+>;
+
 export type SpecRequest = {
   email: string;
   locale: string;
   country: string | null;
   timezone: string | null;
+  attribution: Attribution;
 };
+
+/* Bump when the wording people agree to changes (email opt-in, preferences
+   page), so each consent record points at the text that was shown. */
+export const CONSENT_COPY_VERSION = "2026-09-specs-v1";
 
 /* Records a spec request. Asking again is allowed — it bumps the count,
    refreshes language/location and lifts an unsubscribe, since asking is an
@@ -65,9 +101,14 @@ export type SpecRequest = {
    (a hard bounce or a spam complaint). */
 export async function recordSpecRequest(r: SpecRequest): Promise<{ suppressed: boolean }> {
   await ensureSchema();
+  const a = r.attribution;
   const rows = await sql()`
-    INSERT INTO contacts (email, locale, country, timezone)
-    VALUES (${r.email}, ${r.locale}, ${r.country}, ${r.timezone})
+    WITH prev AS (SELECT unsubscribed_at FROM contacts WHERE email = ${r.email})
+    INSERT INTO contacts (email, locale, country, timezone,
+      utm_source, utm_medium, utm_campaign, utm_content, utm_term, ref, referrer, landing_path)
+    VALUES (${r.email}, ${r.locale}, ${r.country}, ${r.timezone},
+      ${a.utm_source ?? null}, ${a.utm_medium ?? null}, ${a.utm_campaign ?? null}, ${a.utm_content ?? null},
+      ${a.utm_term ?? null}, ${a.ref ?? null}, ${a.referrer ?? null}, ${a.landing_path ?? null})
     ON CONFLICT (email) DO UPDATE SET
       locale            = EXCLUDED.locale,
       country           = COALESCE(EXCLUDED.country, contacts.country),
@@ -75,8 +116,13 @@ export async function recordSpecRequest(r: SpecRequest): Promise<{ suppressed: b
       request_count     = contacts.request_count + 1,
       last_requested_at = now(),
       unsubscribed_at   = NULL
-    RETURNING bounced_at, complained_at`;
-  const row = rows[0] as { bounced_at: string | null; complained_at: string | null } | undefined;
+    RETURNING bounced_at, complained_at, (SELECT unsubscribed_at FROM prev) AS was_unsubscribed`;
+  const row = rows[0] as
+    | { bounced_at: string | null; complained_at: string | null; was_unsubscribed: string | null }
+    | undefined;
+  if (row?.was_unsubscribed) {
+    await logConsent(r.email, "none", "launch", "spec_request", r.locale);
+  }
   return { suppressed: Boolean(row?.bounced_at || row?.complained_at) };
 }
 
@@ -110,8 +156,33 @@ export function preferenceOf(c: Contact): Preference {
   return c.marketing_consent_at ? "updates" : "launch";
 }
 
-export async function setPreference(email: string, preference: Preference) {
+async function logConsent(
+  email: string,
+  from: Preference | null,
+  to: Preference,
+  source: string,
+  locale: string | null
+) {
+  await sql()`
+    INSERT INTO consent_events (email, from_pref, to_pref, source, locale, copy_version)
+    VALUES (${email}, ${from}, ${to}, ${source}, ${locale}, ${CONSENT_COPY_VERSION})`;
+}
+
+/* Where a preference change came from, for the consent record */
+export type ConsentSource = "preferences_page" | "one_click" | "spam_complaint" | "spec_request";
+
+export async function setPreference(
+  email: string,
+  preference: Preference,
+  source: ConsentSource,
+  locale: string | null = null
+) {
   await ensureSchema();
+  const before = await getContact(email);
+  if (!before) return;
+  const from = preferenceOf(before);
+  if (from === preference) return;
+
   if (preference === "updates") {
     await sql()`
       UPDATE contacts SET marketing_consent_at = COALESCE(marketing_consent_at, now()), unsubscribed_at = NULL
@@ -123,6 +194,7 @@ export async function setPreference(email: string, preference: Preference) {
       UPDATE contacts SET marketing_consent_at = NULL, unsubscribed_at = COALESCE(unsubscribed_at, now())
       WHERE email = ${email}`;
   }
+  await logConsent(email, from, preference, source, locale ?? before.locale);
 }
 
 /* Delivery events from Resend's webhook. Idempotent on the event id, since
@@ -145,9 +217,7 @@ export async function recordEmailEvent(e: {
   if (e.type === "email.bounced") {
     await sql()`UPDATE contacts SET bounced_at = COALESCE(bounced_at, now()) WHERE email = ${e.email}`;
   } else if (e.type === "email.complained") {
-    await sql()`
-      UPDATE contacts SET complained_at = COALESCE(complained_at, now()),
-        unsubscribed_at = COALESCE(unsubscribed_at, now()), marketing_consent_at = NULL
-      WHERE email = ${e.email}`;
+    await setPreference(e.email, "none", "spam_complaint");
+    await sql()`UPDATE contacts SET complained_at = COALESCE(complained_at, now()) WHERE email = ${e.email}`;
   }
 }

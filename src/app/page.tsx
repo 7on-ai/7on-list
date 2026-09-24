@@ -11,6 +11,9 @@ import SplitText from "@/components/ui/split-text";
 import { SpecsForm } from "@/components/specs-form";
 import type { Locale } from "@/i18n/dictionaries";
 import { useI18n } from "@/i18n/provider";
+import { captureAttribution } from "@/lib/attribution";
+import { track } from "@/lib/track";
+import { useEffect } from "react";
 
 /* Logo PNG used as a mask so it renders in brand red, like 7on.ai */
 function Logo({ className = "" }: { className?: string }) {
@@ -48,8 +51,31 @@ function focusSpecsForm() {
   setTimeout(() => form?.querySelector("input")?.focus({ preventScroll: true }), 500);
 }
 
+/* Where visitors came from, and how far down the page they get */
+function usePageInsights() {
+  useEffect(() => {
+    captureAttribution();
+    const seen = new Set<string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const section = (e.target as HTMLElement).dataset.section as "orbit" | "day" | "machine";
+          if (e.isIntersecting && !seen.has(section)) {
+            seen.add(section);
+            track("section_view", { section });
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    document.querySelectorAll<HTMLElement>("[data-section]").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export default function Home() {
   const { t, locale } = useI18n();
+  usePageInsights();
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-white text-[#111] selection:bg-[#C41D3B] selection:text-white">
@@ -85,7 +111,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative z-0 mt-[calc(var(--orbit)*-0.1)] sm:mt-[calc(var(--orbit)*-0.22)]">
+        <div data-section="orbit" className="relative z-0 mt-[calc(var(--orbit)*-0.1)] sm:mt-[calc(var(--orbit)*-0.22)]">
           {/* Pink bloom that the orb condenses from */}
           <div className="breathe pointer-events-none absolute left-1/2 top-[calc(var(--orbit)*0.5)] h-[calc(var(--orbit)*0.8)] w-[calc(var(--orbit)*0.8)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(196,29,59,0.16),rgba(196,29,59,0.05)_55%,transparent)]" />
           <Orbit />
@@ -93,11 +119,13 @@ export default function Home() {
       </section>
 
       {/* ── Your first day ──────────────────────────────────────── */}
-      <DayWithSunday />
+      <div data-section="day">
+        <DayWithSunday />
+      </div>
 
       {/* ── Truly yours. — the product reveal ─────────────────── */}
       {/* Background matches the photo's own backdrop so the image has no edge */}
-      <section className="relative overflow-hidden bg-[#faf8f6]">
+      <section data-section="machine" className="relative overflow-hidden bg-[#faf8f6]">
         <div className="fade-up relative z-10 mx-auto max-w-3xl px-6 pt-24 text-center sm:pt-32">
           {/* Product name — the same in every language */}
           <p className="mb-4 text-base font-medium text-[#C41D3B] sm:text-lg">7on ARC</p>
@@ -113,7 +141,10 @@ export default function Home() {
           </p>
           <button
             type="button"
-            onClick={focusSpecsForm}
+            onClick={() => {
+              track("cta_click", { location: "machine" });
+              focusSpecsForm();
+            }}
             className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
           >
             {t.machine.cta}

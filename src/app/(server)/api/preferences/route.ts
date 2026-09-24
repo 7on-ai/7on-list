@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   if (!email || !CHOICES.includes(choice) || !(await getContact(email))) {
     return NextResponse.redirect(back, 303);
   }
-  await setPreference(email, choice);
+  await setPreference(email, choice, "preferences_page");
   back.searchParams.set("saved", "1");
   return NextResponse.redirect(back, 303);
 }
