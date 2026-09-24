@@ -57,7 +57,7 @@ export const vi: Dictionary = {
     ],
   },
   machine: {
-    headline: ["Của bạn.", "Chỉ của bạn."],
+    headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
     cta: "Gửi tôi thông số",
   },

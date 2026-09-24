@@ -57,7 +57,7 @@ export const ko: Dictionary = {
     ],
   },
   machine: {
-    headline: ["당신의 것.", "오직 당신만의."],
+    headline: ["진정한 당신의 것."],
     body: "Sunday는 당신을 알아갑니다. 다른 누구도 아닌. 당신의 데이터는 결코 누구의 모델 학습에도 쓰이지 않습니다.",
     cta: "스펙 받아보기",
   },

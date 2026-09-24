@@ -98,11 +98,11 @@ export default function Home() {
       {/* ── Your first day ──────────────────────────────────────── */}
       <DayWithSunday />
 
-      {/* ── Yours. Only yours. ─────────────────────────────────── */}
+      {/* ── Truly yours. ─────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[#f6f6f7]">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 md:grid-cols-2">
           <div className="fade-up">
-            <h2 className="t-heading text-5xl font-medium sm:text-6xl">
+            <h2 className="t-heading text-[40px] font-medium sm:text-6xl">
               {t.machine.headline.map((line) => (
                 <span key={line} className="block">
                   {line}

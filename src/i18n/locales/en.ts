@@ -58,7 +58,7 @@ export const en: Dictionary = {
     ],
   },
   machine: {
-    headline: ["Yours.", "Only yours."],
+    headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
     cta: "Send me the specs",
   },

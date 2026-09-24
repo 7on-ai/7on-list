@@ -57,7 +57,7 @@ export const id: Dictionary = {
     ],
   },
   machine: {
-    headline: ["Milikmu.", "Hanya milikmu."],
+    headline: ["Sungguh milikmu."],
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
     cta: "Kirimkan spesifikasinya",
   },

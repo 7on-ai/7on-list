@@ -58,7 +58,7 @@ export const fr: Dictionary = {
     ],
   },
   machine: {
-    headline: ["À vous.", "Rien qu'à vous."],
+    headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
     cta: "Recevoir la fiche technique",
   },

@@ -57,7 +57,7 @@ export const es: Dictionary = {
     ],
   },
   machine: {
-    headline: ["Tuyo.", "Solo tuyo."],
+    headline: ["Verdaderamente", "tuyo."],
     body: "Sunday te conoce. Nadie más. Tus datos nunca entrenan el modelo de nadie.",
     cta: "Envíame la ficha técnica",
   },

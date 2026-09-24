@@ -57,7 +57,7 @@ export const zhHant: Dictionary = {
     ],
   },
   machine: {
-    headline: ["你的。", "只屬於你。"],
+    headline: ["真正屬於你。"],
     body: "Sunday 了解你，別人不會。你的資料絕不會用來訓練任何人的模型。",
     cta: "把規格寄給我",
   },
