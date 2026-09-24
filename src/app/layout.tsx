@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "7on.ai",
-  description: "Always on, never off",
+  title: "7on — Join the waitlist",
+  description:
+    "Your Sovereign AI. Always-On Agent. It doesn't just answer. It acts. Claim your machine.",
 };
 
 export default function RootLayout({
@@ -31,8 +32,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          forcedTheme="light"
           disableTransitionOnChange
         >
           <Toaster position="bottom-center" />

@@ -15,7 +15,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z
@@ -87,7 +87,7 @@ export function WaitlistForm() {
 
       toast.success(
         (responseBody as { message?: string })?.message ||
-          "Successfully joined the waitlist!"
+          "You're on the list. We'll be in touch."
       );
       form.reset();
     } catch (error) {
@@ -105,10 +105,10 @@ export function WaitlistForm() {
     <Form {...form}>
       <motion.form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative flex w-full max-w-md flex-col gap-3 sm:flex-row"
+        className="relative flex w-full max-w-md flex-col gap-2 sm:flex-row"
         initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 2, type: "spring" }}
+        transition={{ duration: 1.2, delay: 0.7, type: "spring", bounce: 0 }}
       >
         <FormField
           control={form.control}
@@ -117,23 +117,23 @@ export function WaitlistForm() {
             <FormItem className="flex-1">
               <FormControl>
                 <Input
-                  placeholder="Enter your email"
+                  placeholder="you@email.com"
                   type="email"
                   autoComplete="email"
-                  className="h-11 rounded-md"
+                  className="h-11 rounded-lg border-transparent bg-transparent px-4 text-base text-[#111] shadow-none placeholder:text-zinc-400 focus-visible:border-transparent focus-visible:ring-0 md:text-sm"
                   aria-label="Email address for waitlist"
                   aria-invalid={!!form.formState.errors.email}
                   {...field}
                 />
               </FormControl>
-              <FormMessage className="absolute pt-1 text-xs text-red-600 dark:text-red-500" />
+              <FormMessage className="absolute -bottom-8 left-2 text-xs text-[#C41D3B]" />
             </FormItem>
           )}
         />
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="h-11 shrink-0 rounded-md px-6 font-medium"
+          className="group h-11 shrink-0 rounded-lg bg-[#111] px-5 font-medium text-white hover:bg-black"
           aria-live="polite"
         >
           {isSubmitting ? (
@@ -142,7 +142,10 @@ export function WaitlistForm() {
               Joining...
             </>
           ) : (
-            "Join Us"
+            <>
+              Claim your machine
+              <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+            </>
           )}
         </Button>
       </motion.form>

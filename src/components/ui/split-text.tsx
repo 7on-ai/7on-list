@@ -11,6 +11,8 @@ function Stylesheet() {
           will-change: transform, opacity, filter;
           display: inline-block;
       }
+      /* Lines as blocks so wrapped lines don't lose their word gap */
+      .split-line { display: block !important; }
     `}</style>
   );
 }

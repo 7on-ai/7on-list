@@ -53,12 +53,14 @@ export function Counter() {
     <motion.p
       initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      transition={{ duration: 2, type: "spring" }}
-      className="text-sm text-muted-foreground"
+      transition={{ duration: 1.2, delay: 0.9, type: "spring", bounce: 0 }}
+      className="text-sm text-zinc-500"
       aria-live="polite"
     >
-      Join <span className="font-bold">{count.toLocaleString()}</span>+ others
-      who signed up
+      <span className="font-semibold text-[#111] tabular-nums">
+        {count.toLocaleString()}+
+      </span>{" "}
+      people are already waiting for theirs
     </motion.p>
   );
 }
