@@ -14,7 +14,7 @@ export const vi: Dictionary = {
     counter: "{count} người đang chờ ngày ra mắt. Tham gia cùng họ.",
   },
   form: {
-    success: "Bạn đã có tên. Chúng tôi sẽ gửi thông số vào hộp thư của bạn.",
+    success: "Bạn đã có tên. Thông số đang được gửi đến hộp thư của bạn.",
     duplicate: "Bạn đã có trong danh sách rồi. Chúng tôi chưa quên bạn đâu.",
     invalid: "Email này có vẻ chưa đúng.",
     required: "Hãy nhập email của bạn.",

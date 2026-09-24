@@ -15,7 +15,7 @@ export const en: Dictionary = {
     counter: "{count} people ahead of the launch. Join them.",
   },
   form: {
-    success: "You're in. We'll send the specs to your inbox.",
+    success: "You're in. The specs are on their way.",
     duplicate: "You're already on the list. We haven't forgotten you.",
     invalid: "That email doesn't look right.",
     required: "Enter your email.",

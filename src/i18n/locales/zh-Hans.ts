@@ -14,7 +14,7 @@ export const zhHans: Dictionary = {
     counter: "已有 {count} 人在等待发布。加入他们。",
   },
   form: {
-    success: "已加入。我们会把规格发到你的邮箱。",
+    success: "已加入。规格正在发往你的邮箱。",
     duplicate: "你已在名单中，我们没有忘记你。",
     invalid: "这个邮箱地址似乎不正确。",
     required: "请输入你的邮箱。",

@@ -15,7 +15,7 @@ export const de: Dictionary = {
     counter: "{count} Menschen warten schon auf den Launch. Sei dabei.",
   },
   form: {
-    success: "Du bist dabei. Wir schicken dir das Datenblatt per E-Mail.",
+    success: "Du bist dabei. Das Datenblatt ist unterwegs.",
     duplicate: "Du stehst schon auf der Liste. Wir haben dich nicht vergessen.",
     invalid: "Diese E-Mail sieht nicht richtig aus.",
     required: "Gib deine E-Mail ein.",

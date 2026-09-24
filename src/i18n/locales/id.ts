@@ -14,7 +14,7 @@ export const id: Dictionary = {
     counter: "{count} orang sudah menunggu peluncuran. Bergabunglah.",
   },
   form: {
-    success: "Kamu sudah terdaftar. Spesifikasinya akan kami kirim ke email kamu.",
+    success: "Kamu sudah terdaftar. Spesifikasinya sedang dikirim ke email kamu.",
     duplicate: "Kamu sudah ada di daftar. Kami tidak lupa.",
     invalid: "Email itu sepertinya tidak benar.",
     required: "Masukkan email kamu.",

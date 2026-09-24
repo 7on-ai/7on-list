@@ -45,7 +45,10 @@ To get this running on your machine:
     UPSTASH_REDIS_REST_TOKEN="YOUR_UPSTASH_REDIS_TOKEN"
 
     # Get from your Arcjet dashboard
-    ARCJET_SITE_KEY="YOUR_ARCJET_SITE_KEY"
+    ARCJET_KEY="YOUR_ARCJET_KEY"
+
+    # Get from your Resend dashboard (sends the specs email)
+    RESEND_API_KEY="YOUR_RESEND_API_KEY"
     ```
 
 4.  **Run the dev server:**
@@ -62,8 +65,18 @@ To get this running on your machine:
 2.  The submission hits an API route (e.g., `/api/waitlist/`).
 3.  This API route first passes the email to Arcjet for validation.
 4.  If Arcjet approves, the email is added to a list in Redis using the Upstash SDK.
-5.  A separate API route (e.g., `/api/waitlist/count`) reads the length of the Redis list to get the current signup count.
-6.  The frontend fetches from the count endpoint and displays the number.
+5.  Right after responding, the route emails the preliminary specs through Resend, in the language the visitor saw (`src/emails/specs/`). Without `RESEND_API_KEY` the email is skipped and signups still work.
+6.  A separate API route (e.g., `/api/waitlist/count`) reads the length of the Redis list to get the current signup count.
+7.  The frontend fetches from the count endpoint and displays the number.
+
+### Redis keys
+
+| Key | Type | Holds |
+|---|---|---|
+| `waitlist` | set | every email on the list |
+| `waitlist:timestamps` | hash | email → when they joined |
+| `waitlist:locale` | hash | email → language they signed up in |
+| `waitlist:specs_sent` | hash | email → when the specs email went out |
 
 ## Contributing
 

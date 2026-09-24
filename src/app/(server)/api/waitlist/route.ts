@@ -1,6 +1,8 @@
-import { addToWaitlist } from "@/lib/redis";
+import { isLocale, matchLocale } from "@/i18n/dictionaries";
+import { sendSpecsEmail } from "@/lib/email";
+import { addToWaitlist, markSpecsSent } from "@/lib/redis";
 import arcjet, { validateEmail } from "@arcjet/next";
-import { type NextRequest, NextResponse } from "next/server";
+import { after, type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const aj = arcjet({
@@ -14,7 +16,8 @@ const aj = arcjet({
 });
 
 const emailSchema = z.object({
-  email: z.string().email("Please enter a valid email address format."),
+  email: z.string().trim().toLowerCase().email("Please enter a valid email address format."),
+  locale: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -44,6 +47,10 @@ export async function POST(request: NextRequest) {
     }
 
     const { email } = result.data;
+    // The page's language, so the specs arrive in the words the visitor read
+    const locale = isLocale(result.data.locale)
+      ? result.data.locale
+      : matchLocale(request.headers.get("accept-language"));
     const decision = await aj.protect(request, { email });
 
     if (decision.isDenied()) {
@@ -54,14 +61,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const added = await addToWaitlist(email);
+    const status = await addToWaitlist(email, locale);
 
-    if (!added) {
+    if (status === "exists") {
       return NextResponse.json(
         { success: false, message: "Email already registered" },
         { status: 409 }
       );
     }
+
+    // Send after responding, so the button never waits on the mail server
+    const origin = request.nextUrl.origin;
+    after(async () => {
+      if (await sendSpecsEmail(email, locale, origin)) {
+        await markSpecsSent(email).catch((e) => console.error("markSpecsSent failed:", e));
+      }
+    });
 
     return NextResponse.json(
       { success: true, message: "Successfully signed up to the waitlist!" },

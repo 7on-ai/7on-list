@@ -14,7 +14,7 @@ export const zhHant: Dictionary = {
     counter: "已有 {count} 人在等待上市。加入他們。",
   },
   form: {
-    success: "已加入。我們會把規格寄到你的信箱。",
+    success: "已加入。規格正寄往你的信箱。",
     duplicate: "你已在名單上，我們沒有忘記你。",
     invalid: "這個電子郵件看起來不太對。",
     required: "請輸入你的電子郵件。",

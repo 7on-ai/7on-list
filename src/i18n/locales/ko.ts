@@ -14,7 +14,7 @@ export const ko: Dictionary = {
     counter: "{count}명이 출시를 기다리고 있습니다. 함께하세요.",
   },
   form: {
-    success: "등록되었습니다. 스펙을 이메일로 보내드릴게요.",
+    success: "등록되었습니다. 스펙이 곧 도착합니다.",
     duplicate: "이미 명단에 있어요. 잊지 않았습니다.",
     invalid: "이메일 주소가 올바르지 않은 것 같아요.",
     required: "이메일 주소를 입력해 주세요.",

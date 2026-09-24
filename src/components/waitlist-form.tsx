@@ -15,7 +15,7 @@ import { useI18n } from "@/i18n/provider";
 type FormValues = { email: string };
 
 export function WaitlistForm() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormValues>({ defaultValues: { email: "" } });
@@ -37,7 +37,7 @@ export function WaitlistForm() {
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
+        body: JSON.stringify({ ...parsed.data, locale }),
       });
 
       // The API speaks English; the visitor hears their own language.

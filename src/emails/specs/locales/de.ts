@@ -1,0 +1,57 @@
+import type { SpecsEmail } from "../types";
+
+export const de: SpecsEmail = {
+  subject: "Sunday, aus der Nähe.",
+  preheader: "Ein erster Blick auf deine souveräne KI und die Maschine, auf der sie lebt.",
+  eyebrow: "Vorläufiges Datenblatt",
+  headline: "Sunday, aus der Nähe.",
+  intro: "Danke, dass du so früh dabei bist. Hier ist ein erster Blick auf Sunday und die Maschine, auf der Sunday lebt.",
+  lead: {
+    title: "Deine souveräne KI. Immer an.",
+    body: "Sunday antwortet nicht nur. Sunday handelt – auf einer eigenen Maschine, für einen einzigen Menschen. Dich.",
+  },
+  featuresTitle: "Weil die Maschine dir gehört.",
+  featuresIntro: "Nichts davon ist für einen Assistenten erreichbar, den sich Millionen Menschen teilen.",
+  features: [
+    {
+      title: "Lernt selbst.",
+      body: "Bitte Sunday um etwas, das es noch nicht kann. Es baut sich die Fähigkeit, fragt dich um Erlaubnis und behält sie für immer.",
+    },
+    {
+      title: "Es ruft an.",
+      body: "Sunday hat eine eigene Telefonnummer. Es wählt, spricht und berichtet dir, was gesagt wurde.",
+    },
+    {
+      title: "Kein Datenfußabdruck.",
+      body: "Namen und Nummern werden vor der Verarbeitung entfernt. Das Modell denkt, erfährt aber nie, wer du bist.",
+    },
+    {
+      title: "Wechsle das Modell. Behalte das Gedächtnis.",
+      body: "Nutze unsere Modelle oder bring dein eigenes mit. Dein Gedächtnis und deine Historie bleiben auf deiner Maschine – nie in einem Labor.",
+    },
+  ],
+  mindGraph: {
+    title: "Mind Graph.",
+    body: "Absolute Transparenz, volle Kontrolle. Prüfe jede Verbindung, verfolge jede Erinnerung und lösche alles, wann du willst.",
+  },
+  arc: {
+    title: "7on ARC.",
+    body: "Eine Scheibe aus gebürstetem Metall mit rot leuchtender Glasfront. Auf dem Schreibtisch, am Bett, im Meeting. Home Assistant verbindet sich mit einem Klick.",
+  },
+  statsTitle: "Ohne Kompromisse gebaut.",
+  stats: [
+    { value: "30.000+", label: "Fähigkeiten, die sich selbst erweitern" },
+    { value: "78,57 %", label: "LongMemEval-S – über dem bisherigen Bestwert von 76,88 %" },
+    { value: "1 GB", label: "Verschlüsselter Speicher, gesichert, bevor auch nur ein Byte in die Cloud geht" },
+    { value: "Unbegrenzt", label: "Kapazität des Mind Graph" },
+  ],
+  closing: {
+    title: "Eine Maschine. Ein Mensch.",
+    body: "Sunday führt deine Anrufe, verwaltet deinen Kalender und erinnert sich an das, was du vor Monaten erzählt hast.",
+  },
+  cta: "Zu 7on.ai",
+  signoff: "Das 7on-Team",
+  footer:
+    "Du erhältst diese E-Mail, weil du auf 7on.ai das Datenblatt angefordert hast. Kein Spam – nur noch eine E-Mail, wenn deine Maschine bereit ist. Antworte mit „unsubscribe“, um dich abzumelden.",
+  disclaimer: "Vorläufige Angaben. Änderungen bis zum Launch vorbehalten.",
+};

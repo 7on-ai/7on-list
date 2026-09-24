@@ -14,7 +14,7 @@ export const ja: Dictionary = {
     counter: "{count} 人がすでに発売を待っています。あなたも、その一人に。",
   },
   form: {
-    success: "登録しました。スペックをメールでお送りします。",
+    success: "登録しました。スペックがまもなく届きます。",
     duplicate: "すでに登録されています。忘れていませんよ。",
     invalid: "メールアドレスが正しくないようです。",
     required: "メールアドレスを入力してください。",
