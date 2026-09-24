@@ -33,7 +33,7 @@ export type Dictionary = {
   };
   orbit: { headline: string[]; sub: string };
   day: { eyebrow: string; headline: string; moments: Moment[] };
-  machine: { headline: string[]; body: string; points: string[]; cta: string };
+  machine: { headline: string[]; body: string; cta: string };
   footer: string;
 };
 
@@ -96,9 +96,8 @@ const en: Dictionary = {
     ],
   },
   machine: {
-    headline: ["Yours.", "Not rented."],
-    body: "Your AI runs on hardware you own. Your data never trains anyone else's model, and never leaves without your say.",
-    points: ["On-device memory", "No shared cloud", "Always on"],
+    headline: ["Yours.", "Only yours."],
+    body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
     cta: "Send me the specs",
   },
   footer: "Built to stay on.",
@@ -163,9 +162,8 @@ const th: Dictionary = {
     ],
   },
   machine: {
-    headline: ["ของคุณ", "ไม่ใช่ของเช่า"],
-    body: "AI ของคุณทำงาน\u200Bบนฮาร์ดแวร์\u200Bที่คุณเป็นเจ้าของ ข้อมูลของคุณ\u200Bจะไม่ถูกใช้ฝึกโมเดลของใคร และไม่ออกไปไหน\u200Bหากคุณไม่อนุญาต",
-    points: ["หน่วยความจำในเครื่อง", "ไม่แชร์คลาวด์กับใคร", "ทำงานตลอดเวลา"],
+    headline: ["ของคุณ", "ของคุณคนเดียว"],
+    body: "Sunday เรียนรู้ตัวคุณ ไม่มีใครอื่นได้รู้ ข้อมูลของคุณ\u200Bจะไม่ถูกใช้ฝึกโมเดลของใคร",
     cta: "ส่งสเปกให้ฉัน",
   },
   footer: "สร้างมาเพื่อไม่หยุดทำงาน",

@@ -110,7 +110,7 @@ export default function Home() {
       {/* ── Your first day ──────────────────────────────────────── */}
       <DayWithSunday />
 
-      {/* ── Yours. Not rented. ─────────────────────────────────── */}
+      {/* ── Yours. Only yours. ─────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[#f6f6f7]">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 md:grid-cols-2">
           <div className="fade-up">
@@ -124,14 +124,6 @@ export default function Home() {
             <p className="mt-6 max-w-md text-lg leading-relaxed text-zinc-700 sm:text-xl">
               <Phrases text={t.machine.body} />
             </p>
-            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-600">
-              {t.machine.points.map((point) => (
-                <li key={point} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#C41D3B]" />
-                  {point}
-                </li>
-              ))}
-            </ul>
             <button
               type="button"
               onClick={focusWaitlist}
