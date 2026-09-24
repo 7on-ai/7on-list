@@ -1,10 +1,10 @@
 import type { SpecsEmail } from "../types";
 
 export const de: SpecsEmail = {
-  subject: "7on ARC für unterwegs",
+  subject: "7on ARC, KI für unterwegs",
   preheader: "Ein erster Blick auf 7on ARC und Sunday, die KI, die darauf lebt.",
   eyebrow: "Vorläufiges Datenblatt",
-  headline: "7on ARC für unterwegs.",
+  headline: "7on ARC,\nKI für unterwegs.",
   intro: "Danke, dass du so früh dabei bist. Hier ist ein erster Blick auf 7on ARC – und auf Sunday, die KI, die darauf lebt.",
   lead: {
     title: "Deine souveräne KI. Immer an.",

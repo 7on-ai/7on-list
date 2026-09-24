@@ -1,10 +1,10 @@
 import type { SpecsEmail } from "../types";
 
 export const en: SpecsEmail = {
-  subject: "7on ARC on the go",
+  subject: "7on ARC, AI on the go",
   preheader: "A first look at 7on ARC and Sunday, the AI that lives on it.",
   eyebrow: "Preliminary specs",
-  headline: "7on ARC on the go.",
+  headline: "7on ARC,\nAI on the go.",
   intro: "Thank you for being early. Here is a first look at 7on ARC, and Sunday, the AI that lives on it.",
   lead: {
     title: "Your Sovereign AI. Always on.",

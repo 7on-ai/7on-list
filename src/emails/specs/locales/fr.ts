@@ -2,10 +2,10 @@ import type { SpecsEmail } from "../types";
 
 /* French typography: non-breaking spaces ( ) before : ; ! ? % and inside numbers */
 export const fr: SpecsEmail = {
-  subject: "7on ARC, partout avec vous",
+  subject: "7on ARC, l'IA partout avec vous",
   preheader: "Un premier regard sur 7on ARC et sur Sunday, l'IA qui y vit.",
   eyebrow: "Fiche technique préliminaire",
-  headline: "7on ARC, partout avec vous.",
+  headline: "7on ARC,\nl'IA partout avec vous.",
   intro: "Merci d'être parmi les premiers. Voici un premier regard sur 7on ARC, et sur Sunday, l'IA qui y vit.",
   lead: {
     title: "Votre IA souveraine. Toujours active.",

@@ -1,10 +1,10 @@
 import type { SpecsEmail } from "../types";
 
 export const zhHant: SpecsEmail = {
-  subject: "7on ARC，隨身相伴",
+  subject: "7on ARC，隨身 AI",
   preheader: "初識 7on ARC，以及住在裡面的 AI——Sunday。",
   eyebrow: "初步規格",
-  headline: "7on ARC，隨身相伴。",
+  headline: "7on ARC，\n隨身 AI。",
   intro: "感謝你搶先加入。以下是 7on ARC，以及住在其中的 AI——Sunday 的初步介紹。",
   lead: {
     title: "你的主權 AI。始終在線。",

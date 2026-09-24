@@ -1,10 +1,10 @@
 import type { SpecsEmail } from "../types";
 
 export const vi: SpecsEmail = {
-  subject: "7on ARC, theo bạn mọi nơi",
+  subject: "7on ARC, AI theo bạn mọi nơi",
   preheader: "Cái nhìn đầu tiên về 7on ARC và Sunday, AI sống bên trong.",
   eyebrow: "Thông số sơ bộ",
-  headline: "7on ARC, theo bạn mọi nơi.",
+  headline: "7on ARC,\nAI theo bạn mọi nơi.",
   intro: "Cảm ơn bạn đã đến sớm. Đây là cái nhìn đầu tiên về 7on ARC, và Sunday, AI sống bên trong.",
   lead: {
     title: "AI của riêng bạn. Luôn bật.",
