@@ -40,8 +40,15 @@ async function resolveLocale(): Promise<Locale> {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { title, description } = DICTIONARIES[await resolveLocale()].meta;
-  return { title, description, openGraph: { title, description }, twitter: { title, description } };
+  const locale = await resolveLocale();
+  const { title, description } = DICTIONARIES[locale].meta;
+  return {
+    title,
+    description,
+    openGraph: { title, description, type: "website", siteName: "7on", locale },
+    // Large card so shared links show the full 1200×630 image
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function RootLayout({
