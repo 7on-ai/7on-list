@@ -51,6 +51,11 @@ export const id: SpecsEmail = {
   },
   cta: "Kunjungi 7on.ai",
   signoff: "Tim 7on",
+  place: {
+    title: "Posisimu di antrean",
+    body: "Kamu di posisi #{position}. Setiap teman yang mendapatkan spesifikasi lewat tautanmu akan memajukan antreanmu.",
+    cta: "Dapatkan tautan undanganmu",
+  },
   updates: {
     title: "Mau tahu lebih banyak?",
     body: "Sesekali, kami akan berbagi kabar terbaru tentang Sunday dan 7on ARC. Hanya jika kamu mau.",

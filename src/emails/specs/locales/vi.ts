@@ -51,6 +51,11 @@ export const vi: SpecsEmail = {
   },
   cta: "Truy cập 7on.ai",
   signoff: "Đội ngũ 7on",
+  place: {
+    title: "Vị trí của bạn trong hàng chờ",
+    body: "Bạn đang ở vị trí #{position}. Mỗi người bạn nhận thông số qua liên kết của bạn sẽ đưa bạn lên trước.",
+    cta: "Lấy liên kết mời",
+  },
   updates: {
     title: "Muốn biết thêm?",
     body: "Thỉnh thoảng, chúng tôi sẽ chia sẻ điều mới về Sunday và 7on ARC. Chỉ khi bạn muốn.",

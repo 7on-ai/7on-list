@@ -53,6 +53,52 @@ CREATE TABLE IF NOT EXISTS email_events (
 );
 CREATE INDEX IF NOT EXISTS email_events_email_idx ON email_events (email);
 
+CREATE INDEX IF NOT EXISTS email_events_message_idx ON email_events (message_id);
+
+-- Referrals: each contact's invite code, who invited them, and when their first
+-- email was delivered (a referral counts only from then). email_canonical folds
+-- Gmail dots and +tags, so one inbox can't pose as several friends.
+ALTER TABLE contacts
+  ADD COLUMN IF NOT EXISTS referral_code   text,
+  ADD COLUMN IF NOT EXISTS referred_by     text,          -- inviter's referral_code
+  ADD COLUMN IF NOT EXISTS email_canonical text,
+  ADD COLUMN IF NOT EXISTS delivered_at    timestamptz;
+CREATE UNIQUE INDEX IF NOT EXISTS contacts_referral_code_idx ON contacts (referral_code);
+CREATE INDEX IF NOT EXISTS contacts_referred_by_idx ON contacts (referred_by);
+CREATE INDEX IF NOT EXISTS contacts_email_canonical_idx ON contacts (email_canonical);
+
+-- Campaigns: drafted by a person or Sunday, approved by a person, sent in waves.
+-- Approval is valid only while approved_hash = content_hash.
+CREATE TABLE IF NOT EXISTS campaigns (
+  id             text PRIMARY KEY,               -- also the utm_campaign tag
+  name           text NOT NULL,
+  kind           text NOT NULL,                  -- updates | launch (launch: once, ever)
+  content        jsonb NOT NULL,                 -- per language: subject, preheader, heading, body, cta
+  content_hash   text NOT NULL,
+  created_by     text NOT NULL,                  -- admin | sunday
+  created_at     timestamptz NOT NULL DEFAULT now(),
+  updated_at     timestamptz NOT NULL DEFAULT now(),
+  approved_hash  text,
+  approved_at    timestamptz
+);
+
+-- One row per person per campaign or flow step (flow:referral:3, …)
+CREATE TABLE IF NOT EXISTS sends (
+  campaign_id    text NOT NULL,
+  email          text NOT NULL,
+  status         text NOT NULL,                  -- pending | sent | failed
+  resend_id      text,                           -- joins email_events.message_id
+  error          text,
+  scheduled_for  timestamptz,                    -- local-time delivery
+  created_at     timestamptz NOT NULL DEFAULT now(),
+  sent_at        timestamptz,
+  PRIMARY KEY (campaign_id, email)
+);
+CREATE INDEX IF NOT EXISTS sends_resend_idx ON sends (resend_id);
+
+-- The line (src/lib/referrals.ts): ordered by first_requested_at, minus 7 days
+-- per counted friend; people who turned email off, bounced or complained are out.
+
 -- Who can receive what:
 --   campaigns (news):  marketing_consent_at IS NOT NULL AND unsubscribed_at IS NULL
 --                      AND bounced_at IS NULL AND complained_at IS NULL

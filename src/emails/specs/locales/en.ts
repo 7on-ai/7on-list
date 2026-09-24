@@ -51,6 +51,11 @@ export const en: SpecsEmail = {
   },
   cta: "Visit 7on.ai",
   signoff: "The 7on team",
+  place: {
+    title: "Your place in line",
+    body: "You're #{position}. Every friend who gets the specs through your link moves you up.",
+    cta: "Get your invite link",
+  },
   updates: {
     title: "Want to hear more?",
     body: "Now and then, we'll share what's new with Sunday and 7on ARC. Only if you'd like.",

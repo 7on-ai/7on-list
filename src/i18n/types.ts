@@ -34,6 +34,23 @@ export type Dictionary = {
     invalid: string;
     back: string;
   };
+  /* Invite link after asking for the specs, and the place-in-line page */
+  invite: {
+    title: string;
+    body: string;
+    copy: string;
+    copied: string;
+    share: string;
+    /* Text shared along with the link */
+    shareText: string;
+    pageTitle: string;
+    place: string;
+    friends: string;
+    how: string;
+    /* Shown when the address has turned off all email */
+    out: string;
+    manage: string;
+  };
   footer: string;
 };
 

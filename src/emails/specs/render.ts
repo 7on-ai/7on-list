@@ -158,6 +158,16 @@ function html(c: SpecsEmail, locale: Locale, logoUrl: string, links?: SpecsLinks
   </td></tr>
 
   ${
+    links?.invite && links.position
+      ? block(
+          `${h(c.place.title, 18, "margin-bottom:6px;")}${p(c.place.body.replace("{position}", String(links.position)), "font-size:15px;")}
+    <p style="margin:12px 0 0;font-family:${FONT};font-size:15px;font-weight:600;"><a href="${esc(links.invite)}" style="color:${RED};text-decoration:none;">${esc(c.place.cta)} &rarr;</a></p>`,
+          "0 40px 36px"
+        )
+      : ""
+  }
+
+  ${
     links
       ? block(
           `${h(c.updates.title, 18, "margin-bottom:6px;")}${p(c.updates.body, "font-size:15px;")}
@@ -213,6 +223,9 @@ function text(c: SpecsEmail, links?: SpecsLinks) {
     "",
     `${c.cta}: ${SITE}`,
     "",
+    ...(links?.invite && links.position
+      ? [c.place.title, c.place.body.replace("{position}", String(links.position)), `${c.place.cta}: ${links.invite}`, ""]
+      : []),
     ...(links ? [c.updates.title, c.updates.body, `${c.updates.cta}: ${links.updates}`, ""] : []),
     `— ${c.signoff}`,
     "",
@@ -224,7 +237,13 @@ function text(c: SpecsEmail, links?: SpecsLinks) {
 }
 
 /* Signed links into the preferences page; omitted when no link secret is set */
-export type SpecsLinks = { updates: string; preferences: string };
+export type SpecsLinks = {
+  updates: string;
+  preferences: string;
+  /* Page with the person's place in line and invite link */
+  invite?: string;
+  position?: number | null;
+};
 
 export function renderSpecsEmail(locale: Locale, origin: string, links?: SpecsLinks) {
   const c = COPY[locale] ?? COPY.en;

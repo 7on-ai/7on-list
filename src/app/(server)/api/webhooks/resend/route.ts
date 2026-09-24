@@ -1,6 +1,8 @@
 import { recordEmailEvent } from "@/lib/db";
+import { sendReferralNotice } from "@/lib/email";
+import { inviterOf } from "@/lib/referrals";
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
 
 /* Resend delivery events (Svix-signed). Set this URL in Resend → Webhooks and
    put the signing secret (whsec_…) in RESEND_WEBHOOK_SECRET. */
@@ -53,13 +55,22 @@ export async function POST(request: NextRequest) {
       ? "email.bounced.transient"
       : event.type;
 
-  await recordEmailEvent({
+  const { creditedInviter } = await recordEmailEvent({
     id,
     type,
     email: event.data?.to?.[0]?.trim().toLowerCase() ?? null,
     messageId: event.data?.email_id ?? null,
     data: event,
   });
+
+  // A referred friend's first email just arrived: their inviter moves up
+  if (creditedInviter) {
+    const origin = request.nextUrl.origin;
+    after(async () => {
+      const inviter = await inviterOf(creditedInviter);
+      if (inviter) await sendReferralNotice(inviter, origin).catch((e) => console.error("Referral notice failed:", e));
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Be_Vietnam_Pro, Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
+import { PageAnalytics } from "@/components/page-analytics";
 import { ThemeProvider } from "@/components/themes/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/i18n/provider";
@@ -74,7 +74,7 @@ export default async function RootLayout({
             {children}
           </I18nProvider>
           {/* Cookieless page analytics; custom events need Vercel Pro */}
-          <Analytics />
+          <PageAnalytics />
         </ThemeProvider>
       </body>
     </html>

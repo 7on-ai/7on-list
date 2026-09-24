@@ -52,6 +52,11 @@ export const fr: SpecsEmail = {
   },
   cta: "Découvrir 7on.ai",
   signoff: "L'équipe 7on",
+  place: {
+    title: "Votre place dans la file",
+    body: "Vous êtes n°\u00A0{position}. Chaque ami qui reçoit la fiche technique grâce à votre lien vous fait avancer.",
+    cta: "Obtenir votre lien d'invitation",
+  },
   updates: {
     title: "Envie d'en savoir plus\u00A0?",
     body: "De temps en temps, nous partagerons les nouveautés de Sunday et de 7on ARC. Seulement si vous le souhaitez.",

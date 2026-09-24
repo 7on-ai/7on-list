@@ -51,6 +51,11 @@ export const ko: SpecsEmail = {
   },
   cta: "7on.ai 방문하기",
   signoff: "7on 팀",
+  place: {
+    title: "내 대기 순서",
+    body: "현재 {position}번째입니다. 회원님의 링크로 스펙을 받은 친구가 생길 때마다 순서가 앞당겨집니다.",
+    cta: "초대 링크 받기",
+  },
   updates: {
     title: "소식을 받아보시겠어요?",
     body: "Sunday와 7on ARC의 새 소식을 가끔 전해 드립니다. 원하실 때만요.",

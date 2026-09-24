@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { Phrases } from "@/components/ui/phrases";
+import { NOTE_COPY } from "@/emails/note/copy";
 import { DICTIONARIES, matchLocale } from "@/i18n/dictionaries";
 import { getContact, preferenceOf, type Preference } from "@/lib/db";
 import { verifyPreferenceToken } from "@/lib/tokens";
@@ -16,7 +17,8 @@ type Props = { searchParams: Promise<{ t?: string; choose?: string; saved?: stri
    receives and lets them change it; every change is a deliberate click. */
 export default async function Preferences({ searchParams }: Props) {
   const { t: token = "", choose, saved } = await searchParams;
-  const t = DICTIONARIES[matchLocale((await headers()).get("accept-language"))].prefs;
+  const locale = matchLocale((await headers()).get("accept-language"));
+  const t = DICTIONARIES[locale].prefs;
 
   const email = verifyPreferenceToken(token);
   const contact = email ? await getContact(email) : null;
@@ -54,13 +56,14 @@ export default async function Preferences({ searchParams }: Props) {
               </p>
             )}
 
-            {/* Arrived from "Yes, keep me posted" in an email: one clear button */}
-            {choose === "updates" && current !== "updates" && !saved && (
+            {/* Arrived from "Yes, keep me posted" or "Unsubscribe" in an email:
+                one clear button, still a deliberate press */}
+            {(choose === "updates" || choose === "none") && current !== choose && !saved && (
               <form method="post" action="/api/preferences" className="mt-8 text-center">
                 <input type="hidden" name="t" value={token} />
-                <input type="hidden" name="preference" value="updates" />
+                <input type="hidden" name="preference" value={choose} />
                 <button className="inline-flex h-12 items-center rounded-lg bg-[#111] px-6 font-medium text-white transition-colors hover:bg-black">
-                  {t.confirm}
+                  {choose === "updates" ? t.confirm : NOTE_COPY[locale].unsubscribe}
                 </button>
               </form>
             )}

@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import * as motion from "motion/react-client";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
+
+import { InviteLink } from "@/components/invite-link";
+import { Phrases } from "@/components/ui/phrases";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +22,8 @@ type FormValues = { email: string };
 export function SpecsForm() {
   const { t, locale } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Set once the request succeeds: the form gives way to the invite link
+  const [invite, setInvite] = useState<string | null>(null);
 
   const form = useForm<FormValues>({ defaultValues: { email: "" } });
 
@@ -46,9 +51,11 @@ export function SpecsForm() {
 
       // The API speaks English; the visitor hears their own language.
       if (response.ok) {
-        toast.success(t.form.success);
+        const result = (await response.json().catch(() => ({}))) as { invite?: string };
         form.reset();
         track("spec_requested", { locale });
+        if (result.invite) setInvite(result.invite);
+        else toast.success(t.form.success);
       } else if (response.status === 400 || response.status === 403) {
         form.setError("email", { type: "server", message: t.form.invalid });
         track("form_error", { reason: "rejected" });
@@ -63,6 +70,27 @@ export function SpecsForm() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (invite) {
+    return (
+      <motion.div
+        className="px-3 pb-3 pt-4 text-center"
+        initial={{ opacity: 0, y: 6, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.6, type: "spring", bounce: 0 }}
+      >
+        <p role="status" className="inline-flex items-center gap-2 font-medium text-[#111]">
+          <Check className="size-4 text-[#C41D3B]" />
+          {t.form.success}
+        </p>
+        <p className="mt-5 text-sm font-medium text-[#111]">{t.invite.title}</p>
+        <p className="mx-auto mt-1 mb-4 max-w-xs text-balance text-sm text-zinc-500">
+          <Phrases text={t.invite.body} />
+        </p>
+        <InviteLink url={invite} from="form" />
+      </motion.div>
+    );
   }
 
   return (

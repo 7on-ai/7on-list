@@ -18,6 +18,8 @@ export type SpecsEmail = {
   closing: { title: string; body: string };
   cta: string;
   signoff: string;
+  /* Place in line and the invite link; {position} is filled in */
+  place: { title: string; body: string; cta: string };
   /* Opt-in for occasional news, shown only when signed links are available */
   updates: { title: string; body: string; cta: string };
   /* Link text to the email preferences page */

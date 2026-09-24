@@ -1,6 +1,7 @@
 import { isLocale, matchLocale } from "@/i18n/dictionaries";
 import { markSpecsSent, recordSpecRequest } from "@/lib/db";
 import { sendSpecsEmail } from "@/lib/email";
+import { inviteUrl } from "@/lib/referrals";
 import arcjet, { validateEmail } from "@arcjet/next";
 import { after, type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -66,7 +67,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Email validation failed" }, { status: 403 });
     }
 
-    const { suppressed } = await recordSpecRequest({
+    const { suppressed, referralCode } = await recordSpecRequest({
       email,
       locale,
       // Vercel's IP geolocation — used later to send at a sensible local hour
@@ -84,7 +85,12 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    return NextResponse.json({ success: true, message: "The specs are on their way." }, { status: 200 });
+    // The invite link is safe to show here: it's the same whether the address
+    // is new or known, so it reveals nothing about who is on the list
+    return NextResponse.json(
+      { success: true, message: "The specs are on their way.", invite: inviteUrl(origin, referralCode) },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Spec request failed:", error);
     return NextResponse.json(

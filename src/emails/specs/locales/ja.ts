@@ -51,6 +51,11 @@ export const ja: SpecsEmail = {
   },
   cta: "7on.ai へ",
   signoff: "7on チーム",
+  place: {
+    title: "あなたの順番",
+    body: "現在 {position} 番目です。あなたのリンクからスペックを受け取った友達がいるたびに、順番が繰り上がります。",
+    cta: "招待リンクを受け取る",
+  },
   updates: {
     title: "最新情報を受け取りますか？",
     body: "Sunday と 7on ARC の最新情報をときどきお届けします。ご希望の場合のみ。",

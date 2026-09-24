@@ -51,6 +51,11 @@ export const zhHant: SpecsEmail = {
   },
   cta: "前往 7on.ai",
   signoff: "7on 團隊",
+  place: {
+    title: "你的排隊位置",
+    body: "你目前排在第 {position} 位。每位透過你的連結索取規格的朋友，都會讓你往前移。",
+    cta: "取得你的邀請連結",
+  },
   updates: {
     title: "想了解更多嗎？",
     body: "我們會不定期分享 Sunday 與 7on ARC 的最新進展。只在你願意時。",

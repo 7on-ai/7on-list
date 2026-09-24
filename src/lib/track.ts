@@ -8,6 +8,7 @@ type Events = {
   section_view: { section: "orbit" | "day" | "machine" };
   spec_requested: { locale: string };
   form_error: { reason: "invalid" | "rejected" | "server" | "network" };
+  invite_shared: { method: "copy" | "share"; from: "form" | "invite_page" };
 };
 
 export function track<E extends keyof Events>(event: E, props: Events[E]) {
