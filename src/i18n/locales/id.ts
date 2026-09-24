@@ -10,7 +10,7 @@ export const id: Dictionary = {
     sub: "AI pribadi yang tinggal di mesin milikmu sendiri dan menyelesaikan berbagai hal selagi kamu menjalani harimu.",
     placeholder: "Email kamu",
     cta: "Kirimkan spesifikasinya",
-    note: "Tanpa spam. Hanya satu email saat mesinmu siap.",
+    note: "Tanpa spam. Spesifikasinya sekarang, dan satu email lagi saat mesinmu siap.",
     counter: "{count} orang sudah menunggu peluncuran. Bergabunglah.",
   },
   form: {

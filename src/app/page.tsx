@@ -81,7 +81,7 @@ export default function Home() {
             <div className="rounded-2xl border border-zinc-200 bg-white/85 p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)] backdrop-blur-md">
               <WaitlistForm />
             </div>
-            <p className="mt-3 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
+            <p className="mt-3 text-balance px-4 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
             <div className="mt-6 text-sm text-zinc-500">
               <Counter />
             </div>

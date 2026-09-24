@@ -10,7 +10,7 @@ export const zhHans: Dictionary = {
     sub: "一个私人 AI，住在你自己的机器上，在你过好每一天的同时，把事情办妥。",
     placeholder: "你的邮箱",
     cta: "把规格发给我",
-    note: "绝不打扰。机器准备就绪时，只发一封邮件。",
+    note: "绝不打扰。现在发送规格，机器就绪时再发一封邮件。",
     counter: "已有 {count} 人在等待发布。加入他们。",
   },
   form: {

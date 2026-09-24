@@ -11,7 +11,7 @@ export const de: Dictionary = {
     sub: "Eine private KI, die auf deiner eigenen Maschine lebt und Dinge erledigt, während du deinen Tag lebst.",
     placeholder: "Deine E-Mail",
     cta: "Schick mir das Datenblatt",
-    note: "Kein Spam. Eine einzige E-Mail, wenn deine Maschine bereit ist.",
+    note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn deine Maschine bereit ist.",
     counter: "{count} Menschen warten schon auf den Launch. Sei dabei.",
   },
   form: {

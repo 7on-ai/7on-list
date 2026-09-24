@@ -10,7 +10,7 @@ export const es: Dictionary = {
     sub: "Una IA privada que vive en tu propia máquina y se encarga de todo mientras tú vives tu día.",
     placeholder: "Tu email",
     cta: "Envíame la ficha técnica",
-    note: "Sin spam. Un solo email cuando tu máquina esté lista.",
+    note: "Sin spam. La ficha técnica ahora, y un solo email más cuando tu máquina esté lista.",
     counter: "{count} personas ya esperan el lanzamiento. Únete a ellas.",
   },
   form: {

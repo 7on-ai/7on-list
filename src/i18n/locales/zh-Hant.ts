@@ -10,7 +10,7 @@ export const zhHant: Dictionary = {
     sub: "一個私人 AI，住在你自己的機器上，在你過好每一天的同時，把事情辦妥。",
     placeholder: "你的電子郵件",
     cta: "把規格寄給我",
-    note: "絕不打擾。機器準備就緒時，只寄一封信。",
+    note: "絕不打擾。現在寄出規格，機器就緒時再寄一封信。",
     counter: "已有 {count} 人在等待上市。加入他們。",
   },
   form: {

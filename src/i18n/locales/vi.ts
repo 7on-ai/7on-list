@@ -10,7 +10,7 @@ export const vi: Dictionary = {
     sub: "Một AI riêng tư sống trên chính chiếc máy của bạn, lo liệu mọi việc trong khi bạn sống trọn ngày của mình.",
     placeholder: "Email của bạn",
     cta: "Gửi tôi thông số",
-    note: "Không spam. Chỉ một email khi máy của bạn sẵn sàng.",
+    note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi máy của bạn sẵn sàng.",
     counter: "{count} người đang chờ ngày ra mắt. Tham gia cùng họ.",
   },
   form: {

@@ -11,7 +11,7 @@ export const en: Dictionary = {
     sub: "A private AI that lives on your own machine and gets things done while you live your day.",
     placeholder: "Your email",
     cta: "Send me the specs",
-    note: "No spam. One email when your machine is ready.",
+    note: "No spam. The specs now, and one email when your machine is ready.",
     counter: "{count} people ahead of the launch. Join them.",
   },
   form: {

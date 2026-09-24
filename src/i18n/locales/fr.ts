@@ -11,7 +11,7 @@ export const fr: Dictionary = {
     sub: "Une IA privée qui vit sur votre propre machine et s'occupe de tout pendant que vous vivez votre journée.",
     placeholder: "Votre e-mail",
     cta: "Recevoir la fiche technique",
-    note: "Pas de spam. Un seul e-mail quand votre machine sera prête.",
+    note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre machine sera prête.",
     counter: "{count} personnes attendent déjà le lancement. Rejoignez-les.",
   },
   form: {
