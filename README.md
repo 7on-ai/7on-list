@@ -1,86 +1,38 @@
-# Zeitlist
+# 7on — Sunday specs
 
-this is a waitlist app. it uses redis. and arcjet to validate emails.
+The page where visitors ask for the preliminary specs of Sunday. They leave an
+email; the specs arrive in their inbox, in the language they read the page in.
 
-![](zeitlist.gif)
+## How it works
 
-## Core Functionality
+1. The visitor submits their email (`src/components/specs-form.tsx`).
+2. `POST /api/specs` checks it with Arcjet (no disposable or undeliverable addresses).
+3. The request is saved to Neon Postgres in `contacts`, with language, country and
+   time zone (from Vercel's geolocation headers). Asking again re-sends the specs.
+4. Right after responding, the specs email is sent through Resend
+   (`src/emails/specs/`, 12 languages) and `specs_sent_at` is recorded.
 
-- Provides a simple form for users to submit their email.
-- Validates submitted emails using Arcjet before processing.
-- Stores valid emails in a Redis list managed by Upstash.
-- Displays a live count of total signups.
+The page language follows the visitor's browser (`src/i18n/`). Every visible string
+lives in `src/i18n/locales/<language>.ts`.
 
-## Tech Used
+## Database
 
-- **Framework:** Next.js
-- **Database:** Upstash (Redis)
-- **Email Validation:** Arcjet
-- **Styling:** Tailwind CSS
-- **Language:** TypeScript
+Table `contacts` — see `db/schema.sql`. The app creates it on first use; you can also
+run that file in the Neon SQL editor.
 
-## Local Setup
+## Local setup
 
-To get this running on your machine:
+```bash
+bun i
+cp .env.example .env.local   # fill in DATABASE_URL, ARCJET_KEY, RESEND_API_KEY
+bun dev
+```
 
-1.  **Clone it:**
+Without `RESEND_API_KEY` the email step is skipped and requests are still saved.
 
-    ```bash
-    git clone ``https://github.com/zeitgg/zeitlist.git`
-    cd zeitlist
-    ```
+## Tech
 
-2.  **Install dependencies:**
-
-    ```bash
-    bun i
-    ```
-
-3.  **Set up environment variables:**
-    You'll need API keys/URLs. Create a `.env.local` file in the root directory and dd these variables:
-
-    ```plaintext
-    # Get from your Upstash dashboard
-    UPSTASH_REDIS_REST_URL="YOUR_UPSTASH_REDIS_URL"
-    UPSTASH_REDIS_REST_TOKEN="YOUR_UPSTASH_REDIS_TOKEN"
-
-    # Get from your Arcjet dashboard
-    ARCJET_KEY="YOUR_ARCJET_KEY"
-
-    # Get from your Resend dashboard (sends the specs email)
-    RESEND_API_KEY="YOUR_RESEND_API_KEY"
-    ```
-
-4.  **Run the dev server:**
-
-    ```bash
-    bun dev
-    ```
-
-5.  **Open in browser:** `http://localhost:3000`
-
-## How it Works (Quick Overview)
-
-1.  User submits their email via the frontend.
-2.  The submission hits an API route (e.g., `/api/waitlist/`).
-3.  This API route first passes the email to Arcjet for validation.
-4.  If Arcjet approves, the email is added to a list in Redis using the Upstash SDK.
-5.  Right after responding, the route emails the preliminary specs through Resend, in the language the visitor saw (`src/emails/specs/`). Without `RESEND_API_KEY` the email is skipped and signups still work.
-6.  A separate API route (e.g., `/api/waitlist/count`) reads the length of the Redis list to get the current signup count.
-7.  The frontend fetches from the count endpoint and displays the number.
-
-### Redis keys
-
-| Key | Type | Holds |
-|---|---|---|
-| `waitlist` | set | every email on the list |
-| `waitlist:timestamps` | hash | email → when they joined |
-| `waitlist:locale` | hash | email → language they signed up in |
-| `waitlist:specs_sent` | hash | email → when the specs email went out |
-
-## Contributing
-
-Issues and PRs welcome.
+Next.js · Neon Postgres · Resend · Arcjet · Tailwind CSS · Motion
 
 ## License
 

@@ -3,8 +3,7 @@ import type { Dictionary } from "../types";
 export const en: Dictionary = {
   meta: {
     title: "7on — Be first to own your Sunday",
-    description:
-      "Join the waitlist for Sunday, the always-on AI agent that lives on a machine you own.",
+    description: "Get the preliminary specs for Sunday, the always-on AI agent that lives on a machine you own.",
   },
   hero: {
     headline: ["Be first to own", "your Sunday."],
@@ -12,11 +11,9 @@ export const en: Dictionary = {
     placeholder: "Your email",
     cta: "Send me the specs",
     note: "No spam. The specs now, and one email when your machine is ready.",
-    counter: "{count} people ahead of the launch. Join them.",
   },
   form: {
     success: "You're in. The specs are on their way.",
-    duplicate: "You're already on the list. We haven't forgotten you.",
     invalid: "That email doesn't look right.",
     required: "Enter your email.",
     error: "Something went wrong. Please try again.",

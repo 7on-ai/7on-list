@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const ko: Dictionary = {
   meta: {
     title: "7on — 가장 먼저, 나만의 Sunday",
-    description: "Sunday 대기자 명단에 등록하세요. 당신의 기기에 사는, 늘 켜져 있는 AI Agent.",
+    description: "Sunday 예비 스펙을 받아보세요. 당신의 기기에 사는, 늘 켜져 있는 AI Agent.",
   },
   hero: {
     headline: ["가장 먼저,", "나만의 Sunday."],
@@ -11,11 +11,9 @@ export const ko: Dictionary = {
     placeholder: "이메일 주소",
     cta: "스펙 받아보기",
     note: "스팸은 없습니다. 지금은 스펙을, 기기가 준비되면 이메일 한 통만 더 보내드립니다.",
-    counter: "{count}명이 출시를 기다리고 있습니다. 함께하세요.",
   },
   form: {
     success: "등록되었습니다. 스펙이 곧 도착합니다.",
-    duplicate: "이미 명단에 있어요. 잊지 않았습니다.",
     invalid: "이메일 주소가 올바르지 않은 것 같아요.",
     required: "이메일 주소를 입력해 주세요.",
     error: "문제가 발생했습니다. 다시 시도해 주세요.",

@@ -11,12 +11,9 @@ export type Dictionary = {
     placeholder: string;
     cta: string;
     note: string;
-    /* {count} is replaced with the bold number */
-    counter: string;
   };
   form: {
     success: string;
-    duplicate: string;
     invalid: string;
     required: string;
     error: string;

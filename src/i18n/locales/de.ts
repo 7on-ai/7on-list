@@ -3,8 +3,7 @@ import type { Dictionary } from "../types";
 export const de: Dictionary = {
   meta: {
     title: "7on — Dein Sunday. Vor allen anderen.",
-    description:
-      "Trag dich in die Warteliste für Sunday ein – den KI-Agenten, der immer an ist und auf deiner eigenen Maschine lebt.",
+    description: "Hol dir das vorläufige Datenblatt von Sunday – dem KI-Agenten, der immer an ist und auf deiner eigenen Maschine lebt.",
   },
   hero: {
     headline: ["Dein Sunday.", "Vor allen anderen."],
@@ -12,11 +11,9 @@ export const de: Dictionary = {
     placeholder: "Deine E-Mail",
     cta: "Schick mir das Datenblatt",
     note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn deine Maschine bereit ist.",
-    counter: "{count} Menschen warten schon auf den Launch. Sei dabei.",
   },
   form: {
     success: "Du bist dabei. Das Datenblatt ist unterwegs.",
-    duplicate: "Du stehst schon auf der Liste. Wir haben dich nicht vergessen.",
     invalid: "Diese E-Mail sieht nicht richtig aus.",
     required: "Gib deine E-Mail ein.",
     error: "Etwas ist schiefgelaufen. Bitte versuch es noch einmal.",

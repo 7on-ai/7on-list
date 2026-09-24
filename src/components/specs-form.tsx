@@ -14,7 +14,7 @@ import { useI18n } from "@/i18n/provider";
 
 type FormValues = { email: string };
 
-export function WaitlistForm() {
+export function SpecsForm() {
   const { t, locale } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,7 +34,7 @@ export function WaitlistForm() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch("/api/specs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...parsed.data, locale }),
@@ -44,15 +44,13 @@ export function WaitlistForm() {
       if (response.ok) {
         toast.success(t.form.success);
         form.reset();
-      } else if (response.status === 409) {
-        toast(t.form.duplicate);
       } else if (response.status === 400 || response.status === 403) {
         form.setError("email", { type: "server", message: t.form.invalid });
       } else {
         toast.error(t.form.error);
       }
     } catch (error) {
-      console.error("Waitlist submission failed:", error);
+      console.error("Spec request failed:", error);
       toast.error(t.form.error);
     } finally {
       setIsSubmitting(false);

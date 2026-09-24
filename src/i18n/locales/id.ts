@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const id: Dictionary = {
   meta: {
     title: "7on — Jadilah yang pertama memiliki Sunday",
-    description: "Daftar tunggu Sunday — AI Agent yang selalu aktif, tinggal di mesin milikmu sendiri.",
+    description: "Dapatkan spesifikasi awal Sunday — AI Agent yang selalu aktif, tinggal di mesin milikmu sendiri.",
   },
   hero: {
     headline: ["Jadilah yang pertama", "memiliki Sunday."],
@@ -11,11 +11,9 @@ export const id: Dictionary = {
     placeholder: "Email kamu",
     cta: "Kirimkan spesifikasinya",
     note: "Tanpa spam. Spesifikasinya sekarang, dan satu email lagi saat mesinmu siap.",
-    counter: "{count} orang sudah menunggu peluncuran. Bergabunglah.",
   },
   form: {
     success: "Kamu sudah terdaftar. Spesifikasinya sedang dikirim ke email kamu.",
-    duplicate: "Kamu sudah ada di daftar. Kami tidak lupa.",
     invalid: "Email itu sepertinya tidak benar.",
     required: "Masukkan email kamu.",
     error: "Terjadi kesalahan. Silakan coba lagi.",

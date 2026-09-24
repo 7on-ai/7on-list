@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const zhHant: Dictionary = {
   meta: {
     title: "7on — 搶先擁有你的 Sunday",
-    description: "加入 Sunday 候補名單——始終在線、住在你自己機器上的 AI Agent。",
+    description: "索取 Sunday 的初步規格——始終在線、住在你自己機器上的 AI Agent。",
   },
   hero: {
     headline: ["搶先擁有", "你的 Sunday。"],
@@ -11,11 +11,9 @@ export const zhHant: Dictionary = {
     placeholder: "你的電子郵件",
     cta: "把規格寄給我",
     note: "絕不打擾。現在寄出規格，機器就緒時再寄一封信。",
-    counter: "已有 {count} 人在等待上市。加入他們。",
   },
   form: {
     success: "已加入。規格正寄往你的信箱。",
-    duplicate: "你已在名單上，我們沒有忘記你。",
     invalid: "這個電子郵件看起來不太對。",
     required: "請輸入你的電子郵件。",
     error: "發生錯誤，請再試一次。",

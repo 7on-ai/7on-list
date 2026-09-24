@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const vi: Dictionary = {
   meta: {
     title: "7on — Hãy là người đầu tiên sở hữu Sunday",
-    description: "Đăng ký danh sách chờ Sunday — AI Agent luôn bật, sống trên chính chiếc máy của bạn.",
+    description: "Nhận thông số sơ bộ của Sunday — AI Agent luôn bật, sống trên chính chiếc máy của bạn.",
   },
   hero: {
     headline: ["Hãy là người đầu tiên", "sở hữu Sunday."],
@@ -11,11 +11,9 @@ export const vi: Dictionary = {
     placeholder: "Email của bạn",
     cta: "Gửi tôi thông số",
     note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi máy của bạn sẵn sàng.",
-    counter: "{count} người đang chờ ngày ra mắt. Tham gia cùng họ.",
   },
   form: {
     success: "Bạn đã có tên. Thông số đang được gửi đến hộp thư của bạn.",
-    duplicate: "Bạn đã có trong danh sách rồi. Chúng tôi chưa quên bạn đâu.",
     invalid: "Email này có vẻ chưa đúng.",
     required: "Hãy nhập email của bạn.",
     error: "Đã có lỗi xảy ra. Vui lòng thử lại.",

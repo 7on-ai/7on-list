@@ -2,13 +2,12 @@
 
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Counter } from "@/components/counter";
 import { DayWithSunday } from "@/components/day-with-sunday";
 import { Machine } from "@/components/machine";
 import { Orbit } from "@/components/orbit";
 import { Phrases } from "@/components/ui/phrases";
 import SplitText from "@/components/ui/split-text";
-import { WaitlistForm } from "@/components/waitlist-form";
+import { SpecsForm } from "@/components/specs-form";
 import type { Locale } from "@/i18n/dictionaries";
 import { useI18n } from "@/i18n/provider";
 
@@ -42,8 +41,8 @@ const DISPLAY_SIZE: Partial<Record<Locale, string>> = {
   pt: LONG,
 };
 
-function focusWaitlist() {
-  const form = document.getElementById("waitlist");
+function focusSpecsForm() {
+  const form = document.getElementById("get-specs");
   form?.scrollIntoView({ behavior: "smooth", block: "center" });
   setTimeout(() => form?.querySelector("input")?.focus({ preventScroll: true }), 500);
 }
@@ -77,14 +76,11 @@ export default function Home() {
             <Phrases text={t.hero.sub} />
           </p>
 
-          <div id="waitlist" className="reveal reveal-3 mx-auto mt-10 w-full max-w-md scroll-mt-40">
+          <div id="get-specs" className="reveal reveal-3 mx-auto mt-10 w-full max-w-md scroll-mt-40">
             <div className="rounded-2xl border border-zinc-200 bg-white/85 p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)] backdrop-blur-md">
-              <WaitlistForm />
+              <SpecsForm />
             </div>
             <p className="mt-3 text-balance px-4 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
-            <div className="mt-6 text-sm text-zinc-500">
-              <Counter />
-            </div>
           </div>
         </div>
 
@@ -114,7 +110,7 @@ export default function Home() {
             </p>
             <button
               type="button"
-              onClick={focusWaitlist}
+              onClick={focusSpecsForm}
               className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
             >
               {t.machine.cta}

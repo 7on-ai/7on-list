@@ -3,7 +3,7 @@ import type { Dictionary } from "../types";
 export const ja: Dictionary = {
   meta: {
     title: "7on — いち早く、あなたの Sunday を",
-    description: "Sunday のウェイトリストに登録。あなた自身のマシンに住む、常時稼働の AI Agent。",
+    description: "Sunday の暫定スペックを受け取る。あなた自身のマシンに住む、常時稼働の AI Agent。",
   },
   hero: {
     headline: ["いち早く、", "あなたの Sunday を。"],
@@ -11,11 +11,9 @@ export const ja: Dictionary = {
     placeholder: "メールアドレス",
     cta: "スペックを受け取る",
     note: "スパムは送りません。今すぐスペックを、マシンの準備ができたらもう一通だけ。",
-    counter: "{count} 人がすでに発売を待っています。あなたも、その一人に。",
   },
   form: {
     success: "登録しました。スペックがまもなく届きます。",
-    duplicate: "すでに登録されています。忘れていませんよ。",
     invalid: "メールアドレスが正しくないようです。",
     required: "メールアドレスを入力してください。",
     error: "問題が発生しました。もう一度お試しください。",
