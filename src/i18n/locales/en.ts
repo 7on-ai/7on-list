@@ -4,6 +4,7 @@ export const en: Dictionary = {
   meta: {
     title: "7on ARC — Be first to own your Sunday",
     description: "Get the preliminary specs for 7on ARC, home of Sunday, the always-on AI agent.",
+    ogLine: "Sunday lives on 7on ARC.",
   },
   hero: {
     headline: ["Be first to own", "your Sunday."],
@@ -76,6 +77,7 @@ export const en: Dictionary = {
     back: "Back to 7on ARC",
   },
   invite: {
+    invited: "A friend invited you",
     title: "Want yours sooner?",
     body: "Every friend who gets the specs through your link moves you up the line.",
     copy: "Copy link",

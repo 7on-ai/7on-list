@@ -13,7 +13,7 @@ import type { Locale } from "@/i18n/dictionaries";
 import { useI18n } from "@/i18n/provider";
 import { captureAttribution } from "@/lib/attribution";
 import { track } from "@/lib/track";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /* Logo PNG used as a mask so it renders in brand red, like 7on.ai */
 function Logo({ className = "" }: { className?: string }) {
@@ -73,9 +73,19 @@ function usePageInsights() {
   }, []);
 }
 
+/* Arrived on a friend's invite link (?ref=…) */
+function useInvited() {
+  const [invited, setInvited] = useState(false);
+  useEffect(() => {
+    setInvited(/^[a-z0-9]{6,12}$/i.test(new URLSearchParams(window.location.search).get("ref") ?? ""));
+  }, []);
+  return invited;
+}
+
 export default function Home() {
   const { t, locale } = useI18n();
   usePageInsights();
+  const invited = useInvited();
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-white text-[#111] selection:bg-[#C41D3B] selection:text-white">
@@ -89,6 +99,11 @@ export default function Home() {
       {/* ── Hero + orbit ────────────────────────────────────────── */}
       <section className="relative">
         <div className="relative z-10 mx-auto max-w-4xl px-6 pt-36 text-center sm:pt-44">
+          {invited && (
+            <p className="reveal mx-auto -mt-12 mb-6 w-fit rounded-full border border-[#C41D3B]/20 bg-[#C41D3B]/[0.06] px-3.5 py-1 text-sm font-medium text-[#C41D3B] sm:-mt-14 sm:mb-8">
+              {t.invite.invited}
+            </p>
+          )}
           <h1
             className={`t-display font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en}`}
           >

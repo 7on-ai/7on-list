@@ -64,7 +64,7 @@ export default async function Invite({ searchParams }: Props) {
               <p className="mx-auto mt-1 mb-4 max-w-sm text-balance text-sm text-zinc-600">
                 <Phrases text={t.body} />
               </p>
-              <InviteLink url={inviteUrl(origin, standing.code)} from="invite_page" />
+              <InviteLink url={inviteUrl(origin, standing.code, standing.locale)} from="invite_page" />
               <p className="mx-auto mt-6 max-w-sm text-balance text-xs leading-relaxed text-zinc-400">
                 <Phrases text={t.how} />
               </p>

@@ -1,3 +1,4 @@
+import { DEFAULT_LOCALE, isLocale, pathOf } from "@/i18n/dictionaries";
 import { ensureSchema, sql } from "@/lib/db";
 
 /* The line — the order launch emails go out in.
@@ -30,6 +31,7 @@ export const LINE_CTE = `
 
 export type Standing = {
   code: string;
+  locale: string;
   /* null when the person isn't in line (email turned off or undeliverable) */
   position: number | null;
   referrals: number;
@@ -39,14 +41,16 @@ export async function getStanding(email: string): Promise<Standing | null> {
   await ensureSchema();
   const rows = await sql().query(
     `WITH ${LINE_CTE}
-     SELECT c.referral_code AS code, l.position,
+     SELECT c.referral_code AS code, c.locale, l.position,
        COALESCE((SELECT n FROM refs WHERE code = c.referral_code), 0) AS referrals
      FROM contacts c LEFT JOIN line l ON l.email = c.email
      WHERE c.email = $1`,
     [email]
   );
-  const row = rows[0] as { code: string; position: number | null; referrals: number } | undefined;
-  return row ? { code: row.code, position: row.position ?? null, referrals: Number(row.referrals) } : null;
+  const row = rows[0] as { code: string; locale: string; position: number | null; referrals: number } | undefined;
+  return row
+    ? { code: row.code, locale: row.locale, position: row.position ?? null, referrals: Number(row.referrals) }
+    : null;
 }
 
 /* The contact who owns an invite code, for telling them a friend joined */
@@ -69,6 +73,9 @@ export async function inviterOf(code: string) {
   );
 }
 
-export function inviteUrl(origin: string, code: string) {
-  return `${origin}/?ref=${code}`;
+/* In the inviter's language, so the shared card and page speak it too.
+   English uses "/", which still follows each friend's own browser. */
+export function inviteUrl(origin: string, code: string, locale?: string | null) {
+  const path = isLocale(locale) && locale !== DEFAULT_LOCALE ? pathOf(locale) : "/";
+  return `${origin}${path}?ref=${code}`;
 }

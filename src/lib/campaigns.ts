@@ -188,7 +188,7 @@ export function renderCampaign(c: Campaign, person: Omit<Person, "timezone">, or
   const locale: Locale = isLocale(person.locale) && c.content[person.locale] ? person.locale : DEFAULT_LOCALE;
   const content = c.content[locale] ?? c.content.en!;
   const links = personalLinks(origin, person.email);
-  const invite = person.referral_code ? inviteUrl(origin, person.referral_code) : origin;
+  const invite = person.referral_code ? inviteUrl(origin, person.referral_code, person.locale) : origin;
   const fill = (s: string) =>
     s
       .replace(/\{position\}/g, String(person.position))

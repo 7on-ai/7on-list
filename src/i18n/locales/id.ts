@@ -4,6 +4,7 @@ export const id: Dictionary = {
   meta: {
     title: "7on ARC — Jadilah yang pertama memiliki Sunday",
     description: "Dapatkan spesifikasi awal 7on ARC — rumah bagi Sunday, AI Agent yang selalu aktif.",
+    ogLine: "Sunday tinggal di 7on ARC.",
   },
   hero: {
     headline: ["Jadilah yang pertama", "memiliki Sunday."],
@@ -76,6 +77,7 @@ export const id: Dictionary = {
     back: "Kembali ke 7on ARC",
   },
   invite: {
+    invited: "Temanmu mengundangmu",
     title: "Mau dapat lebih cepat?",
     body: "Setiap teman yang mendapatkan spesifikasi lewat tautanmu akan memajukan antreanmu.",
     copy: "Salin tautan",

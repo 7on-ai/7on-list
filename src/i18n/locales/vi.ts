@@ -4,6 +4,7 @@ export const vi: Dictionary = {
   meta: {
     title: "7on ARC — Hãy là người đầu tiên sở hữu Sunday",
     description: "Nhận thông số sơ bộ của 7on ARC — ngôi nhà của Sunday, AI Agent luôn bật.",
+    ogLine: "Sunday sống trên 7on ARC.",
   },
   hero: {
     headline: ["Hãy là người đầu tiên", "sở hữu Sunday."],
@@ -76,6 +77,7 @@ export const vi: Dictionary = {
     back: "Quay lại 7on ARC",
   },
   invite: {
+    invited: "Một người bạn đã mời bạn",
     title: "Muốn có sớm hơn?",
     body: "Mỗi người bạn nhận thông số qua liên kết của bạn sẽ đưa bạn lên trước trong hàng chờ.",
     copy: "Sao chép liên kết",

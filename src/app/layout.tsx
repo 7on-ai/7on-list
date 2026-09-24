@@ -6,7 +6,7 @@ import { PageAnalytics } from "@/components/page-analytics";
 import { ThemeProvider } from "@/components/themes/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/i18n/provider";
-import { DICTIONARIES, matchLocale, type Locale } from "@/i18n/dictionaries";
+import { DICTIONARIES, isLocale, LOCALES, matchLocale, pathOf, segmentOf, type Locale } from "@/i18n/dictionaries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,20 +35,63 @@ const beVietnam = Be_Vietnam_Pro({
   preload: false,
 });
 
-/* Speak the visitor's browser language — no switcher on the page */
+/* The language in the address (/th, /ja …) if there is one; otherwise the
+   visitor's browser language. No switcher on the page. */
 async function resolveLocale(): Promise<Locale> {
-  return matchLocale((await headers()).get("accept-language"));
+  const h = await headers();
+  const forced = h.get("x-7on-locale");
+  return isLocale(forced) ? forced : matchLocale(h.get("accept-language"));
+}
+
+async function siteOrigin() {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "7on.ai";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const h = await headers();
   const locale = await resolveLocale();
-  const { title, description } = DICTIONARIES[locale].meta;
+  const t = DICTIONARIES[locale];
+  // Set by the middleware on the home page and its language addresses
+  const path = h.get("x-7on-path");
+  const invited = h.get("x-7on-invited") === "1";
+
+  // Arrived on a friend's link: the card says so, in the link's language
+  const title = invited ? `${t.invite.invited} · 7on ARC` : t.meta.title;
+  const image = {
+    url: `/og/${invited ? "invited-" : ""}${segmentOf(locale)}.png`,
+    width: 1200,
+    height: 630,
+    alt: `${t.hero.headline.join(" ")} ${t.meta.ogLine}`,
+  };
+
   return {
+    metadataBase: new URL(await siteOrigin()),
     title,
-    description,
-    openGraph: { title, description, type: "website", siteName: "7on", locale },
+    description: t.meta.description,
+    ...(path && {
+      alternates: {
+        // Invite codes and campaign tags never make a separate page
+        canonical: path,
+        languages: {
+          ...Object.fromEntries(LOCALES.map((l) => [l, pathOf(l)])),
+          "x-default": "/",
+        },
+      },
+    }),
+    openGraph: {
+      title,
+      description: t.meta.description,
+      type: "website",
+      siteName: "7on",
+      locale,
+      images: [image],
+      ...(path && { url: path }),
+    },
     // Large card so shared links show the full 1200×630 image
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description: t.meta.description, images: [image] },
   };
 }
 

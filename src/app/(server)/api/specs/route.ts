@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     // The invite link is safe to show here: it's the same whether the address
     // is new or known, so it reveals nothing about who is on the list
     return NextResponse.json(
-      { success: true, message: "The specs are on their way.", invite: inviteUrl(origin, referralCode) },
+      { success: true, message: "The specs are on their way.", invite: inviteUrl(origin, referralCode, locale) },
       { status: 200 }
     );
   } catch (error) {

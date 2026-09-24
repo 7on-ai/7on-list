@@ -4,6 +4,7 @@ export const zhHant: Dictionary = {
   meta: {
     title: "7on ARC — 搶先擁有你的 Sunday",
     description: "索取 7on ARC 的初步規格——Sunday 的家，一個始終在線的 AI Agent。",
+    ogLine: "Sunday 住在 7on ARC 裡。",
   },
   hero: {
     headline: ["搶先擁有", "你的 Sunday。"],
@@ -76,6 +77,7 @@ export const zhHant: Dictionary = {
     back: "返回 7on ARC",
   },
   invite: {
+    invited: "朋友邀請你",
     title: "想更早拿到？",
     body: "每位透過你的連結索取規格的朋友，都會讓你在隊伍中往前移。",
     copy: "複製連結",

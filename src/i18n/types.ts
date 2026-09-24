@@ -3,7 +3,12 @@ export type Moment = { time: string; tag: string; title: string; line: string };
 /* Copy for one language. Thai (no spaces between words) marks allowed
    line breaks with \u200B — see Phrases. */
 export type Dictionary = {
-  meta: { title: string; description: string };
+  meta: {
+    title: string;
+    description: string;
+    /* Second line of the share image */
+    ogLine: string;
+  };
   hero: {
     /* One entry per display line */
     headline: string[];
@@ -36,6 +41,8 @@ export type Dictionary = {
   };
   /* Invite link after asking for the specs, and the place-in-line page */
   invite: {
+    /* Shown to someone who arrives on a friend's invite link */
+    invited: string;
     title: string;
     body: string;
     copy: string;

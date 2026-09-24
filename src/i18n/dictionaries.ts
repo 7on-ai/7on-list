@@ -71,3 +71,33 @@ export function matchLocale(acceptLanguage: string | null | undefined): Locale {
   }
   return DEFAULT_LOCALE;
 }
+
+/* Each language has its own address (/th, /ja, /zh-hant …) so search engines
+   can find every translation. "/" still follows the visitor's browser. */
+const SEGMENTS: Record<Locale, string> = {
+  en: "en",
+  th: "th",
+  "zh-Hans": "zh-hans",
+  "zh-Hant": "zh-hant",
+  ja: "ja",
+  ko: "ko",
+  vi: "vi",
+  id: "id",
+  es: "es",
+  fr: "fr",
+  de: "de",
+  pt: "pt",
+};
+
+export function segmentOf(locale: Locale) {
+  return SEGMENTS[locale];
+}
+
+export function localeFromSegment(segment: string | null | undefined): Locale | null {
+  if (!segment) return null;
+  return LOCALES.find((l) => SEGMENTS[l] === segment.toLowerCase()) ?? null;
+}
+
+export function pathOf(locale: Locale) {
+  return `/${SEGMENTS[locale]}`;
+}

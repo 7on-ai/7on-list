@@ -4,6 +4,7 @@ export const ko: Dictionary = {
   meta: {
     title: "7on ARC — 가장 먼저, 나만의 Sunday",
     description: "7on ARC 예비 스펙을 받아보세요. 늘 켜져 있는 AI Agent, Sunday가 사는 기기.",
+    ogLine: "Sunday는 7on ARC에 삽니다.",
   },
   hero: {
     headline: ["가장 먼저,", "나만의 Sunday."],
@@ -76,6 +77,7 @@ export const ko: Dictionary = {
     back: "7on ARC로 돌아가기",
   },
   invite: {
+    invited: "친구가 초대했어요",
     title: "더 빨리 받고 싶으신가요?",
     body: "내 링크로 스펙을 받은 친구가 생길 때마다 순서가 앞당겨집니다.",
     copy: "링크 복사",

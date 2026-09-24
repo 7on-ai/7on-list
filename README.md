@@ -36,8 +36,18 @@ email; the specs arrive in their inbox, in the language they read the page in.
   `cta_click`, `section_view`, `spec_requested`, `form_error` (`src/lib/track.ts`) —
   appear on Vercel Pro. No event carries an email.
 
-The page language follows the visitor's browser (`src/i18n/`). Every visible string
-lives in `src/i18n/locales/<language>.ts`.
+## Languages and search
+
+- Every language has its own address — `/en`, `/th`, `/zh-hans`, `/zh-hant`, `/ja`,
+  `/ko`, `/vi`, `/id`, `/es`, `/fr`, `/de`, `/pt` — so search engines index all 12.
+  `/` follows the visitor's browser and is the `x-default`. No switcher on the page.
+- Each page lists its translations (`hreflang`) and a canonical address without
+  `?ref` or UTM tags; `/sitemap.xml` and `/robots.txt` are generated.
+- Share cards are per language (`public/og/<lang>.png`). Invite links carry the
+  inviter's language (`/th?ref=…`) and show a "A friend invited you" card and
+  a matching note on the page. Use `utm_*` rather than `?ref=` for partners.
+
+Every visible string lives in `src/i18n/locales/<language>.ts`.
 
 ## Referrals and the line
 

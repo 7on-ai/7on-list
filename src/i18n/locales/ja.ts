@@ -4,6 +4,7 @@ export const ja: Dictionary = {
   meta: {
     title: "7on ARC — いち早く、あなたの Sunday を",
     description: "7on ARC の暫定スペックを受け取る。常時稼働の AI Agent、Sunday が住むマシン。",
+    ogLine: "Sunday は 7on ARC に住んでいます。",
   },
   hero: {
     headline: ["いち早く、", "あなたの Sunday を。"],
@@ -76,6 +77,7 @@ export const ja: Dictionary = {
     back: "7on ARC に戻る",
   },
   invite: {
+    invited: "友達からの招待",
     title: "もっと早く手に入れたい？",
     body: "あなたのリンクからスペックを受け取った友達がいるたびに、あなたの順番が繰り上がります。",
     copy: "リンクをコピー",

@@ -4,6 +4,7 @@ export const th: Dictionary = {
   meta: {
     title: "7on ARC — เป็นคนแรกที่มี Sunday ของคุณเอง",
     description: "รับสเปกเบื้องต้นของ 7on ARC บ้านของ Sunday — AI Agent ที่ทำงานตลอดเวลา",
+    ogLine: "Sunday อยู่ใน 7on ARC",
   },
   hero: {
     headline: ["เป็นคนแรก", "ที่มี Sunday ของคุณเอง"],
@@ -76,6 +77,7 @@ export const th: Dictionary = {
     back: "กลับไปที่ 7on ARC",
   },
   invite: {
+    invited: "เพื่อนชวนคุณมา",
     title: "อยากได้เร็วขึ้นไหม",
     body: "เพื่อนทุกคนที่รับสเปก\u200Bผ่านลิงก์ของคุณ\u200Bจะช่วยเลื่อนคิวของคุณขึ้น",
     copy: "คัดลอกลิงก์",
