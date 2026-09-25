@@ -62,7 +62,7 @@ export const en: Dictionary = {
     points: [
       { title: "One server. One person.", line: "Dedicated CPU, RAM and database. Never shared." },
       { title: "Nothing that names you.", line: "Names and numbers are removed before anything is processed." },
-      { title: "Yours to erase.", line: "See every memory. Delete anything." },
+      { title: "Memory across time.", line: "See what Sunday knows at any point in time. Add or edit, set aside for now, or erase for good." },
     ],
     cta: "Get the ARC specs",
   },

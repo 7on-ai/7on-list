@@ -62,7 +62,7 @@ export const id: Dictionary = {
     points: [
       { title: "Satu server. Satu orang.", line: "CPU, RAM, dan database khusus. Tidak pernah dibagi." },
       { title: "Tanpa jejak identitas.", line: "Nama dan nomor dihapus sebelum apa pun diproses." },
-      { title: "Hapus kapan saja.", line: "Lihat setiap memori. Hapus apa saja." },
+      { title: "Memori lintas waktu.", line: "Lihat apa yang diingat Sunday di setiap waktu. Tambah, ubah, lupakan sementara, atau hapus selamanya." },
     ],
     cta: "Dapatkan spesifikasi ARC",
   },

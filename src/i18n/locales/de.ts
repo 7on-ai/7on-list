@@ -62,7 +62,7 @@ export const de: Dictionary = {
     points: [
       { title: "Ein Server. Ein Mensch.", line: "Eigene CPU, eigener RAM, eigene Datenbank. Nie geteilt." },
       { title: "Nichts, was dich verrät.", line: "Namen und Nummern werden vor jeder Verarbeitung entfernt." },
-      { title: "Jederzeit löschbar.", line: "Sieh jede Erinnerung. Lösche, was du willst." },
+      { title: "Erinnerung über die Zeit.", line: "Sieh, was Sunday zu jedem Zeitpunkt weiß. Hinzufügen, bearbeiten, vorübergehend vergessen oder für immer löschen." },
     ],
     cta: "ARC-Datenblatt anfordern",
   },

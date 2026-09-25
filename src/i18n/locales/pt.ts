@@ -62,7 +62,7 @@ export const pt: Dictionary = {
     points: [
       { title: "Um servidor. Uma pessoa.", line: "CPU, RAM e banco de dados dedicados. Nunca compartilhados." },
       { title: "Nada que identifique você.", line: "Nomes e números são removidos antes de qualquer processamento." },
-      { title: "Seu para apagar.", line: "Veja cada memória. Apague o que quiser." },
+      { title: "Memória ao longo do tempo.", line: "Veja o que o Sunday lembra em qualquer momento. Adicione, edite, esqueça por ora ou apague para sempre." },
     ],
     cta: "Receber a ficha do ARC",
   },

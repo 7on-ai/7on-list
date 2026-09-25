@@ -62,7 +62,7 @@ export const zhHans: Dictionary = {
     points: [
       { title: "一台服务器，一个人。", line: "专属的 CPU、内存与数据库，从不共享。" },
       { title: "不留身份痕迹。", line: "处理之前，姓名和号码都会被移除。" },
-      { title: "随时可删。", line: "看见每一段记忆，删除任何内容。" },
+      { title: "跨越时间的记忆。", line: "随时查看 Sunday 在任一时刻记得什么。可添加、编辑，暂时遗忘，或永久删除。" },
     ],
     cta: "获取 ARC 规格",
   },

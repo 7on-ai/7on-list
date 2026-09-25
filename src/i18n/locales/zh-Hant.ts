@@ -62,7 +62,7 @@ export const zhHant: Dictionary = {
     points: [
       { title: "一台伺服器，一個人。", line: "專屬的 CPU、記憶體與資料庫，從不共用。" },
       { title: "不留身分痕跡。", line: "處理之前，姓名和號碼都會被移除。" },
-      { title: "隨時可刪。", line: "看見每一段記憶，刪除任何內容。" },
+      { title: "跨越時間的記憶。", line: "隨時查看 Sunday 在任一時刻記得什麼。可新增、編輯，暫時遺忘，或永久刪除。" },
     ],
     cta: "索取 ARC 規格",
   },

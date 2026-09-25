@@ -62,7 +62,7 @@ export const vi: Dictionary = {
     points: [
       { title: "Một máy chủ. Một người.", line: "CPU, RAM và cơ sở dữ liệu riêng. Không bao giờ dùng chung." },
       { title: "Không gì định danh bạn.", line: "Tên và số được loại bỏ trước khi xử lý." },
-      { title: "Xóa bất cứ lúc nào.", line: "Xem mọi ký ức. Xóa bất cứ điều gì." },
+      { title: "Ký ức theo dòng thời gian.", line: "Xem Sunday nhớ gì ở bất kỳ thời điểm nào. Thêm, sửa, tạm quên, hoặc xóa vĩnh viễn." },
     ],
     cta: "Nhận thông số ARC",
   },
