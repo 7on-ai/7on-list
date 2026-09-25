@@ -3,7 +3,8 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import arc from "@/assets/7on-arc.webp";
+import device from "@/assets/arc-device.webp";
+import shadow from "@/assets/arc-shadow.webp";
 import { DayWithSunday } from "@/components/day-with-sunday";
 import { Orbit } from "@/components/orbit";
 import { Phrases } from "@/components/ui/phrases";
@@ -26,24 +27,53 @@ function Logo({ className = "" }: { className?: string }) {
   );
 }
 
-/* Hero size per script: Latin runs big like 7on.ai; longer languages and
-   scripts with tall marks or dense glyphs step down so lines stay whole. */
-const LONG = "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[76px]";
-const COMPACT = "text-[30px] min-[400px]:text-[34px] sm:text-6xl md:text-[72px]";
+/* Headline size per language: "AI on the go" is short in most, long in a few */
+const SHORT = "text-[46px] min-[400px]:text-[52px] sm:text-7xl md:text-[88px]";
+const MEDIUM = "text-[40px] min-[400px]:text-[46px] sm:text-6xl md:text-[80px]";
+const LONG = "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[68px]";
 const DISPLAY_SIZE: Partial<Record<Locale, string>> = {
-  en: "text-[40px] min-[400px]:text-[46px] sm:text-7xl md:text-[92px]",
-  th: "text-[34px] min-[400px]:text-[38px] sm:text-6xl md:text-[72px]",
-  "zh-Hans": COMPACT,
-  "zh-Hant": COMPACT,
-  ja: COMPACT,
-  ko: COMPACT,
+  en: SHORT,
+  th: MEDIUM,
+  "zh-Hans": SHORT,
+  "zh-Hant": SHORT,
+  ja: SHORT,
+  ko: MEDIUM,
+  de: MEDIUM,
   vi: LONG,
   id: LONG,
   es: LONG,
   fr: LONG,
-  de: LONG,
   pt: LONG,
 };
+
+/* ARC, floating. The device and its shadow are separate layers cut from the
+   same photo: the device drifts up and down; the shadow stays on the ground,
+   shrinking and fading a little as the device rises. Positions are the
+   device's place in the original 2000×1116 photo. */
+function FloatingArc() {
+  return (
+    <div className="arc-stage relative mx-auto w-full">
+      <div className="arc-frame absolute left-1/2 -translate-x-1/2">
+        <Image
+          src={shadow}
+          alt=""
+          priority
+          sizes="(min-width: 768px) 1100px, 160vw"
+          className="arc-shadow absolute select-none"
+          style={{ left: "0%", top: "62.72%", width: "80.4%", height: "auto" }}
+        />
+        <Image
+          src={device}
+          alt="7on ARC"
+          priority
+          sizes="(min-width: 768px) 420px, 60vw"
+          className="arc-float absolute select-none"
+          style={{ left: "35.45%", top: "19.09%", width: "29%", height: "auto" }}
+        />
+      </div>
+    </div>
+  );
+}
 
 function focusSpecsForm() {
   const form = document.getElementById("get-specs");
@@ -96,37 +126,39 @@ export default function Home() {
         </Link>
       </header>
 
-      {/* ── Hero + orbit ────────────────────────────────────────── */}
-      <section className="relative">
-        <div className="relative z-10 mx-auto max-w-4xl px-6 pt-36 text-center sm:pt-44">
+      {/* ── Hero: the product first, then what it is, then the form ── */}
+      <section className="relative bg-gradient-to-b from-[#faf8f6] from-80% to-white pb-20 pt-20 sm:pb-28 sm:pt-24">
+        <FloatingArc />
+
+        <div className="relative z-10 mx-auto -mt-4 max-w-4xl px-6 text-center sm:-mt-8">
           {invited && (
-            <p className="reveal mx-auto -mt-12 mb-6 w-fit rounded-full border border-[#C41D3B]/20 bg-[#C41D3B]/[0.06] px-3.5 py-1 text-sm font-medium text-[#C41D3B] sm:-mt-14 sm:mb-8">
+            <p className="reveal mx-auto mb-5 w-fit rounded-full border border-[#C41D3B]/20 bg-[#C41D3B]/[0.06] px-3.5 py-1 text-sm font-medium text-[#C41D3B]">
               {t.invite.invited}
             </p>
           )}
-          <h1
-            className={`t-display font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en}`}
-          >
-            {t.hero.headline.map((line, i) => (
-              <SplitText key={line} className="block" delay={i * 0.15}>
-                {line}
-              </SplitText>
-            ))}
+          <h1>
+            <span className="reveal block text-lg font-semibold text-[#C41D3B] sm:text-xl">7on ARC</span>
+            <span className={`t-display mt-2 block text-balance font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en}`}>
+              <SplitText delay={0.25}>{t.machine.tagline}</SplitText>
+            </span>
           </h1>
 
-          <p className="reveal reveal-2 mx-auto mt-7 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl">
+          <p className="reveal reveal-2 mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl">
             <Phrases text={t.hero.sub} />
           </p>
 
-          <div id="get-specs" className="reveal reveal-3 mx-auto mt-10 w-full max-w-md scroll-mt-40">
+          <div id="get-specs" className="reveal reveal-3 mx-auto mt-9 w-full max-w-md scroll-mt-40">
             <div className="rounded-2xl border border-zinc-200 bg-white/85 p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)] backdrop-blur-md">
               <SpecsForm />
             </div>
             <p className="mt-3 text-balance px-4 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
           </div>
         </div>
+      </section>
 
-        <div data-section="orbit" className="relative z-0 mt-[calc(var(--orbit)*-0.1)] sm:mt-[calc(var(--orbit)*-0.22)]">
+      {/* ── One agent, everything around you ───────────────────── */}
+      <section className="relative">
+        <div data-section="orbit" className="relative z-0">
           {/* Pink bloom that the orb condenses from */}
           <div className="breathe pointer-events-none absolute left-1/2 top-[calc(var(--orbit)*0.5)] h-[calc(var(--orbit)*0.8)] w-[calc(var(--orbit)*0.8)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(196,29,59,0.16),rgba(196,29,59,0.05)_55%,transparent)]" />
           <Orbit />
@@ -138,16 +170,9 @@ export default function Home() {
         <DayWithSunday />
       </div>
 
-      {/* ── Truly yours. — the product reveal ─────────────────── */}
-      {/* Background matches the photo's own backdrop so the image has no edge */}
-      <section data-section="machine" className="relative overflow-hidden bg-[#faf8f6]">
-        <div className="fade-up relative z-10 mx-auto max-w-3xl px-6 pt-24 text-center sm:pt-32">
-          {/* Product name (the same in every language) and what it is */}
-          <p className="mb-4 text-base font-medium text-[#C41D3B] sm:text-lg">
-            <span className="whitespace-nowrap">7on ARC</span>
-            <span aria-hidden className="mx-2 text-[#C41D3B]/40">·</span>
-            <span className="whitespace-nowrap">{t.machine.tagline}</span>
-          </p>
+      {/* ── Truly yours. — and the closing call ─────────────── */}
+      <section data-section="machine" className="relative overflow-hidden bg-[#faf8f6] px-6 py-24 text-center sm:py-32">
+        <div className="fade-up mx-auto max-w-3xl">
           <h2 className="t-heading text-[40px] font-medium sm:text-6xl md:text-7xl">
             {t.machine.headline.map((line) => (
               <span key={line} className="block">
@@ -158,27 +183,28 @@ export default function Home() {
           <p className="mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-700 sm:text-xl">
             <Phrases text={t.machine.body} />
           </p>
+        </div>
+
+        <div className="fade-up mx-auto mt-20 max-w-2xl sm:mt-28">
+          <p className="text-base font-semibold text-[#C41D3B] sm:text-lg">ARC</p>
+          <h2 className="t-heading mt-2 text-balance text-3xl font-medium sm:text-5xl">
+            {t.hero.headline.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </h2>
           <button
             type="button"
             onClick={() => {
               track("cta_click", { location: "machine" });
               focusSpecsForm();
             }}
-            className="group mt-9 inline-flex h-11 items-center gap-3 rounded-lg bg-[#111] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
+            className="group mt-9 inline-flex h-11 items-center gap-3 rounded-full bg-[#111] px-6 text-sm font-medium text-white transition-colors hover:bg-black"
           >
             {t.machine.cta}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
-        </div>
-
-        <div className="reveal-product relative mx-auto -mt-6 max-w-6xl sm:-mt-10">
-          <Image
-            src={arc}
-            alt="7on ARC"
-            sizes="(min-width: 1152px) 1152px, 100vw"
-            placeholder="blur"
-            className="aspect-square w-full object-cover sm:aspect-[16/10] [mask-image:radial-gradient(ellipse_62%_62%_at_50%_46%,#000_58%,transparent_100%)]"
-          />
         </div>
       </section>
 
@@ -214,11 +240,20 @@ export default function Home() {
         @keyframes spin { to { transform: rotate(360deg); } }
 
 
-        .reveal-product { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
-        @keyframes settle { from { opacity: 0; transform: translateY(40px) scale(.96); } to { opacity: 1; transform: none; } }
+        /* The stage shows the photo from just above the device to below its shadow */
+        .arc-stage { height: clamp(300px, 48vh, 580px); }
+        .arc-frame { height: 122%; top: -16%; aspect-ratio: 2000 / 1116; }
+
+        /* ARC settles in, then floats: up and down, gently, forever */
+        .arc-float { animation: arcIn 1.4s cubic-bezier(.2,.7,.2,1) both, arcFloat 5s ease-in-out 1.4s infinite; }
+        @keyframes arcIn { from { opacity: 0; transform: translateY(8%) scale(.97); } to { opacity: 1; transform: none; } }
+        @keyframes arcFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5%); } }
+        .arc-shadow { transform-origin: 62% 55%; animation: shadowIn 1.4s ease-out both, shadowFloat 5s ease-in-out 1.4s infinite; }
+        @keyframes shadowIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shadowFloat { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.93); opacity: .75; } }
 
         @media (prefers-reduced-motion: reduce) {
-          .reveal, .fade-up, .reveal-product { opacity: 1 !important; transform: none !important; animation: none !important; }
+          .reveal, .fade-up, .arc-float, .arc-shadow { opacity: 1 !important; transform: none !important; animation: none !important; }
           .breathe, .orb-breathe, .orbit-ring, .orbit-counter { animation: none !important; }
         }
       `}</style>
