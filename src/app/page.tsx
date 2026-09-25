@@ -53,7 +53,8 @@ const DISPLAY_SIZE: Partial<Record<Locale, string>> = {
 function FloatingArc() {
   return (
     <div className="arc-stage relative mx-auto w-full">
-      <div className="arc-frame absolute left-1/2 -translate-x-1/2">
+      {/* Mirrored so ARC faces right: toward the future, for left-to-right readers */}
+      <div className="arc-frame absolute left-1/2 -translate-x-1/2 -scale-x-100">
         <Image
           src={shadow}
           alt=""
