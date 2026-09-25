@@ -59,6 +59,11 @@ export const en: Dictionary = {
     tagline: "AI on the go",
     headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
+    points: [
+      { title: "Private by design.", line: "Your memory stays with you." },
+      { title: "Nothing that names you.", line: "Names and numbers are removed before anything is processed." },
+      { title: "Yours to erase.", line: "See every memory. Delete anything." },
+    ],
     cta: "Get the ARC specs",
   },
   prefs: {

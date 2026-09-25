@@ -59,6 +59,11 @@ export const de: Dictionary = {
     tagline: "KI für unterwegs",
     headline: ["Wirklich deins."],
     body: "Sunday lernt dich kennen. Niemand sonst. Deine Daten trainieren nie das Modell eines anderen.",
+    points: [
+      { title: "Privat von Grund auf.", line: "Deine Erinnerungen bleiben bei dir." },
+      { title: "Nichts, was dich verrät.", line: "Namen und Nummern werden vor jeder Verarbeitung entfernt." },
+      { title: "Jederzeit löschbar.", line: "Sieh jede Erinnerung. Lösche, was du willst." },
+    ],
     cta: "ARC-Datenblatt anfordern",
   },
   prefs: {

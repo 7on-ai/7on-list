@@ -32,6 +32,8 @@ export type Dictionary = {
     tagline: string;
     headline: string[];
     body: string;
+    /* Three short privacy points under "Truly yours." */
+    points: { title: string; line: string }[];
     cta: string;
   };
   prefs: {

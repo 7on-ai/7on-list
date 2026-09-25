@@ -59,6 +59,11 @@ export const zhHans: Dictionary = {
     tagline: "随身 AI",
     headline: ["真正属于你。"],
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
+    points: [
+      { title: "生来私密。", line: "你的记忆只属于你。" },
+      { title: "不留身份痕迹。", line: "处理之前，姓名和号码都会被移除。" },
+      { title: "随时可删。", line: "看见每一段记忆，删除任何内容。" },
+    ],
     cta: "获取 ARC 规格",
   },
   prefs: {

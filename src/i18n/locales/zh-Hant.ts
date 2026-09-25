@@ -59,6 +59,11 @@ export const zhHant: Dictionary = {
     tagline: "隨身 AI",
     headline: ["真正屬於你。"],
     body: "Sunday 了解你，別人不會。你的資料絕不會用來訓練任何人的模型。",
+    points: [
+      { title: "生來私密。", line: "你的記憶只屬於你。" },
+      { title: "不留身分痕跡。", line: "處理之前，姓名和號碼都會被移除。" },
+      { title: "隨時可刪。", line: "看見每一段記憶，刪除任何內容。" },
+    ],
     cta: "索取 ARC 規格",
   },
   prefs: {

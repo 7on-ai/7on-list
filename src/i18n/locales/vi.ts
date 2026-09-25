@@ -59,6 +59,11 @@ export const vi: Dictionary = {
     tagline: "AI theo bạn mọi nơi",
     headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
+    points: [
+      { title: "Riêng tư từ thiết kế.", line: "Ký ức luôn ở bên bạn." },
+      { title: "Không gì định danh bạn.", line: "Tên và số được loại bỏ trước khi xử lý." },
+      { title: "Xóa bất cứ lúc nào.", line: "Xem mọi ký ức. Xóa bất cứ điều gì." },
+    ],
     cta: "Nhận thông số ARC",
   },
   prefs: {

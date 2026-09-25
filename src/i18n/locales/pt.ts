@@ -59,6 +59,11 @@ export const pt: Dictionary = {
     tagline: "IA sempre com você",
     headline: ["Verdadeiramente", "seu."],
     body: "O Sunday aprende sobre você. Mais ninguém. Seus dados nunca treinam o modelo de ninguém.",
+    points: [
+      { title: "Privado desde o projeto.", line: "Sua memória fica com você." },
+      { title: "Nada que identifique você.", line: "Nomes e números são removidos antes de qualquer processamento." },
+      { title: "Seu para apagar.", line: "Veja cada memória. Apague o que quiser." },
+    ],
     cta: "Receber a ficha do ARC",
   },
   prefs: {

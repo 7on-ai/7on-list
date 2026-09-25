@@ -60,6 +60,11 @@ export const fr: Dictionary = {
     tagline: "L'IA partout avec vous",
     headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
+    points: [
+      { title: "Privé par conception.", line: "Votre mémoire reste avec vous." },
+      { title: "Rien qui vous identifie.", line: "Noms et numéros sont retirés avant tout traitement." },
+      { title: "Effaçable à tout moment.", line: "Voyez chaque souvenir. Effacez ce que vous voulez." },
+    ],
     cta: "Recevoir la fiche ARC",
   },
   prefs: {

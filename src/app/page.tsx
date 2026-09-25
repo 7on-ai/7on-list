@@ -1,6 +1,8 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { Eraser, EyeOff, Lock } from "lucide-react";
+
+const POINT_ICONS = [Lock, EyeOff, Eraser];
 import Image from "next/image";
 import Link from "next/link";
 import device from "@/assets/arc-device.webp";
@@ -50,15 +52,15 @@ const DISPLAY_SIZE: Partial<Record<Locale, string>> = {
    same photo: the device drifts up and down; the shadow stays on the ground,
    shrinking and fading a little as the device rises. Positions are the
    device's place in the original 2000×1116 photo. */
-function FloatingArc() {
+function FloatingArc({ className = "arc-stage", priority = true }: { className?: string; priority?: boolean }) {
   return (
-    <div className="arc-stage relative mx-auto w-full">
+    <div className={`${className} relative mx-auto w-full`}>
       {/* Mirrored so ARC faces right: toward the future, for left-to-right readers */}
       <div className="arc-frame absolute left-1/2 -translate-x-1/2 -scale-x-100">
         <Image
           src={shadow}
           alt=""
-          priority
+          priority={priority}
           sizes="(min-width: 768px) 1100px, 160vw"
           className="arc-shadow absolute select-none"
           style={{ left: "0%", top: "62.72%", width: "80.4%", height: "auto" }}
@@ -66,7 +68,7 @@ function FloatingArc() {
         <Image
           src={device}
           alt="7on ARC"
-          priority
+          priority={priority}
           sizes="(min-width: 768px) 420px, 60vw"
           className="arc-float absolute select-none"
           style={{ left: "35.45%", top: "19.09%", width: "29%", height: "auto" }}
@@ -74,12 +76,6 @@ function FloatingArc() {
       </div>
     </div>
   );
-}
-
-function focusSpecsForm() {
-  const form = document.getElementById("get-specs");
-  form?.scrollIntoView({ behavior: "smooth", block: "center" });
-  setTimeout(() => form?.querySelector("input")?.focus({ preventScroll: true }), 500);
 }
 
 /* Where visitors came from, and how far down the page they get */
@@ -171,41 +167,61 @@ export default function Home() {
         <DayWithSunday />
       </div>
 
-      {/* ── Truly yours. — and the closing call ─────────────── */}
-      <section data-section="machine" className="relative overflow-hidden bg-[#faf8f6] px-6 py-24 text-center sm:py-32">
-        <div className="fade-up mx-auto max-w-3xl">
-          <h2 className="t-heading text-[40px] font-medium sm:text-6xl md:text-7xl">
+      {/* ── Truly yours. — privacy, in three short points ─────── */}
+      <section data-section="machine" className="bg-white px-6 pb-12 pt-24 sm:pt-32">
+        <div className="fade-up mx-auto max-w-3xl text-center">
+          <h2 className="t-heading text-[44px] font-medium sm:text-6xl md:text-7xl">
             {t.machine.headline.map((line) => (
               <span key={line} className="block">
                 {line}
               </span>
             ))}
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-700 sm:text-xl">
+          <p className="mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl">
             <Phrases text={t.machine.body} />
           </p>
         </div>
 
-        <div className="fade-up mx-auto mt-20 max-w-2xl sm:mt-28">
-          <p className="text-base font-semibold text-[#C41D3B] sm:text-lg">ARC</p>
-          <h2 className="t-heading mt-2 text-balance text-3xl font-medium sm:text-5xl">
-            {t.hero.headline.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </h2>
-          <button
-            type="button"
-            onClick={() => {
-              track("cta_click", { location: "machine" });
-              focusSpecsForm();
-            }}
-            className="group mt-9 inline-flex h-11 items-center gap-3 rounded-full bg-[#111] px-6 text-sm font-medium text-white transition-colors hover:bg-black"
-          >
-            {t.machine.cta}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </button>
+        <ul className="fade-up mx-auto mt-14 grid max-w-5xl gap-4 sm:mt-20 md:grid-cols-3">
+          {t.machine.points.map((point, i) => {
+            const Icon = POINT_ICONS[i];
+            return (
+              <li key={point.title} className="rounded-3xl bg-[#f5f5f7] p-7 sm:p-8">
+                <Icon className="h-7 w-7 text-[#C41D3B]" strokeWidth={1.6} />
+                <h3 className="mt-6 text-xl font-semibold tracking-tight">
+                  <Phrases text={point.title} />
+                </h3>
+                <p className="mt-2 text-balance leading-relaxed text-zinc-600">
+                  <Phrases text={point.line} />
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* ── The close: ARC, the promise, and the form, together ───── */}
+      <section className="bg-white px-4 pb-16 pt-8 sm:px-6 sm:pb-24">
+        <div className="fade-up mx-auto grid max-w-5xl items-center overflow-hidden rounded-[2.5rem] bg-[#faf8f6] md:grid-cols-[1.1fr_1fr]">
+          <FloatingArc className="arc-stage-sm" priority={false} />
+          <div className="px-6 pb-12 text-center md:py-16 md:pl-0 md:pr-14 md:text-left">
+            <p className="text-lg font-semibold text-[#C41D3B]">7on ARC</p>
+            <h2 className="t-heading mt-2 text-balance text-4xl font-medium sm:text-5xl">
+              {t.hero.headline.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </h2>
+            <div className="mx-auto mt-8 max-w-md md:mx-0">
+              <div className="rounded-2xl border border-zinc-200 bg-white p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)]">
+                <SpecsForm location="machine" />
+              </div>
+              <p className="mt-3 text-balance px-2 text-xs text-zinc-400">
+                <Phrases text={t.hero.note} />
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -243,6 +259,7 @@ export default function Home() {
 
         /* The stage shows the photo from just above the device to below its shadow */
         .arc-stage { height: clamp(300px, 48vh, 580px); }
+        .arc-stage-sm { height: clamp(260px, 34vw, 420px); }
         .arc-frame { height: 122%; top: -16%; aspect-ratio: 2000 / 1116; }
 
         /* ARC settles in, then floats: up and down, gently, forever */

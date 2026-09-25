@@ -59,6 +59,11 @@ export const es: Dictionary = {
     tagline: "IA siempre contigo",
     headline: ["Verdaderamente", "tuyo."],
     body: "Sunday te conoce. Nadie más. Tus datos nunca entrenan el modelo de nadie.",
+    points: [
+      { title: "Privado por diseño.", line: "Tu memoria se queda contigo." },
+      { title: "Nada que te identifique.", line: "Los nombres y números se eliminan antes de procesar nada." },
+      { title: "Tuyo para borrar.", line: "Ve cada recuerdo. Borra lo que quieras." },
+    ],
     cta: "Recibe la ficha de ARC",
   },
   prefs: {

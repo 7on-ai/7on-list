@@ -19,7 +19,8 @@ import { track } from "@/lib/track";
 
 type FormValues = { email: string };
 
-export function SpecsForm() {
+/* location: where on the page this form sits, for analytics */
+export function SpecsForm({ location = "hero" }: { location?: "hero" | "machine" }) {
   const { t, locale } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Set once the request succeeds: the form gives way to the invite link
@@ -39,7 +40,7 @@ export function SpecsForm() {
       track("form_error", { reason: "invalid" });
       return;
     }
-    track("cta_click", { location: "hero" });
+    track("cta_click", { location });
 
     setIsSubmitting(true);
     try {

@@ -59,6 +59,11 @@ export const id: Dictionary = {
     tagline: "AI ke mana pun kamu pergi",
     headline: ["Sungguh milikmu."],
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
+    points: [
+      { title: "Privat sejak dirancang.", line: "Memorimu tetap bersamamu." },
+      { title: "Tanpa jejak identitas.", line: "Nama dan nomor dihapus sebelum apa pun diproses." },
+      { title: "Hapus kapan saja.", line: "Lihat setiap memori. Hapus apa saja." },
+    ],
     cta: "Dapatkan spesifikasi ARC",
   },
   prefs: {
