@@ -8,7 +8,7 @@ export const zhHant: Dictionary = {
   },
   hero: {
     headline: ["搶先擁有", "你的 Sunday。"],
-    sub: "ARC 附帶一朵專屬於你的私有雲——一個容器、一個資料庫，只為一個人。Sunday 就住在那裡，在你生活時把事情辦好。",
+    sub: "ARC 附帶一台專屬伺服器。只為你一人，從不共用。Sunday 就住在那裡，在你生活時把事情辦好。",
     placeholder: "你的電子郵件",
     cta: "索取 ARC 規格",
     note: "絕不打擾。現在寄出規格，ARC 就緒時再寄一封信。",
@@ -60,7 +60,7 @@ export const zhHant: Dictionary = {
     headline: ["真正屬於你。"],
     body: "Sunday 了解你，別人不會。你的資料絕不會用來訓練任何人的模型。",
     points: [
-      { title: "一朵雲，一個人。", line: "專屬的容器與資料庫，從不共用。" },
+      { title: "一台伺服器，一個人。", line: "專屬的 CPU、記憶體與資料庫，從不共用。" },
       { title: "不留身分痕跡。", line: "處理之前，姓名和號碼都會被移除。" },
       { title: "隨時可刪。", line: "看見每一段記憶，刪除任何內容。" },
     ],

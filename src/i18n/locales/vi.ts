@@ -8,7 +8,7 @@ export const vi: Dictionary = {
   },
   hero: {
     headline: ["Hãy là người đầu tiên", "sở hữu Sunday."],
-    sub: "ARC đi kèm một đám mây riêng của bạn: một container, một cơ sở dữ liệu, cho đúng một người. Sunday sống ở đó và lo mọi việc trong khi bạn sống ngày của mình.",
+    sub: "ARC đi kèm một máy chủ của riêng bạn. Dành riêng cho bạn, không bao giờ dùng chung. Sunday sống ở đó và lo mọi việc trong khi bạn sống ngày của mình.",
     placeholder: "Email của bạn",
     cta: "Nhận thông số ARC",
     note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi ARC của bạn sẵn sàng.",
@@ -60,7 +60,7 @@ export const vi: Dictionary = {
     headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
     points: [
-      { title: "Một đám mây. Một người.", line: "Container và cơ sở dữ liệu riêng. Không bao giờ dùng chung." },
+      { title: "Một máy chủ. Một người.", line: "CPU, RAM và cơ sở dữ liệu riêng. Không bao giờ dùng chung." },
       { title: "Không gì định danh bạn.", line: "Tên và số được loại bỏ trước khi xử lý." },
       { title: "Xóa bất cứ lúc nào.", line: "Xem mọi ký ức. Xóa bất cứ điều gì." },
     ],

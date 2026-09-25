@@ -8,7 +8,7 @@ export const pt: Dictionary = {
   },
   hero: {
     headline: ["Seu Sunday,", "antes de todo mundo."],
-    sub: "O ARC vem com uma nuvem privada só sua: um contêiner, um banco de dados, para uma única pessoa. O Sunday vive lá e resolve tudo enquanto você vive o seu dia.",
+    sub: "O ARC vem com um servidor só seu. Dedicado a você, nunca compartilhado. O Sunday vive lá e resolve tudo enquanto você vive o seu dia.",
     placeholder: "Seu e-mail",
     cta: "Receber a ficha do ARC",
     note: "Sem spam. A ficha técnica agora, e só mais um e-mail quando seu ARC estiver pronto.",
@@ -60,7 +60,7 @@ export const pt: Dictionary = {
     headline: ["Verdadeiramente", "seu."],
     body: "O Sunday aprende sobre você. Mais ninguém. Seus dados nunca treinam o modelo de ninguém.",
     points: [
-      { title: "Uma nuvem. Uma pessoa.", line: "Seu próprio contêiner e banco de dados. Nunca compartilhados." },
+      { title: "Um servidor. Uma pessoa.", line: "CPU, RAM e banco de dados dedicados. Nunca compartilhados." },
       { title: "Nada que identifique você.", line: "Nomes e números são removidos antes de qualquer processamento." },
       { title: "Seu para apagar.", line: "Veja cada memória. Apague o que quiser." },
     ],

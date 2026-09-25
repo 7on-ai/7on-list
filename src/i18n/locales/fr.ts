@@ -9,7 +9,7 @@ export const fr: Dictionary = {
   },
   hero: {
     headline: ["Votre Sunday,", "avant tout le monde."],
-    sub: "ARC est livré avec votre propre cloud privé : un conteneur, une base de données, pour une seule personne. Sunday y vit, et s'occupe de tout pendant que vous vivez votre journée.",
+    sub: "ARC est livré avec son propre serveur. Dédié à vous, jamais partagé. Sunday y vit, et s'occupe de tout pendant que vous vivez votre journée.",
     placeholder: "Votre e-mail",
     cta: "Recevoir la fiche ARC",
     note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre ARC sera prêt.",
@@ -61,7 +61,7 @@ export const fr: Dictionary = {
     headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
     points: [
-      { title: "Un cloud. Une personne.", line: "Votre propre conteneur et base de données. Jamais partagés." },
+      { title: "Un serveur. Une personne.", line: "CPU, RAM et base de données dédiés. Jamais partagés." },
       { title: "Rien qui vous identifie.", line: "Noms et numéros sont retirés avant tout traitement." },
       { title: "Effaçable à tout moment.", line: "Voyez chaque souvenir. Effacez ce que vous voulez." },
     ],
