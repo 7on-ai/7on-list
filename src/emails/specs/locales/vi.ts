@@ -8,9 +8,9 @@ export const vi: SpecsEmail = {
   intro: "Cảm ơn bạn đã đến sớm. Đây là cái nhìn đầu tiên về 7on ARC, và Sunday, AI sống bên trong.",
   lead: {
     title: "AI của riêng bạn. Luôn bật.",
-    body: "Sunday không chỉ trả lời. Sunday hành động — trên chiếc máy của riêng mình, cho một người duy nhất. Là bạn.",
+    body: "Sunday không chỉ trả lời. Sunday hành động — trên một máy chủ dành riêng, cho một người duy nhất. Là bạn.",
   },
-  featuresTitle: "Vì chiếc máy là của bạn.",
+  featuresTitle: "Vì máy chủ là của bạn.",
   featuresIntro: "Mỗi điều dưới đây đều nằm ngoài tầm với của một trợ lý mà hàng triệu người dùng chung.",
   features: [
     {
@@ -27,7 +27,7 @@ export const vi: SpecsEmail = {
     },
     {
       title: "Đổi mô hình. Giữ nguyên trí nhớ.",
-      body: "Dùng mô hình của chúng tôi hoặc mang mô hình của bạn. Trí nhớ và lịch sử nằm trên máy của bạn — không bao giờ trong một phòng lab nào.",
+      body: "Dùng mô hình của chúng tôi hoặc mang mô hình của bạn. Trí nhớ và lịch sử nằm trên máy chủ của riêng bạn — không bao giờ trong một phòng lab nào.",
     },
   ],
   mindGraph: {
@@ -46,7 +46,7 @@ export const vi: SpecsEmail = {
     { value: "Không giới hạn", label: "Dung lượng Mind Graph" },
   ],
   closing: {
-    title: "Một chiếc máy. Một con người.",
+    title: "Một máy chủ. Một con người.",
     body: "Sunday gọi điện thay bạn, giữ lịch cho bạn, và nhớ những gì bạn đã kể từ nhiều tháng trước.",
   },
   cta: "Truy cập 7on.ai",

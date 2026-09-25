@@ -8,9 +8,9 @@ export const en: SpecsEmail = {
   intro: "Thank you for being early. Here is a first look at 7on ARC, and Sunday, the AI that lives on it.",
   lead: {
     title: "Your Sovereign AI. Always on.",
-    body: "Sunday doesn't just answer. It acts — on a machine of its own, for one person. You.",
+    body: "Sunday doesn't just answer. It acts — on a dedicated server of its own, for one person. You.",
   },
-  featuresTitle: "Because the machine is yours.",
+  featuresTitle: "Because the server is yours.",
   featuresIntro: "Each of these is out of reach for an assistant that millions of people share.",
   features: [
     {
@@ -27,7 +27,7 @@ export const en: SpecsEmail = {
     },
     {
       title: "Change the model. Keep the mind.",
-      body: "Use our models or bring your own. Your memory and history live on your machine — never inside a lab.",
+      body: "Use our models or bring your own. Your memory and history live on your own server — never inside a lab.",
     },
   ],
   mindGraph: {
@@ -46,7 +46,7 @@ export const en: SpecsEmail = {
     { value: "Unlimited", label: "Mind Graph capacity" },
   ],
   closing: {
-    title: "One machine. One person.",
+    title: "One server. One person.",
     body: "Sunday makes your calls, holds your calendar, and remembers what you told it months ago.",
   },
   cta: "Visit 7on.ai",

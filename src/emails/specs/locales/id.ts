@@ -8,9 +8,9 @@ export const id: SpecsEmail = {
   intro: "Terima kasih sudah datang lebih awal. Ini sekilas pertama tentang 7on ARC, dan Sunday, AI yang tinggal di dalamnya.",
   lead: {
     title: "AI milikmu sendiri. Selalu aktif.",
-    body: "Sunday tidak hanya menjawab. Sunday bertindak — di mesinnya sendiri, untuk satu orang. Kamu.",
+    body: "Sunday tidak hanya menjawab. Sunday bertindak — di server khususnya sendiri, untuk satu orang. Kamu.",
   },
-  featuresTitle: "Karena mesinnya milikmu.",
+  featuresTitle: "Karena servernya milikmu.",
   featuresIntro: "Semua ini di luar jangkauan asisten yang dipakai bersama oleh jutaan orang.",
   features: [
     {
@@ -27,7 +27,7 @@ export const id: SpecsEmail = {
     },
     {
       title: "Ganti modelnya. Ingatannya tetap.",
-      body: "Pakai model kami atau bawa modelmu sendiri. Ingatan dan riwayatmu tinggal di mesinmu — tidak pernah di laboratorium mana pun.",
+      body: "Pakai model kami atau bawa modelmu sendiri. Ingatan dan riwayatmu tinggal di servermu sendiri — tidak pernah di laboratorium mana pun.",
     },
   ],
   mindGraph: {
@@ -46,7 +46,7 @@ export const id: SpecsEmail = {
     { value: "Tanpa batas", label: "Kapasitas Mind Graph" },
   ],
   closing: {
-    title: "Satu mesin. Satu orang.",
+    title: "Satu server. Satu orang.",
     body: "Sunday menelepon untukmu, mengatur kalendermu, dan mengingat apa yang kamu ceritakan berbulan-bulan lalu.",
   },
   cta: "Kunjungi 7on.ai",

@@ -8,9 +8,9 @@ export const zhHant: SpecsEmail = {
   intro: "感謝你搶先加入。以下是 7on ARC，以及住在其中的 AI——Sunday 的初步介紹。",
   lead: {
     title: "你的主權 AI。始終在線。",
-    body: "Sunday 不只是回答，它會行動——在一台屬於它自己的機器上，只為一個人：你。",
+    body: "Sunday 不只是回答，它會行動——在一台專屬的伺服器上，只為一個人：你。",
   },
-  featuresTitle: "因為這台機器屬於你。",
+  featuresTitle: "因為這台伺服器屬於你。",
   featuresIntro: "以下每一項，都是數百萬人共用的助理做不到的。",
   features: [
     {
@@ -27,7 +27,7 @@ export const zhHant: SpecsEmail = {
     },
     {
       title: "換模型，不換記憶。",
-      body: "使用我們的模型，或接上你自己的。你的記憶與歷史留在你的機器上——絕不進入任何實驗室。",
+      body: "使用我們的模型，或接上你自己的。你的記憶與歷史留在你專屬的伺服器上——絕不進入任何實驗室。",
     },
   ],
   mindGraph: {
@@ -46,7 +46,7 @@ export const zhHant: SpecsEmail = {
     { value: "無限", label: "Mind Graph 容量" },
   ],
   closing: {
-    title: "一台機器，一個人。",
+    title: "一台伺服器，一個人。",
     body: "Sunday 替你打電話、管理你的行事曆，還記得你幾個月前說過的話。",
   },
   cta: "前往 7on.ai",

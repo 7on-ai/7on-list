@@ -8,9 +8,9 @@ export const ko: SpecsEmail = {
   intro: "먼저 함께해 주셔서 감사합니다. 7on ARC와, 그 안에 사는 AI Sunday를 처음으로 소개합니다.",
   lead: {
     title: "당신만의 AI. 언제나 켜져 있습니다.",
-    body: "Sunday는 답하는 데서 그치지 않고 행동합니다. 자신만의 기기 위에서, 단 한 사람, 당신을 위해.",
+    body: "Sunday는 답하는 데서 그치지 않고 행동합니다. 전용 서버 위에서, 단 한 사람, 당신을 위해.",
   },
-  featuresTitle: "기기가 당신의 것이기에.",
+  featuresTitle: "서버가 당신의 것이기에.",
   featuresIntro: "수백만 명이 함께 쓰는 어시스턴트로는 닿을 수 없는 일들입니다.",
   features: [
     {
@@ -27,7 +27,7 @@ export const ko: SpecsEmail = {
     },
     {
       title: "모델은 바꿔도, 기억은 그대로.",
-      body: "저희 모델을 쓰셔도, 직접 가져오셔도 됩니다. 기억과 기록은 당신의 기기에 남고, 어떤 연구소에도 가지 않습니다.",
+      body: "저희 모델을 쓰셔도, 직접 가져오셔도 됩니다. 기억과 기록은 당신만의 서버에 남고, 어떤 연구소에도 가지 않습니다.",
     },
   ],
   mindGraph: {
@@ -46,7 +46,7 @@ export const ko: SpecsEmail = {
     { value: "무제한", label: "Mind Graph 용량" },
   ],
   closing: {
-    title: "하나의 기기. 한 사람을 위해.",
+    title: "하나의 서버. 한 사람을 위해.",
     body: "Sunday는 전화를 걸고, 일정을 챙기고, 몇 달 전 당신이 한 말도 기억합니다.",
   },
   cta: "7on.ai 방문하기",
