@@ -9,10 +9,10 @@ export const fr: Dictionary = {
   },
   hero: {
     headline: ["Votre Sunday,", "avant tout le monde."],
-    sub: "Une IA privée qui vit sur 7on ARC, une machine bien à vous, et s'occupe de tout pendant que vous vivez votre journée.",
+    sub: "Une IA privée qui vit sur ARC, une machine bien à vous, et s'occupe de tout pendant que vous vivez votre journée.",
     placeholder: "Votre e-mail",
-    cta: "Recevoir la fiche 7on ARC",
-    note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre 7on ARC sera prêt.",
+    cta: "Recevoir la fiche ARC",
+    note: "Pas de spam. La fiche technique maintenant, et un seul autre e-mail quand votre ARC sera prêt.",
   },
   form: {
     success: "C'est noté. La fiche technique est en route.",
@@ -28,7 +28,7 @@ export const fr: Dictionary = {
   },
   day: {
     eyebrow: "Votre premier jour",
-    headline: "Le jour où votre 7on ARC arrive",
+    headline: "Le jour où votre ARC arrive",
     moments: [
       {
         time: "07:00",
@@ -60,15 +60,15 @@ export const fr: Dictionary = {
     tagline: "L'IA partout avec vous",
     headline: ["Vraiment à vous."],
     body: "Sunday apprend à vous connaître. Personne d'autre. Vos données n'entraînent jamais le modèle de qui que ce soit.",
-    cta: "Recevoir la fiche 7on ARC",
+    cta: "Recevoir la fiche ARC",
   },
   prefs: {
     title: "Préférences e-mail",
     /* {email} is replaced with the address */
     intro: "Choisissez ce que nous envoyons à {email}.",
     options: {
-      updates: { label: "Nouvelles", description: "Des nouvelles de Sunday et de 7on ARC de temps en temps, et l'e-mail quand votre 7on ARC sera prêt." },
-      launch: { label: "Lancement uniquement", description: "Un e-mail quand votre 7on ARC sera prêt. Rien d'autre." },
+      updates: { label: "Nouvelles", description: "Des nouvelles de Sunday et d'ARC de temps en temps, et l'e-mail quand votre ARC sera prêt." },
+      launch: { label: "Lancement uniquement", description: "Un e-mail quand votre ARC sera prêt. Rien d'autre." },
       none: { label: "Rien", description: "Plus aucun e-mail de 7on." },
     },
     current: "Actuel",
@@ -76,7 +76,7 @@ export const fr: Dictionary = {
     confirm: "Oui, tenez-moi informé",
     saved: "Enregistré.",
     invalid: "Ce lien ne fonctionne pas. Utilisez le lien de votre e-mail le plus récent de 7on.",
-    back: "Retour à 7on ARC",
+    back: "Retour à ARC",
   },
   invite: {
     invited: "Un ami vous invite",
@@ -85,11 +85,11 @@ export const fr: Dictionary = {
     copy: "Copier le lien",
     copied: "Copié",
     share: "Partager",
-    shareText: "Sunday vit sur 7on ARC. Recevez la fiche technique\u00A0:",
+    shareText: "Sunday vit sur ARC. Recevez la fiche technique\u00A0:",
     pageTitle: "Votre place dans la file",
     place: "Votre place",
     friends: "Amis inscrits",
-    how: "Quand 7on ARC sera prêt, nous écrirons dans l'ordre de la file. Un ami compte dès que sa fiche technique lui est parvenue.",
+    how: "Quand ARC sera prêt, nous écrirons dans l'ordre de la file. Un ami compte dès que sa fiche technique lui est parvenue.",
     out: "Les e-mails de 7on sont désactivés pour cette adresse, elle n'est donc pas dans la file.",
     manage: "Préférences e-mail",
   },

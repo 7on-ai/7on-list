@@ -8,10 +8,10 @@ export const ja: Dictionary = {
   },
   hero: {
     headline: ["いち早く、", "あなたの Sunday を。"],
-    sub: "あなただけのマシン、7on ARC に住むプライベート AI。あなたが毎日を過ごしているあいだに、やるべきことを片づけます。",
+    sub: "あなただけのマシン、ARC に住むプライベート AI。あなたが毎日を過ごしているあいだに、やるべきことを片づけます。",
     placeholder: "メールアドレス",
-    cta: "7on ARC のスペックを受け取る",
-    note: "スパムは送りません。今すぐスペックを、7on ARC の準備ができたらもう一通だけ。",
+    cta: "ARC のスペックを受け取る",
+    note: "スパムは送りません。今すぐスペックを、ARC の準備ができたらもう一通だけ。",
   },
   form: {
     success: "登録しました。スペックがまもなく届きます。",
@@ -27,7 +27,7 @@ export const ja: Dictionary = {
   },
   day: {
     eyebrow: "最初の一日",
-    headline: "7on ARC が届く日",
+    headline: "ARC が届く日",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const ja: Dictionary = {
     tagline: "持ち歩ける AI",
     headline: ["本当に、", "あなたのもの。"],
     body: "Sunday はあなたを知っていく。ほかの誰でもなく。あなたのデータが、誰かのモデルの学習に使われることはありません。",
-    cta: "7on ARC のスペックを受け取る",
+    cta: "ARC のスペックを受け取る",
   },
   prefs: {
     title: "メール設定",
     /* {email} is replaced with the address */
     intro: "{email} にお送りする内容を選んでください。",
     options: {
-      updates: { label: "最新情報", description: "Sunday と 7on ARC の最新情報をときどき。7on ARC の準備ができたときのお知らせも。" },
-      launch: { label: "発売のお知らせのみ", description: "7on ARC の準備ができたときに一通だけ。それ以外は送りません。" },
+      updates: { label: "最新情報", description: "Sunday と ARC の最新情報をときどき。ARC の準備ができたときのお知らせも。" },
+      launch: { label: "発売のお知らせのみ", description: "ARC の準備ができたときに一通だけ。それ以外は送りません。" },
       none: { label: "受け取らない", description: "7on からのメールを今後お送りしません。" },
     },
     current: "現在の設定",
@@ -75,7 +75,7 @@ export const ja: Dictionary = {
     confirm: "はい、最新情報を受け取る",
     saved: "保存しました。",
     invalid: "このリンクは使用できません。7on からの最新のメールにあるリンクをお使いください。",
-    back: "7on ARC に戻る",
+    back: "ARC に戻る",
   },
   invite: {
     invited: "友達からの招待",
@@ -84,11 +84,11 @@ export const ja: Dictionary = {
     copy: "リンクをコピー",
     copied: "コピーしました",
     share: "共有",
-    shareText: "Sunday は 7on ARC に住んでいます。スペックはこちら：",
+    shareText: "Sunday は ARC に住んでいます。スペックはこちら：",
     pageTitle: "あなたの順番",
     place: "現在の順番",
     friends: "参加した友達",
-    how: "7on ARC の準備ができたら、順番どおりにご連絡します。友達はスペックのメールが届いた時点でカウントされます。",
+    how: "ARC の準備ができたら、順番どおりにご連絡します。友達はスペックのメールが届いた時点でカウントされます。",
     out: "このアドレスは 7on からのメールを停止しているため、順番に含まれていません。",
     manage: "メール設定",
   },

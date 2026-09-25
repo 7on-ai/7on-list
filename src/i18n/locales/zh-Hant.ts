@@ -8,10 +8,10 @@ export const zhHant: Dictionary = {
   },
   hero: {
     headline: ["搶先擁有", "你的 Sunday。"],
-    sub: "一個私人 AI，住在 7on ARC——一台屬於你自己的機器上，在你過好每一天的同時，把事情辦妥。",
+    sub: "一個私人 AI，住在 ARC——一台屬於你自己的機器上，在你過好每一天的同時，把事情辦妥。",
     placeholder: "你的電子郵件",
-    cta: "索取 7on ARC 規格",
-    note: "絕不打擾。現在寄出規格，7on ARC 就緒時再寄一封信。",
+    cta: "索取 ARC 規格",
+    note: "絕不打擾。現在寄出規格，ARC 就緒時再寄一封信。",
   },
   form: {
     success: "已加入。規格正寄往你的信箱。",
@@ -27,7 +27,7 @@ export const zhHant: Dictionary = {
   },
   day: {
     eyebrow: "你的第一天",
-    headline: "7on ARC 到家的那一天",
+    headline: "ARC 到家的那一天",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const zhHant: Dictionary = {
     tagline: "隨身 AI",
     headline: ["真正屬於你。"],
     body: "Sunday 了解你，別人不會。你的資料絕不會用來訓練任何人的模型。",
-    cta: "索取 7on ARC 規格",
+    cta: "索取 ARC 規格",
   },
   prefs: {
     title: "郵件偏好",
     /* {email} is replaced with the address */
     intro: "選擇我們寄給 {email} 的內容。",
     options: {
-      updates: { label: "動態", description: "不定期分享 Sunday 與 7on ARC 的最新消息，以及 7on ARC 就緒時的通知。" },
-      launch: { label: "僅上市通知", description: "7on ARC 就緒時寄一封信，別無其他。" },
+      updates: { label: "動態", description: "不定期分享 Sunday 與 ARC 的最新消息，以及 ARC 就緒時的通知。" },
+      launch: { label: "僅上市通知", description: "ARC 就緒時寄一封信，別無其他。" },
       none: { label: "不接收", description: "不再接收來自 7on 的郵件。" },
     },
     current: "目前",
@@ -75,7 +75,7 @@ export const zhHant: Dictionary = {
     confirm: "好，請告訴我最新動態",
     saved: "已儲存。",
     invalid: "此連結無效。請使用 7on 最近寄給你的郵件中的連結。",
-    back: "返回 7on ARC",
+    back: "返回 ARC",
   },
   invite: {
     invited: "朋友邀請你",
@@ -84,11 +84,11 @@ export const zhHant: Dictionary = {
     copy: "複製連結",
     copied: "已複製",
     share: "分享",
-    shareText: "Sunday 住在 7on ARC 裡。索取規格：",
+    shareText: "Sunday 住在 ARC 裡。索取規格：",
     pageTitle: "你的排隊位置",
     place: "你的位置",
     friends: "加入的朋友",
-    how: "7on ARC 就緒時，我們會依隊伍順序寄信。朋友收到規格信後才會計入。",
+    how: "ARC 就緒時，我們會依隊伍順序寄信。朋友收到規格信後才會計入。",
     out: "此信箱已關閉 7on 的郵件，因此不在隊伍中。",
     manage: "郵件偏好設定",
   },

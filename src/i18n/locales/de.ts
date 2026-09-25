@@ -3,15 +3,15 @@ import type { Dictionary } from "../types";
 export const de: Dictionary = {
   meta: {
     title: "7on ARC — Dein Sunday. Vor allen anderen.",
-    description: "7on ARC, KI für unterwegs. Hol dir das vorläufige Datenblatt – 7on ARC ist das Zuhause von Sunday, dem KI-Agenten, der immer an ist.",
+    description: "7on ARC, KI für unterwegs. Hol dir das vorläufige Datenblatt – ARC ist das Zuhause von Sunday, dem KI-Agenten, der immer an ist.",
     ogLine: "Sunday lebt auf 7on ARC.",
   },
   hero: {
     headline: ["Dein Sunday.", "Vor allen anderen."],
-    sub: "Eine private KI, die auf 7on ARC lebt, deiner eigenen Maschine, und Dinge erledigt, während du deinen Tag lebst.",
+    sub: "Eine private KI, die auf ARC lebt, deiner eigenen Maschine, und Dinge erledigt, während du deinen Tag lebst.",
     placeholder: "Deine E-Mail",
-    cta: "7on ARC-Datenblatt anfordern",
-    note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn dein 7on ARC bereit ist.",
+    cta: "ARC-Datenblatt anfordern",
+    note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn dein ARC bereit ist.",
   },
   form: {
     success: "Du bist dabei. Das Datenblatt ist unterwegs.",
@@ -27,7 +27,7 @@ export const de: Dictionary = {
   },
   day: {
     eyebrow: "Dein erster Tag",
-    headline: "Der Tag, an dem dein 7on ARC ankommt",
+    headline: "Der Tag, an dem dein ARC ankommt",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const de: Dictionary = {
     tagline: "KI für unterwegs",
     headline: ["Wirklich deins."],
     body: "Sunday lernt dich kennen. Niemand sonst. Deine Daten trainieren nie das Modell eines anderen.",
-    cta: "7on ARC-Datenblatt anfordern",
+    cta: "ARC-Datenblatt anfordern",
   },
   prefs: {
     title: "E-Mail-Einstellungen",
     /* {email} is replaced with the address */
     intro: "Wähle, was wir an {email} senden.",
     options: {
-      updates: { label: "Neuigkeiten", description: "Ab und zu Neues zu Sunday und 7on ARC – und die E-Mail, wenn dein 7on ARC bereit ist." },
-      launch: { label: "Nur zum Launch", description: "Eine E-Mail, wenn dein 7on ARC bereit ist. Sonst nichts." },
+      updates: { label: "Neuigkeiten", description: "Ab und zu Neues zu Sunday und ARC – und die E-Mail, wenn dein ARC bereit ist." },
+      launch: { label: "Nur zum Launch", description: "Eine E-Mail, wenn dein ARC bereit ist. Sonst nichts." },
       none: { label: "Nichts", description: "Keine E-Mails mehr von 7on." },
     },
     current: "Aktuell",
@@ -75,7 +75,7 @@ export const de: Dictionary = {
     confirm: "Ja, halte mich auf dem Laufenden",
     saved: "Gespeichert.",
     invalid: "Dieser Link funktioniert nicht. Nutze den Link aus deiner neuesten E-Mail von 7on.",
-    back: "Zurück zu 7on ARC",
+    back: "Zurück zu ARC",
   },
   invite: {
     invited: "Ein Freund lädt dich ein",
@@ -84,11 +84,11 @@ export const de: Dictionary = {
     copy: "Link kopieren",
     copied: "Kopiert",
     share: "Teilen",
-    shareText: "Sunday lebt auf 7on ARC. Hol dir das Datenblatt:",
+    shareText: "Sunday lebt auf ARC. Hol dir das Datenblatt:",
     pageTitle: "Dein Platz in der Warteschlange",
     place: "Dein Platz",
     friends: "Freunde dabei",
-    how: "Wenn 7on ARC bereit ist, schreiben wir in der Reihenfolge der Warteschlange. Ein Freund zählt, sobald sein Datenblatt angekommen ist.",
+    how: "Wenn ARC bereit ist, schreiben wir in der Reihenfolge der Warteschlange. Ein Freund zählt, sobald sein Datenblatt angekommen ist.",
     out: "Für diese Adresse sind E-Mails von 7on ausgeschaltet, deshalb steht sie nicht in der Warteschlange.",
     manage: "E-Mail-Einstellungen",
   },

@@ -8,10 +8,10 @@ export const en: Dictionary = {
   },
   hero: {
     headline: ["Be first to own", "your Sunday."],
-    sub: "A private AI that lives on 7on ARC, a machine of your own, and gets things done while you live your day.",
+    sub: "A private AI that lives on ARC, a machine of your own, and gets things done while you live your day.",
     placeholder: "Your email",
-    cta: "Get the 7on ARC specs",
-    note: "No spam. The specs now, and one email when your 7on ARC is ready.",
+    cta: "Get the ARC specs",
+    note: "No spam. The specs now, and one email when your ARC is ready.",
   },
   form: {
     success: "You're in. The specs are on their way.",
@@ -27,7 +27,7 @@ export const en: Dictionary = {
   },
   day: {
     eyebrow: "Your first day",
-    headline: "The day your 7on ARC arrives",
+    headline: "The day your ARC arrives",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const en: Dictionary = {
     tagline: "AI on the go",
     headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
-    cta: "Get the 7on ARC specs",
+    cta: "Get the ARC specs",
   },
   prefs: {
     title: "Email preferences",
     /* {email} is replaced with the address */
     intro: "Choose what we send to {email}.",
     options: {
-      updates: { label: "Updates", description: "Occasional news about Sunday and 7on ARC, and the email when your 7on ARC is ready." },
-      launch: { label: "Launch only", description: "One email when your 7on ARC is ready. Nothing else." },
+      updates: { label: "Updates", description: "Occasional news about Sunday and ARC, and the email when your ARC is ready." },
+      launch: { label: "Launch only", description: "One email when your ARC is ready. Nothing else." },
       none: { label: "Nothing", description: "No more emails from 7on." },
     },
     current: "Current",
@@ -75,7 +75,7 @@ export const en: Dictionary = {
     confirm: "Yes, keep me posted",
     saved: "Saved.",
     invalid: "This link doesn't work. Use the link in your most recent email from 7on.",
-    back: "Back to 7on ARC",
+    back: "Back to ARC",
   },
   invite: {
     invited: "A friend invited you",
@@ -84,11 +84,11 @@ export const en: Dictionary = {
     copy: "Copy link",
     copied: "Copied",
     share: "Share",
-    shareText: "Sunday lives on 7on ARC. Get the specs:",
+    shareText: "Sunday lives on ARC. Get the specs:",
     pageTitle: "Your place in line",
     place: "Your place",
     friends: "Friends who joined",
-    how: "When 7on ARC is ready, we write in the order of the line. A friend counts once their specs arrive.",
+    how: "When ARC is ready, we write in the order of the line. A friend counts once their specs arrive.",
     out: "Emails from 7on are turned off for this address, so it isn't in line.",
     manage: "Email preferences",
   },

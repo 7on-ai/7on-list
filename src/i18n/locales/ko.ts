@@ -8,10 +8,10 @@ export const ko: Dictionary = {
   },
   hero: {
     headline: ["가장 먼저,", "나만의 Sunday."],
-    sub: "당신만의 기기, 7on ARC에 사는 프라이빗 AI. 당신이 하루를 사는 동안, 할 일을 끝내 둡니다.",
+    sub: "당신만의 기기, ARC에 사는 프라이빗 AI. 당신이 하루를 사는 동안, 할 일을 끝내 둡니다.",
     placeholder: "이메일 주소",
-    cta: "7on ARC 스펙 받아보기",
-    note: "스팸은 없습니다. 지금은 스펙을, 7on ARC가 준비되면 이메일 한 통만 더 보내드립니다.",
+    cta: "ARC 스펙 받아보기",
+    note: "스팸은 없습니다. 지금은 스펙을, ARC가 준비되면 이메일 한 통만 더 보내드립니다.",
   },
   form: {
     success: "등록되었습니다. 스펙이 곧 도착합니다.",
@@ -27,7 +27,7 @@ export const ko: Dictionary = {
   },
   day: {
     eyebrow: "당신의 첫날",
-    headline: "7on ARC가 도착하는 날",
+    headline: "ARC가 도착하는 날",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const ko: Dictionary = {
     tagline: "어디서나 함께하는 AI",
     headline: ["진정한 당신의 것."],
     body: "Sunday는 당신을 알아갑니다. 다른 누구도 아닌. 당신의 데이터는 결코 누구의 모델 학습에도 쓰이지 않습니다.",
-    cta: "7on ARC 스펙 받아보기",
+    cta: "ARC 스펙 받아보기",
   },
   prefs: {
     title: "이메일 설정",
     /* {email} is replaced with the address */
     intro: "{email}(으)로 보낼 메일을 선택하세요.",
     options: {
-      updates: { label: "소식", description: "Sunday와 7on ARC의 새 소식을 가끔, 그리고 7on ARC가 준비되면 알림 메일." },
-      launch: { label: "출시 알림만", description: "7on ARC가 준비되면 이메일 한 통. 그 외에는 없습니다." },
+      updates: { label: "소식", description: "Sunday와 ARC의 새 소식을 가끔, 그리고 ARC가 준비되면 알림 메일." },
+      launch: { label: "출시 알림만", description: "ARC가 준비되면 이메일 한 통. 그 외에는 없습니다." },
       none: { label: "받지 않음", description: "7on에서 더 이상 메일을 보내지 않습니다." },
     },
     current: "현재",
@@ -75,7 +75,7 @@ export const ko: Dictionary = {
     confirm: "네, 소식 받을게요",
     saved: "저장되었습니다.",
     invalid: "이 링크는 사용할 수 없습니다. 7on에서 받은 최근 메일의 링크를 이용해 주세요.",
-    back: "7on ARC로 돌아가기",
+    back: "ARC로 돌아가기",
   },
   invite: {
     invited: "친구가 초대했어요",
@@ -84,11 +84,11 @@ export const ko: Dictionary = {
     copy: "링크 복사",
     copied: "복사됨",
     share: "공유",
-    shareText: "Sunday는 7on ARC에 삽니다. 스펙 받아보기:",
+    shareText: "Sunday는 ARC에 삽니다. 스펙 받아보기:",
     pageTitle: "내 대기 순서",
     place: "현재 순서",
     friends: "참여한 친구",
-    how: "7on ARC가 준비되면 대기 순서대로 이메일을 보내드립니다. 친구는 스펙 이메일이 도착한 뒤에 집계됩니다.",
+    how: "ARC가 준비되면 대기 순서대로 이메일을 보내드립니다. 친구는 스펙 이메일이 도착한 뒤에 집계됩니다.",
     out: "이 주소는 7on 이메일 수신을 끈 상태라 대기열에 없습니다.",
     manage: "이메일 설정",
   },

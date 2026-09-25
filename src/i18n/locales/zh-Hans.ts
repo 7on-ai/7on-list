@@ -8,10 +8,10 @@ export const zhHans: Dictionary = {
   },
   hero: {
     headline: ["率先拥有", "你的 Sunday。"],
-    sub: "一个私人 AI，住在 7on ARC——一台属于你自己的机器上，在你过好每一天的同时，把事情办妥。",
+    sub: "一个私人 AI，住在 ARC——一台属于你自己的机器上，在你过好每一天的同时，把事情办妥。",
     placeholder: "你的邮箱",
-    cta: "获取 7on ARC 规格",
-    note: "绝不打扰。现在发送规格，7on ARC 就绪时再发一封邮件。",
+    cta: "获取 ARC 规格",
+    note: "绝不打扰。现在发送规格，ARC 就绪时再发一封邮件。",
   },
   form: {
     success: "已加入。规格正在发往你的邮箱。",
@@ -27,7 +27,7 @@ export const zhHans: Dictionary = {
   },
   day: {
     eyebrow: "你的第一天",
-    headline: "7on ARC 到家的那一天",
+    headline: "ARC 到家的那一天",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const zhHans: Dictionary = {
     tagline: "随身 AI",
     headline: ["真正属于你。"],
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
-    cta: "获取 7on ARC 规格",
+    cta: "获取 ARC 规格",
   },
   prefs: {
     title: "邮件偏好",
     /* {email} is replaced with the address */
     intro: "选择我们发送给 {email} 的内容。",
     options: {
-      updates: { label: "动态", description: "不定期分享 Sunday 与 7on ARC 的最新消息，以及 7on ARC 就绪时的通知。" },
-      launch: { label: "仅发布通知", description: "7on ARC 就绪时发一封邮件，别无其他。" },
+      updates: { label: "动态", description: "不定期分享 Sunday 与 ARC 的最新消息，以及 ARC 就绪时的通知。" },
+      launch: { label: "仅发布通知", description: "ARC 就绪时发一封邮件，别无其他。" },
       none: { label: "不接收", description: "不再接收来自 7on 的邮件。" },
     },
     current: "当前",
@@ -75,7 +75,7 @@ export const zhHans: Dictionary = {
     confirm: "好的，请告诉我最新动态",
     saved: "已保存。",
     invalid: "此链接无效。请使用 7on 最近发给你的邮件中的链接。",
-    back: "返回 7on ARC",
+    back: "返回 ARC",
   },
   invite: {
     invited: "朋友邀请你",
@@ -84,11 +84,11 @@ export const zhHans: Dictionary = {
     copy: "复制链接",
     copied: "已复制",
     share: "分享",
-    shareText: "Sunday 住在 7on ARC 里。获取规格：",
+    shareText: "Sunday 住在 ARC 里。获取规格：",
     pageTitle: "你的排队位置",
     place: "你的位置",
     friends: "加入的朋友",
-    how: "7on ARC 就绪时，我们会按队列顺序发信。朋友收到规格邮件后才会计入。",
+    how: "ARC 就绪时，我们会按队列顺序发信。朋友收到规格邮件后才会计入。",
     out: "此地址已关闭 7on 的邮件，因此不在队列中。",
     manage: "邮件偏好设置",
   },

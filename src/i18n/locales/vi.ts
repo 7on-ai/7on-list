@@ -8,10 +8,10 @@ export const vi: Dictionary = {
   },
   hero: {
     headline: ["Hãy là người đầu tiên", "sở hữu Sunday."],
-    sub: "Một AI riêng tư sống trên 7on ARC, chiếc máy của riêng bạn, lo liệu mọi việc trong khi bạn sống trọn ngày của mình.",
+    sub: "Một AI riêng tư sống trên ARC, chiếc máy của riêng bạn, lo liệu mọi việc trong khi bạn sống trọn ngày của mình.",
     placeholder: "Email của bạn",
-    cta: "Nhận thông số 7on ARC",
-    note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi 7on ARC của bạn sẵn sàng.",
+    cta: "Nhận thông số ARC",
+    note: "Không spam. Thông số gửi ngay bây giờ, và thêm một email khi ARC của bạn sẵn sàng.",
   },
   form: {
     success: "Bạn đã có tên. Thông số đang được gửi đến hộp thư của bạn.",
@@ -27,7 +27,7 @@ export const vi: Dictionary = {
   },
   day: {
     eyebrow: "Ngày đầu tiên của bạn",
-    headline: "Ngày 7on ARC của bạn đến",
+    headline: "Ngày ARC của bạn đến",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const vi: Dictionary = {
     tagline: "AI theo bạn mọi nơi",
     headline: ["Thật sự của bạn."],
     body: "Sunday hiểu bạn. Không ai khác. Dữ liệu của bạn không bao giờ được dùng để huấn luyện mô hình của bất kỳ ai.",
-    cta: "Nhận thông số 7on ARC",
+    cta: "Nhận thông số ARC",
   },
   prefs: {
     title: "Tùy chọn email",
     /* {email} is replaced with the address */
     intro: "Chọn những gì chúng tôi gửi đến {email}.",
     options: {
-      updates: { label: "Tin cập nhật", description: "Thỉnh thoảng cập nhật về Sunday và 7on ARC, cùng email khi 7on ARC của bạn sẵn sàng." },
-      launch: { label: "Chỉ ngày ra mắt", description: "Một email khi 7on ARC của bạn sẵn sàng. Không gì khác." },
+      updates: { label: "Tin cập nhật", description: "Thỉnh thoảng cập nhật về Sunday và ARC, cùng email khi ARC của bạn sẵn sàng." },
+      launch: { label: "Chỉ ngày ra mắt", description: "Một email khi ARC của bạn sẵn sàng. Không gì khác." },
       none: { label: "Không nhận", description: "Không nhận thêm email nào từ 7on." },
     },
     current: "Hiện tại",
@@ -75,7 +75,7 @@ export const vi: Dictionary = {
     confirm: "Có, cập nhật cho tôi",
     saved: "Đã lưu.",
     invalid: "Liên kết này không hoạt động. Hãy dùng liên kết trong email mới nhất từ 7on.",
-    back: "Quay lại 7on ARC",
+    back: "Quay lại ARC",
   },
   invite: {
     invited: "Một người bạn đã mời bạn",
@@ -84,11 +84,11 @@ export const vi: Dictionary = {
     copy: "Sao chép liên kết",
     copied: "Đã sao chép",
     share: "Chia sẻ",
-    shareText: "Sunday sống trên 7on ARC. Nhận thông số tại:",
+    shareText: "Sunday sống trên ARC. Nhận thông số tại:",
     pageTitle: "Vị trí của bạn trong hàng chờ",
     place: "Vị trí",
     friends: "Bạn bè đã tham gia",
-    how: "Khi 7on ARC sẵn sàng, chúng tôi gửi email theo thứ tự hàng chờ. Một người bạn được tính khi email thông số đã đến hộp thư của họ.",
+    how: "Khi ARC sẵn sàng, chúng tôi gửi email theo thứ tự hàng chờ. Một người bạn được tính khi email thông số đã đến hộp thư của họ.",
     out: "Địa chỉ này đã tắt email từ 7on nên không có trong hàng chờ.",
     manage: "Tùy chọn email",
   },

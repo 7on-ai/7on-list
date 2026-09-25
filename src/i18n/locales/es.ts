@@ -8,10 +8,10 @@ export const es: Dictionary = {
   },
   hero: {
     headline: ["Ten tu Sunday", "antes que nadie."],
-    sub: "Una IA privada que vive en 7on ARC, una máquina solo tuya, y se encarga de todo mientras tú vives tu día.",
+    sub: "Una IA privada que vive en ARC, una máquina solo tuya, y se encarga de todo mientras tú vives tu día.",
     placeholder: "Tu email",
-    cta: "Recibe la ficha de 7on ARC",
-    note: "Sin spam. La ficha técnica ahora, y un solo email más cuando tu 7on ARC esté listo.",
+    cta: "Recibe la ficha de ARC",
+    note: "Sin spam. La ficha técnica ahora, y un solo email más cuando tu ARC esté listo.",
   },
   form: {
     success: "Estás dentro. La ficha técnica va de camino a tu correo.",
@@ -27,7 +27,7 @@ export const es: Dictionary = {
   },
   day: {
     eyebrow: "Tu primer día",
-    headline: "El día que llega tu 7on ARC",
+    headline: "El día que llega tu ARC",
     moments: [
       {
         time: "07:00",
@@ -59,15 +59,15 @@ export const es: Dictionary = {
     tagline: "IA siempre contigo",
     headline: ["Verdaderamente", "tuyo."],
     body: "Sunday te conoce. Nadie más. Tus datos nunca entrenan el modelo de nadie.",
-    cta: "Recibe la ficha de 7on ARC",
+    cta: "Recibe la ficha de ARC",
   },
   prefs: {
     title: "Preferencias de email",
     /* {email} is replaced with the address */
     intro: "Elige qué enviamos a {email}.",
     options: {
-      updates: { label: "Novedades", description: "Noticias ocasionales sobre Sunday y 7on ARC, y el email cuando tu 7on ARC esté listo." },
-      launch: { label: "Solo el lanzamiento", description: "Un email cuando tu 7on ARC esté listo. Nada más." },
+      updates: { label: "Novedades", description: "Noticias ocasionales sobre Sunday y ARC, y el email cuando tu ARC esté listo." },
+      launch: { label: "Solo el lanzamiento", description: "Un email cuando tu ARC esté listo. Nada más." },
       none: { label: "Nada", description: "Ningún email más de 7on." },
     },
     current: "Actual",
@@ -75,7 +75,7 @@ export const es: Dictionary = {
     confirm: "Sí, mantenme al día",
     saved: "Guardado.",
     invalid: "Este enlace no funciona. Usa el enlace de tu email más reciente de 7on.",
-    back: "Volver a 7on ARC",
+    back: "Volver a ARC",
   },
   invite: {
     invited: "Un amigo te invitó",
@@ -84,11 +84,11 @@ export const es: Dictionary = {
     copy: "Copiar enlace",
     copied: "Copiado",
     share: "Compartir",
-    shareText: "Sunday vive en 7on ARC. Recibe la ficha técnica:",
+    shareText: "Sunday vive en ARC. Recibe la ficha técnica:",
     pageTitle: "Tu lugar en la fila",
     place: "Tu lugar",
     friends: "Amigos que se unieron",
-    how: "Cuando 7on ARC esté listo, escribiremos en el orden de la fila. Un amigo cuenta en cuanto le llega su ficha técnica.",
+    how: "Cuando ARC esté listo, escribiremos en el orden de la fila. Un amigo cuenta en cuanto le llega su ficha técnica.",
     out: "Esta dirección tiene desactivados los emails de 7on, así que no está en la fila.",
     manage: "Preferencias de email",
   },
