@@ -8,7 +8,7 @@ export const en: Dictionary = {
   },
   hero: {
     headline: ["Be first to own", "your Sunday."],
-    sub: "A private AI that lives on ARC, a machine of your own, and gets things done while you live your day.",
+    sub: "ARC comes with a private cloud of your own: one container, one database, for one person. Sunday lives there, and gets things done while you live your day.",
     placeholder: "Your email",
     cta: "Get the ARC specs",
     note: "No spam. The specs now, and one email when your ARC is ready.",
@@ -60,7 +60,7 @@ export const en: Dictionary = {
     headline: ["Truly yours."],
     body: "Sunday learns you. No one else does. Your data never trains anyone else's model.",
     points: [
-      { title: "Private by design.", line: "Your memory stays with you." },
+      { title: "One cloud. One person.", line: "Your own container and database. Never shared." },
       { title: "Nothing that names you.", line: "Names and numbers are removed before anything is processed." },
       { title: "Yours to erase.", line: "See every memory. Delete anything." },
     ],

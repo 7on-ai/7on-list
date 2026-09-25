@@ -8,7 +8,7 @@ export const id: Dictionary = {
   },
   hero: {
     headline: ["Jadilah yang pertama", "memiliki Sunday."],
-    sub: "AI pribadi yang tinggal di ARC, mesin milikmu sendiri, dan menyelesaikan berbagai hal selagi kamu menjalani harimu.",
+    sub: "ARC hadir dengan cloud pribadimu sendiri: satu container, satu database, untuk satu orang. Sunday tinggal di sana dan menyelesaikan berbagai hal selagi kamu menjalani harimu.",
     placeholder: "Email kamu",
     cta: "Dapatkan spesifikasi ARC",
     note: "Tanpa spam. Spesifikasinya sekarang, dan satu email lagi saat ARC-mu siap.",
@@ -60,7 +60,7 @@ export const id: Dictionary = {
     headline: ["Sungguh milikmu."],
     body: "Sunday mengenalmu. Tidak ada yang lain. Datamu tidak pernah dipakai untuk melatih model siapa pun.",
     points: [
-      { title: "Privat sejak dirancang.", line: "Memorimu tetap bersamamu." },
+      { title: "Satu cloud. Satu orang.", line: "Container dan database milikmu sendiri. Tidak pernah dibagi." },
       { title: "Tanpa jejak identitas.", line: "Nama dan nomor dihapus sebelum apa pun diproses." },
       { title: "Hapus kapan saja.", line: "Lihat setiap memori. Hapus apa saja." },
     ],

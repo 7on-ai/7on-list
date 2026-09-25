@@ -8,7 +8,7 @@ export const de: Dictionary = {
   },
   hero: {
     headline: ["Dein Sunday.", "Vor allen anderen."],
-    sub: "Eine private KI, die auf ARC lebt, deiner eigenen Maschine, und Dinge erledigt, während du deinen Tag lebst.",
+    sub: "ARC kommt mit deiner eigenen privaten Cloud: ein Container, eine Datenbank, für eine einzige Person. Dort lebt Sunday und erledigt alles, während du deinen Tag lebst.",
     placeholder: "Deine E-Mail",
     cta: "ARC-Datenblatt anfordern",
     note: "Kein Spam. Das Datenblatt jetzt, und nur noch eine E-Mail, wenn dein ARC bereit ist.",
@@ -60,7 +60,7 @@ export const de: Dictionary = {
     headline: ["Wirklich deins."],
     body: "Sunday lernt dich kennen. Niemand sonst. Deine Daten trainieren nie das Modell eines anderen.",
     points: [
-      { title: "Privat von Grund auf.", line: "Deine Erinnerungen bleiben bei dir." },
+      { title: "Eine Cloud. Ein Mensch.", line: "Dein eigener Container, deine eigene Datenbank. Nie geteilt." },
       { title: "Nichts, was dich verrät.", line: "Namen und Nummern werden vor jeder Verarbeitung entfernt." },
       { title: "Jederzeit löschbar.", line: "Sieh jede Erinnerung. Lösche, was du willst." },
     ],

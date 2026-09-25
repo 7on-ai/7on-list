@@ -8,7 +8,7 @@ export const zhHans: Dictionary = {
   },
   hero: {
     headline: ["率先拥有", "你的 Sunday。"],
-    sub: "一个私人 AI，住在 ARC——一台属于你自己的机器上，在你过好每一天的同时，把事情办妥。",
+    sub: "ARC 自带一朵专属于你的私有云——一个容器、一个数据库，只为一个人。Sunday 就住在那里，在你生活时把事情办好。",
     placeholder: "你的邮箱",
     cta: "获取 ARC 规格",
     note: "绝不打扰。现在发送规格，ARC 就绪时再发一封邮件。",
@@ -60,7 +60,7 @@ export const zhHans: Dictionary = {
     headline: ["真正属于你。"],
     body: "Sunday 了解你，别人不会。你的数据绝不会用于训练任何人的模型。",
     points: [
-      { title: "生来私密。", line: "你的记忆只属于你。" },
+      { title: "一朵云，一个人。", line: "专属的容器与数据库，从不共享。" },
       { title: "不留身份痕迹。", line: "处理之前，姓名和号码都会被移除。" },
       { title: "随时可删。", line: "看见每一段记忆，删除任何内容。" },
     ],

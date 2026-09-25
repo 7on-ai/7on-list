@@ -1,8 +1,8 @@
 "use client";
 
-import { Eraser, EyeOff, Lock } from "lucide-react";
+import { Eraser, EyeOff, Server } from "lucide-react";
 
-const POINT_ICONS = [Lock, EyeOff, Eraser];
+const POINT_ICONS = [Server, EyeOff, Eraser];
 import Image from "next/image";
 import Link from "next/link";
 import device from "@/assets/arc-device.webp";
