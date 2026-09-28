@@ -231,16 +231,26 @@ def screen_material(image):
     b.inputs["Emission Strength"].default_value = 1.8
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = image
-    tex.extension = "CLIP"
-    coord = nt.nodes.new("ShaderNodeTexCoord")
-    mapping = nt.nodes.new("ShaderNodeMapping")
-    s = 1 / GLASS_D
-    mapping.inputs["Scale"].default_value = (s, s, 1)
-    mapping.inputs["Location"].default_value = (0.5, 0.5, 0)
-    nt.links.new(coord.outputs["Object"], mapping.inputs["Vector"])
-    nt.links.new(mapping.outputs["Vector"], tex.inputs["Vector"])
+    tex.extension = "CLIP"   # reads the glass's top-down UVs
     nt.links.new(tex.outputs["Color"], b.inputs["Emission Color"])
     return m
+
+
+def engraving_mask(path):
+    """The logo in the engraving's light tone, keeping its shape as alpha.
+    (logo.png is black; exported as-is, web viewers would show a black mark.)"""
+    logo = bpy.data.images.load(os.path.abspath(LOGO))
+    w, h = logo.size
+    px = np.array(logo.pixels[:]).reshape(h, w, 4)
+    out = np.empty_like(px)
+    out[..., :3] = (0.94, 0.94, 0.95)
+    out[..., 3] = px[..., 3]
+    im = bpy.data.images.new("arc_engraving", w, h, alpha=True)
+    im.pixels.foreach_set(out.astype(np.float32).ravel())
+    im.filepath_raw = path
+    im.file_format = "PNG"
+    im.save()
+    return im
 
 
 def engraving_material():
@@ -250,12 +260,12 @@ def engraving_material():
     m.use_nodes = True
     nt = m.node_tree
     b = nt.nodes["Principled BSDF"]
-    b.inputs["Base Color"].default_value = (0.94, 0.94, 0.95, 1)
     b.inputs["Metallic"].default_value = 0.25
     b.inputs["Roughness"].default_value = 0.72
     tex = nt.nodes.new("ShaderNodeTexImage")
-    tex.image = bpy.data.images.load(os.path.abspath(LOGO))
+    tex.image = engraving_mask(os.path.join(HERE, "arc_engraving.png"))
     tex.extension = "CLIP"
+    nt.links.new(tex.outputs["Color"], b.inputs["Base Color"])
     nt.links.new(tex.outputs["Alpha"], b.inputs["Alpha"])
     return m
 
@@ -287,7 +297,17 @@ def build():
     glass.location.z = THICKNESS - 0.45
     bev = glass.modifiers.new("Edge", "BEVEL")
     bev.width, bev.segments, bev.limit_method = 0.35, 6, "ANGLE"
-    for p in glass.data.polygons:
+    # Bake the bevel in, then map the screen image straight down from above —
+    # glTF can only carry an image through UVs, so Cycles uses the same ones
+    dg = bpy.context.evaluated_depsgraph_get()
+    baked = bpy.data.meshes.new_from_object(glass.evaluated_get(dg))
+    glass.modifiers.clear()
+    glass.data = baked
+    uv = baked.uv_layers.get("UVMap") or baked.uv_layers.new(name="UVMap")
+    for loop in baked.loops:
+        co = baked.vertices[loop.vertex_index].co
+        uv.data[loop.index].uv = (0.5 + co.x / GLASS_D, 0.5 + co.y / GLASS_D)
+    for p in baked.polygons:
         p.use_smooth = True
     img = screen_texture(os.path.join(HERE, "arc_screen.png"))
     glass.data.materials.append(screen_material(img))

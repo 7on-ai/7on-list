@@ -10,6 +10,7 @@ every file below is regenerated.
 | `arc.blend` | Blender scene, ready for animation or KeyShot export |
 | `arc.glb` | Web / AR model (glTF, real size in metres: 55 mm across) |
 | `arc_screen.png` | The screen: dark glass with the red orb from the page |
+| `arc_engraving.png` | The laser-engraving mask (the 7on mark, light, with alpha) |
 | `renders/arc-*.png` | Transparent renders; `*-on-light.png` on the page colour `#faf8f6` |
 
 ## Rebuild
@@ -51,5 +52,6 @@ renders):
 - **Stills:** the transparent renders drop straight onto any background.
 - **Video:** open `arc.blend`, animate the `7on ARC` empty (everything is
   parented to it), render with Cycles — a GPU makes 4K practical.
-- **Web:** `arc.glb` works with `<model-viewer>` or three.js. The engraving
-  and screen travel as textures.
+- **Web:** `arc.glb` works with `<model-viewer>` or three.js — checked in
+  three.js: real size, screen and engraving show. glTF is Y-up, so the screen
+  faces +Y there.
