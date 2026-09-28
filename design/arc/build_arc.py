@@ -3,6 +3,7 @@
 Run with Blender 4.5 (or the `bpy` module):
     blender -b -P build_arc.py            # builds arc.blend, arc.glb and renders
     python build_arc.py --preview         # quick low-sample renders
+    python build_arc.py --export-only     # arc.blend and arc.glb, no renders
 
 Units: 1 Blender unit = 1 mm.
 Angles around the rim are measured clockwise from 12 o'clock, looking at the screen.
@@ -20,6 +21,7 @@ from mathutils import Matrix, Vector
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOGO = os.path.join(HERE, "..", "..", "public", "logo.png")
 PREVIEW = "--preview" in sys.argv
+EXPORT_ONLY = "--export-only" in sys.argv   # rebuild arc.blend and arc.glb without rendering
 
 # ── Dimensions (mm) ───────────────────────────────────────────────
 OUTER_D = 55.00     # widest point of the body
@@ -32,8 +34,8 @@ SEAM_Z = 2.6        # back cover / body split line
 # Widest (27.5) a little above mid-height, rolling in to the glass lip.
 BODY_PROFILE = [
     (26.72, 2.62), (27.02, 3.20), (27.28, 4.40), (27.44, 5.90), (27.50, 7.40),
-    (27.43, 8.90), (27.18, 10.40), (26.66, 11.90), (25.90, 13.20), (25.12, 14.20),
-    (24.72, 14.75), (24.56, 14.95),
+    (27.43, 8.90), (27.18, 10.40), (26.66, 11.90), (25.90, 13.20), (25.12, 14.05),
+    (24.78, 14.40), (24.62, 14.55),
 ]
 # Back cover profile, from the flat back up to the seam
 BACK_PROFILE = [
@@ -248,9 +250,9 @@ def engraving_material():
     m.use_nodes = True
     nt = m.node_tree
     b = nt.nodes["Principled BSDF"]
-    b.inputs["Base Color"].default_value = (0.90, 0.90, 0.91, 1)
-    b.inputs["Metallic"].default_value = 0.35
-    b.inputs["Roughness"].default_value = 0.62
+    b.inputs["Base Color"].default_value = (0.94, 0.94, 0.95, 1)
+    b.inputs["Metallic"].default_value = 0.25
+    b.inputs["Roughness"].default_value = 0.72
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = bpy.data.images.load(os.path.abspath(LOGO))
     tex.extension = "CLIP"
@@ -271,7 +273,7 @@ def build():
     scene.collection.objects.link(root)
 
     # Body: from the seam to the glass, closed with flat caps inside
-    body_prof = [(0.0, 2.72), (26.25, 2.72)] + BODY_SMOOTH + [(24.25, 14.90), (0.0, 14.90)]
+    body_prof = [(0.0, 2.72), (26.25, 2.72)] + BODY_SMOOTH + [(24.30, 14.50), (0.0, 14.50)]
     body = lathe("Body", body_prof)
     body.data.materials.append(anodised)
 
@@ -281,8 +283,8 @@ def build():
     back.data.materials.append(back_alu)
 
     # Cover glass with a softened 2.5D edge
-    glass = cylinder("Glass", GLASS_D / 2, 0.8, verts=256)
-    glass.location.z = THICKNESS - 0.4
+    glass = cylinder("Glass", GLASS_D / 2, 0.9, verts=256)   # from z 14.15 to the full 15.05
+    glass.location.z = THICKNESS - 0.45
     bev = glass.modifiers.new("Edge", "BEVEL")
     bev.width, bev.segments, bev.limit_method = 0.35, 6, "ANGLE"
     for p in glass.data.polygons:
@@ -383,7 +385,7 @@ def build():
     logo = bpy.context.active_object
     logo.name = "Engraved logo"
     logo.scale = (LOGO_WIDTH, LOGO_WIDTH, 1)
-    logo.rotation_euler = (math.pi, 0, 0)          # face the back
+    logo.rotation_euler = (0, math.pi, 0)          # face the back, upright when turned over sideways
     logo.location.z = -0.012
     logo.data.materials.append(engraving_material())
 
@@ -412,7 +414,7 @@ def studio(scene):
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     ramp = nt.nodes.new("ShaderNodeValToRGB")
     r = ramp.color_ramp
-    r.elements[0].position, r.elements[0].color = 0.25, (0.10, 0.10, 0.105, 1)
+    r.elements[0].position, r.elements[0].color = 0.25, (0.17, 0.17, 0.175, 1)
     r.elements[1].position, r.elements[1].color = 0.95, (0.95, 0.95, 0.96, 1)
     mid = r.elements.new(0.52)
     mid.color = (0.26, 0.26, 0.27, 1)
@@ -441,6 +443,7 @@ def studio(scene):
     area("Strip", (230, 50, 45), 20, 0.7e5, size_y=240)    # the long highlight on the rim
     area("Rim", (40, 220, 120), 140, 2.0e5)
     area("Fill", (0, -260, -40), 220, 0.6e5)
+    area("Bounce", (0, -60, -240), 300, 0.9e5)
 
 
 def flatten(path, color=(0xFA, 0xF8, 0xF6)):
@@ -487,7 +490,7 @@ def main():
         "hero": dict(rot=(math.radians(64), math.radians(-10), math.radians(38)), cam=(0, -210, 62), target=(2, -4, 3), lens=62),
         "hero-left": dict(rot=(math.radians(64), math.radians(10), math.radians(-38)), cam=(0, -210, 62), target=(-2, -4, 3), lens=62),
         "front": dict(rot=(0, 0, 0), cam=(0, 0, 280), target=(0, 0, 7.5)),
-        "back": dict(rot=(math.pi, 0, 0), cam=(0, 0, 280), target=(0, 0, -7.5)),
+        "back": dict(rot=(0, math.pi, 0), cam=(0, 0, 280), target=(0, 0, -7.5)),
         # Rim views: the named feature turned to face the camera
         "side-pwr": dict(rot=(0, 0, math.radians(FEATURES["pwr"][0] - 180)), cam=(0, -280, 7.5), target=(0, 0, 7.5)),
         "detail-pwr": dict(rot=(0, 0, math.radians(FEATURES["pwr"][0] - 180)), cam=(0, -120, 9), target=(0, 0, 8)),
@@ -497,18 +500,30 @@ def main():
         root.rotation_euler = v["rot"]
         root.location = (0, 0, 0)
         cam = camera(scene, f"Cam {name}", v["cam"], v["target"], lens=v.get("lens", 85))
+        if EXPORT_ONLY:
+            continue
         path = os.path.join(out, f"arc-{name}.png")
         render(scene, cam, path)
         flatten(path)
 
     root.rotation_euler = (0, 0, 0)
     if not PREVIEW:
-        bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "arc.blend"))
-        for ob in bpy.data.objects:
-            ob.select_set(ob.name not in ("Backdrop",) and ob.type == "MESH")
-        bpy.ops.export_scene.gltf(
-            filepath=os.path.join(HERE, "arc.glb"), use_selection=True, export_apply=True,
-        )
+        export(root)
+
+
+def export(root):
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "arc.blend"))
+    # glTF is in metres and the model in millimetres: scale on the way out,
+    # and leave out the hidden cutters and helpers
+    root.scale = (0.001, 0.001, 0.001)
+    bpy.ops.object.select_all(action="DESELECT")
+    for ob in [root, *root.children_recursive]:
+        if ob.visible_get():
+            ob.select_set(True)
+    bpy.ops.export_scene.gltf(
+        filepath=os.path.join(HERE, "arc.glb"), use_selection=True, export_apply=True,
+    )
+    root.scale = (1, 1, 1)
 
 
 if __name__ == "__main__":
