@@ -81,6 +81,7 @@ export const ko: Dictionary = {
     failed: "Sunday가 지금은 답하지 못했어요. 다시 시도해 주세요.",
     busy: "대화가 많았네요. 몇 분 뒤에 다시 시도해 주세요.",
     pwrHint: "화면 잠금",
+    reminderHint: "다음 알림까지 카운트다운",
   },
   prefs: {
     title: "이메일 설정",

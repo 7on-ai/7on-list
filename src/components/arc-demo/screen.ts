@@ -2,11 +2,15 @@
    the 3D model's glass, and the whole demo when WebGL isn't available.
 
    What it shows, as on the real device:
-   - a small red dot, 3 mm across, in the middle: waiting for "Sunday"
-   - the dot opening into the big red orb: Sunday is listening; the orb
+   - the 7on mark in red, in the middle, as large as the engraving on the
+     back: waiting for "Sunday"
+   - the mark giving way to the big red orb: Sunday is listening; the orb
      swells and settles with the voice
-   - a mic-off icon in place of the dot while the mic is off (the Privacy button)
-   - a small lock at the bottom while the screen is locked (PWR) */
+   - a mic-off icon in place of the mark while the mic is off (the Privacy button)
+   - a small lock at the bottom while the screen is locked (PWR)
+   - the reminder arc: a thin ring 10 mm in from the edge of the display.
+     Red counting down to the next reminder, giving way to grey as time
+     passes; all grey when nothing is coming up */
 
 export type Mode = "idle" | "listening" | "thinking" | "speaking";
 
@@ -16,12 +20,23 @@ export type ScreenInput = {
   micOff: boolean;
   /* Voice level, 0–1: the visitor's while listening, Sunday's while speaking */
   level: number;
+  /* Share of the countdown to the next reminder still to go (1 → 0);
+     null when nothing is coming up */
+  reminder: number | null;
+  /* The reminder has just arrived: the arc lights up */
+  reminderDue: boolean;
 };
 
 /* Sizes in millimetres, from the dimension drawing */
 const GLASS_MM = 48.96;
 const DISPLAY_MM = 43.76;
-const DOT_MM = 3;
+const DOT_MM = 3; // stands in for the mark until its image has loaded
+/* The mark, drawn at the size of the engraving on the back (a 17 mm square
+   image; the mark itself is about 12.5 × 7 mm) */
+const LOGO_MM = 17;
+export const LOGO_HALF_HEIGHT_MM = 3.5;
+/* The reminder arc: its radius, 10 mm in from the display's edge */
+export const REMINDER_ARC_MM = DISPLAY_MM / 2 - 10;
 
 const ICON_MIC_OFF = [
   "M2 2l20 20",
@@ -49,6 +64,8 @@ export class ArcScreen {
   private openV = 0;
   private level = 0;
   private mute = 0;
+  private remind = 0; // shown share of the countdown, eased
+  private due = 0;
   private lock = 0;
   private think = 0;
   private nudgeLock = -10;
@@ -57,6 +74,7 @@ export class ArcScreen {
   private wasLocked = false;
   private time = 0;
   private calm: boolean;
+  private logo: HTMLCanvasElement | null = null;
 
   constructor(size = 768, { reducedMotion = false } = {}) {
     this.size = size;
@@ -69,6 +87,19 @@ export class ArcScreen {
       lock: [new Path2D(ICON_LOCK_BODY), new Path2D(ICON_LOCK_SHACKLE)],
       unlock: [new Path2D(ICON_LOCK_BODY), new Path2D(ICON_UNLOCK_SHACKLE)],
     };
+    // The 7on mark (black in the file), recoloured red
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement("canvas");
+      c.width = c.height = 512;
+      const x = c.getContext("2d")!;
+      x.drawImage(img, 0, 0, 512, 512);
+      x.globalCompositeOperation = "source-in";
+      x.fillStyle = "#E8263F";
+      x.fillRect(0, 0, 512, 512);
+      this.logo = c;
+    };
+    img.src = "/logo.png";
   }
 
   /* A little shake when the screen is touched but can't respond */
@@ -94,6 +125,8 @@ export class ArcScreen {
     this.think = approach(this.think, input.mode === "thinking" ? 1 : 0, 10, dt);
     this.mute = approach(this.mute, input.micOff ? 1 : 0, 14, dt);
     this.lock = approach(this.lock, input.locked ? 1 : 0, 14, dt);
+    this.remind = approach(this.remind, input.reminder ?? 0, 6, dt);
+    this.due = approach(this.due, input.reminderDue ? 1 : 0, input.reminderDue ? 12 : 3, dt);
     if (this.wasLocked && !input.locked) this.unlockedAt = this.time;
     this.wasLocked = input.locked;
   }
@@ -129,16 +162,68 @@ export class ArcScreen {
       ctx.fillRect(0, 0, S, S);
     }
 
-    // The dot, or the orb it opens into
-    const visible = 1 - this.mute;
-    if (visible > 0.01) {
-      const breathe = this.calm ? 1 : 1 + 0.07 * Math.sin(t * 2.2) * (1 - clamp(open));
-      let r = (dotR + (orbR - dotR) * open) * breathe;
-      r *= 1 + 0.2 * this.level * clamp(open) - 0.14 * this.think;
-      this.drawOrb(c, c, r, clamp(open), visible);
+    // The reminder arc: grey track, red for the time still to go. It steps
+    // back while the orb is open.
+    {
+      const r = REMINDER_ARC_MM * px;
+      const dim = 1 - 0.55 * clamp(open);
+      ctx.lineWidth = 0.55 * px;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.17 * dim})`;
+      ctx.beginPath();
+      ctx.arc(c, c, r, 0, Math.PI * 2);
+      ctx.stroke();
+      const top = -Math.PI / 2;
+      ctx.save();
+      ctx.shadowColor = "rgba(230, 30, 60, 0.9)";
+      ctx.shadowBlur = 0.9 * px;
+      if (this.remind > 0.002) {
+        ctx.strokeStyle = `rgba(232, 38, 66, ${0.95 * dim})`;
+        ctx.beginPath();
+        ctx.arc(c, c, r, top, top + Math.PI * 2 * this.remind);
+        ctx.stroke();
+      }
+      // Arrived: the whole arc glows red, then fades back to grey
+      if (this.due > 0.01) {
+        const pulse = this.calm ? 1 : 0.75 + 0.25 * Math.sin(t * 9);
+        ctx.strokeStyle = `rgba(232, 38, 66, ${this.due * pulse * dim})`;
+        ctx.beginPath();
+        ctx.arc(c, c, r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
     }
 
-    // Mic off: the icon takes the dot's place
+    // At rest, the mark; tapped or called, the orb grows out of the middle
+    // as the mark gives way
+    const visible = 1 - this.mute;
+    if (visible > 0.01) {
+      if (this.logo) {
+        const a = visible * clamp(1 - open * 1.8);
+        if (a > 0.01) {
+          const size = LOGO_MM * px * (1 + 0.06 * clamp(open));
+          const glow = this.calm ? 0.6 : 0.6 + 0.4 * Math.sin(t * 2.2);
+          ctx.save();
+          ctx.globalAlpha = a;
+          ctx.shadowColor = "rgba(232, 38, 63, 0.85)";
+          ctx.shadowBlur = (0.6 + 0.9 * glow) * px;
+          ctx.drawImage(this.logo, c - size / 2, c - size / 2, size, size);
+          ctx.restore();
+        }
+        if (open > 0.01) {
+          let r = orbR * open;
+          r *= 1 + 0.2 * this.level * clamp(open) - 0.14 * this.think;
+          this.drawOrb(c, c, r, clamp(open), visible);
+        }
+      } else {
+        const breathe = this.calm ? 1 : 1 + 0.07 * Math.sin(t * 2.2) * (1 - clamp(open));
+        let r = (dotR + (orbR - dotR) * open) * breathe;
+        r *= 1 + 0.2 * this.level * clamp(open) - 0.14 * this.think;
+        this.drawOrb(c, c, r, clamp(open), visible);
+      }
+    }
+
+    // Mic off: the icon takes the mark's place
     if (this.mute > 0.01) {
       const size = 6 * px;
       const shake = this.shake(this.nudgeMic) * px;

@@ -7,11 +7,12 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { deviceFill } from "./layout";
+import { REMINDER_ARC_MM } from "./screen";
 
 export type ArcButton = "pwr" | "boot";
 
 export type Anchor = { x: number; y: number; facing: number };
-export type AnchorId = ArcButton | "dot";
+export type AnchorId = ArcButton | "dot" | "reminder";
 
 export type SceneEvents = {
   onButton(button: ArcButton): void;
@@ -25,7 +26,8 @@ export type ArcSceneHandle = {
   press(button: ArcButton): void;
   /* Pause the slow turn — while the pointer is over the device or a label */
   hold(on: boolean): void;
-  /* Turn to face the viewer and stay — while Sunday is listening or talking */
+  /* Turn to face the viewer and stay — while Sunday is listening or talking,
+     or a reminder is arriving */
   focus(on: boolean): void;
   /* Where each button and the red dot are on the page, for their labels;
      facing < 0 when turned away */
@@ -257,7 +259,9 @@ export async function createArcScene(
   const nrm = new THREE.Vector3();
   const toCam = new THREE.Vector3();
   const hidden = { x: 0, y: 0, facing: -1 };
-  const anchors: Record<AnchorId, Anchor> = { pwr: hidden, boot: hidden, dot: hidden };
+  const anchors: Record<AnchorId, Anchor> = { pwr: hidden, boot: hidden, dot: hidden, reminder: hidden };
+  const sixOClock = new THREE.Vector3(0, 0, 1); // 6 o'clock on the screen, in model space (glTF: 12 o'clock is -Z)
+  const side = new THREE.Vector3();
   const up = new THREE.Vector3(0, 1, 0); // the screen's facing, in model space
 
   let held = false;
@@ -339,6 +343,12 @@ export async function createArcScene(
     const dotFacing = nrm.dot(toCam);
     tmp.project(camera);
     anchors.dot = { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, facing: dotFacing };
+    // The bottom of the reminder arc, on the same face
+    glass.getWorldPosition(tmp);
+    tmp.addScaledVector(nrm, 0.00045);
+    tmp.addScaledVector(side.copy(sixOClock).transformDirection(root.matrixWorld), REMINDER_ARC_MM / 1000);
+    tmp.project(camera);
+    anchors.reminder = { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, facing: dotFacing };
   };
 
   return {

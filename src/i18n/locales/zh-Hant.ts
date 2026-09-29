@@ -81,6 +81,7 @@ export const zhHant: Dictionary = {
     failed: "Sunday 暫時無法回答，請再試一次。",
     busy: "聊了好多了，過幾分鐘再試。",
     pwrHint: "鎖定螢幕",
+    reminderHint: "倒數至下一個提醒",
   },
   prefs: {
     title: "郵件偏好",

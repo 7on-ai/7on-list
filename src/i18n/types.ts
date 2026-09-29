@@ -58,6 +58,8 @@ export type Dictionary = {
     busy: string;
     /* The PWR label on the 3D model, after "PWR" */
     pwrHint: string;
+    /* The reminder arc's label on the 3D model, after "REMINDER ARC" */
+    reminderHint: string;
   };
   prefs: {
     title: string;

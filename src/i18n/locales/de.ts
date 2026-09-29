@@ -81,6 +81,7 @@ export const de: Dictionary = {
     failed: "Sunday konnte gerade nicht antworten. Versuch es noch einmal.",
     busy: "Das war viel Gerede. Versuch es in ein paar Minuten wieder.",
     pwrHint: "Bildschirm sperren",
+    reminderHint: "Countdown bis zur nächsten Erinnerung",
   },
   prefs: {
     title: "E-Mail-Einstellungen",

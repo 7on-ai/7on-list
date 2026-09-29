@@ -81,6 +81,7 @@ export const th: Dictionary = {
     failed: "Sunday ตอบไม่ได้\u200Bในตอนนี้ ลองอีกครั้ง",
     busy: "คุยเยอะแล้ว ลองใหม่\u200Bในอีกไม่กี่นาที",
     pwrHint: "ล็อกจอ",
+    reminderHint: "นับถอยหลังถึงการแจ้งเตือนถัดไป",
   },
   prefs: {
     title: "การรับอีเมล",

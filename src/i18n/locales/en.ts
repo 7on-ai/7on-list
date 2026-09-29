@@ -81,6 +81,7 @@ export const en: Dictionary = {
     failed: "Sunday couldn't answer just now. Try again.",
     busy: "That's a lot of talking. Try again in a few minutes.",
     pwrHint: "Lock screen",
+    reminderHint: "Counts down to your next reminder",
   },
   prefs: {
     title: "Email preferences",

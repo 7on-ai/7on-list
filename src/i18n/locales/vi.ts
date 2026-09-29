@@ -81,6 +81,7 @@ export const vi: Dictionary = {
     failed: "Sunday chưa trả lời được. Hãy thử lại.",
     busy: "Bạn đã nói khá nhiều. Hãy thử lại sau vài phút.",
     pwrHint: "Khóa màn hình",
+    reminderHint: "Đếm ngược đến lời nhắc tiếp theo",
   },
   prefs: {
     title: "Tùy chọn email",

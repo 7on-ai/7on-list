@@ -9,7 +9,7 @@ type Events = {
   spec_requested: { locale: string };
   form_error: { reason: "invalid" | "rejected" | "server" | "network" };
   demo_action: {
-    action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag";
+    action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag" | "reminder";
     via: "device" | "label";
   };
   invite_shared: { method: "copy" | "share"; from: "form" | "invite_page" };

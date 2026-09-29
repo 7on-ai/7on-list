@@ -82,6 +82,7 @@ export const fr: Dictionary = {
     failed: "Sunday n’a pas pu répondre. Réessayez.",
     busy: "Beaucoup de conversation ! Réessayez dans quelques minutes.",
     pwrHint: "Verrouiller l’écran",
+    reminderHint: "Compte à rebours jusqu’au prochain rappel",
   },
   prefs: {
     title: "Préférences e-mail",

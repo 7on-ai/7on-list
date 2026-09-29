@@ -81,6 +81,7 @@ export const id: Dictionary = {
     failed: "Sunday belum bisa menjawab. Coba lagi.",
     busy: "Sudah banyak bicara. Coba lagi beberapa menit lagi.",
     pwrHint: "Kunci layar",
+    reminderHint: "Hitung mundur ke pengingat berikutnya",
   },
   prefs: {
     title: "Preferensi email",

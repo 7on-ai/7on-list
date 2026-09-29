@@ -81,6 +81,7 @@ export const ja: Dictionary = {
     failed: "Sunday は今、答えられませんでした。もう一度どうぞ。",
     busy: "たくさん話しましたね。数分後にまたどうぞ。",
     pwrHint: "画面ロック",
+    reminderHint: "次のリマインダーまでのカウントダウン",
   },
   prefs: {
     title: "メール設定",
