@@ -67,9 +67,6 @@ export const id: Dictionary = {
     cta: "Dapatkan spesifikasi ARC",
   },
   demo: {
-    eyebrow: "Coba ARC",
-    headline: "Ayo, ajak bicara.",
-    sub: "Layar dan tombolnya bekerja seperti ARC asli. Di ARC, cukup panggil “Sunday”.",
     tap: "Ketuk titik merah, lalu bicara.",
     talk: "Bicara",
     stop: "Berhenti",

@@ -67,9 +67,6 @@ export const zhHans: Dictionary = {
     cta: "获取 ARC 规格",
   },
   demo: {
-    eyebrow: "试试 ARC",
-    headline: "来，跟它说话。",
-    sub: "屏幕和按键的操作与真机一致。在 ARC 上，只需说“Sunday”。",
     tap: "轻点红点，开口说话。",
     talk: "说话",
     stop: "停止",

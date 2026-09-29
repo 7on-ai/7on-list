@@ -67,9 +67,6 @@ export const ko: Dictionary = {
     cta: "ARC 스펙 받아보기",
   },
   demo: {
-    eyebrow: "ARC 체험하기",
-    headline: "자, 말을 걸어 보세요.",
-    sub: "화면과 버튼은 실제 ARC와 똑같이 작동합니다. ARC에서는 “Sunday”라고 부르기만 하면 됩니다.",
     tap: "빨간 점을 탭하고 말하세요.",
     talk: "말하기",
     stop: "중지",

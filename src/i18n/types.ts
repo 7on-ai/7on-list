@@ -36,12 +36,8 @@ export type Dictionary = {
     points: { title: string; line: string }[];
     cta: string;
   };
-  /* The working device, just under the hero */
+  /* The working device in the hero: what to do, and what's happening */
   demo: {
-    eyebrow: string;
-    headline: string;
-    sub: string;
-    /* Under the device: what to do, and what's happening */
     tap: string;
     talk: string;
     stop: string;

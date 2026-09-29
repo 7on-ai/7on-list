@@ -67,9 +67,6 @@ export const th: Dictionary = {
     cta: "รับสเปก ARC",
   },
   demo: {
-    eyebrow: "ลองใช้ ARC",
-    headline: "ลองคุยดูสิ",
-    sub: "หน้าจอและปุ่ม\u200Bทำงานเหมือนเครื่องจริง บน ARC\u200Bแค่เรียก “Sunday”",
     tap: "แตะจุดแดง\u200Bแล้วพูดได้เลย",
     talk: "พูด",
     stop: "หยุด",

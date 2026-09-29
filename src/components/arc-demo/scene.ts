@@ -214,7 +214,7 @@ export async function createArcScene(
   canvas.addEventListener("pointercancel", onCancel);
 
   // ── Frame ─────────────────────────────────────────────────────
-  let yaw = BASE_YAW + (reducedMotion ? 0 : 0.9); // swings in on first view
+  let yaw = BASE_YAW; // starts exactly where the still left off
   let pitch = BASE_PITCH;
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();

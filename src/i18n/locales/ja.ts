@@ -67,9 +67,6 @@ export const ja: Dictionary = {
     cta: "ARC のスペックを受け取る",
   },
   demo: {
-    eyebrow: "ARC を試す",
-    headline: "さあ、話しかけて。",
-    sub: "画面もボタンも、本物の ARC と同じ動き。ARC 本体なら「Sunday」と呼ぶだけ。",
     tap: "赤い点をタップして、話しかけてください。",
     talk: "話す",
     stop: "停止",

@@ -2,7 +2,9 @@
 
 import { Lock, LockOpen, Mic, MicOff } from "lucide-react";
 import { useReducedMotion } from "motion/react";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import poster from "@/assets/arc-3d.webp";
 import { Phrases } from "@/components/ui/phrases";
 import { useI18n } from "@/i18n/provider";
 import { track } from "@/lib/track";
@@ -13,7 +15,7 @@ import { MicLevel, speakingLevel } from "./voice";
 
 type Via = "device" | "control";
 type Caption = { kind: "tap" | "listening" | "locked" | "muted" | "noMic" } | { kind: "reply"; text: string; example: boolean };
-type Stage = "flat" | "3d";
+type Stage = "loading" | "3d" | "flat";
 
 /* Touches this close to the middle of the glass count as touching the dot */
 const DOT_TOUCH_MM = 8;
@@ -32,7 +34,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   const { t, locale } = useI18n();
   const reduce = useReducedMotion() ?? false;
 
-  const [stage, setStage] = useState<Stage>("flat");
+  const [stage, setStage] = useState<Stage>("loading");
   const [mode, setMode] = useState<Mode>("idle");
   const [locked, setLocked] = useState(false);
   const [micOff, setMicOff] = useState(false);
@@ -194,6 +196,11 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     [talk]
   );
 
+  // Without WebGL, the screen canvas goes in the flat frame
+  useEffect(() => {
+    if (stage === "flat" && screenRef.current) flatRef.current?.replaceChildren(screenRef.current.canvas);
+  }, [stage]);
+
   // The loop and listeners are set up once; these keep them calling the latest versions
   const handlers = useRef({ talk, pressPwr, pressBoot, touchScreen });
   handlers.current = { talk, pressPwr, pressBoot, touchScreen };
@@ -208,7 +215,6 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     screenRef.current = screen;
     screen.canvas.className = "h-full w-full rounded-full";
     screen.canvas.setAttribute("aria-hidden", "true");
-    flatRef.current?.replaceChildren(screen.canvas);
 
     let raf = 0;
     let last = performance.now();
@@ -271,47 +277,46 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       raf = visible ? requestAnimationFrame(frame) : 0;
     };
 
-    // Run only while on screen; load three.js and the model when close
-    let loading = false;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting;
-        if (visible && !raf) {
-          last = performance.now();
-          raf = requestAnimationFrame(frame);
-        }
-        if (!visible && live.current.mode !== "idle") {
-          toIdleRef.current();
-          setCaption({ kind: "tap" });
-        }
-        if (entry.isIntersecting && !loading) {
-          loading = true;
-          import("./scene")
-            .then(({ createArcScene }) =>
-              createArcScene(
-                stageRef.current!,
-                screen.canvas,
-                {
-                  onButton: (b) => (b === "pwr" ? handlers.current.pressPwr("device") : handlers.current.pressBoot("device")),
-                  onScreen: (x, y) => handlers.current.touchScreen(x, y),
-                  onDrag: () => track("demo_action", { action: "drag", via: "device" }),
-                },
-                { reducedMotion: reduce }
-              )
-            )
-            .then((scene) => {
-              if (disposed) return scene.dispose();
-              sceneRef.current = scene;
-              setStage("3d");
-            })
-            .catch((err) => {
-              // No WebGL, or the model didn't load: the flat screen still works
-              console.warn("ARC demo: showing the flat screen.", err);
-            });
-        }
-      },
-      { rootMargin: "300px 0px" }
-    );
+    // Run only while on screen
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      }
+      if (!visible && live.current.mode !== "idle") {
+        toIdleRef.current();
+        setCaption({ kind: "tap" });
+      }
+    });
+
+    // The still shows first; three.js and the model load once the page is idle
+    const load = () =>
+      import("./scene")
+        .then(({ createArcScene }) =>
+          createArcScene(
+            stageRef.current!,
+            screen.canvas,
+            {
+              onButton: (b) => (b === "pwr" ? handlers.current.pressPwr("device") : handlers.current.pressBoot("device")),
+              onScreen: (x, y) => handlers.current.touchScreen(x, y),
+              onDrag: () => track("demo_action", { action: "drag", via: "device" }),
+            },
+            { reducedMotion: reduce }
+          )
+        )
+        .then((scene) => {
+          if (disposed) return scene.dispose();
+          sceneRef.current = scene;
+          setStage("3d");
+        })
+        .catch((err) => {
+          // No WebGL, or the model didn't load: the screen still works on its own
+          console.warn("ARC demo: showing the flat screen.", err);
+          if (!disposed) setStage("flat");
+        });
+    if ("requestIdleCallback" in window) window.requestIdleCallback(() => void load(), { timeout: 1500 });
+    else setTimeout(() => void load(), 200);
     if (sectionRef.current) io.observe(sectionRef.current);
 
     return () => {
@@ -326,37 +331,46 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
 
   const d = t.demo;
   const busy = mode !== "idle";
+  const pill =
+    "flex h-9 items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 px-3 text-[13px] font-medium text-zinc-700 backdrop-blur transition-colors hover:border-zinc-300 hover:bg-white sm:h-10 sm:gap-2 sm:px-4 sm:text-sm";
 
   return (
-    <div ref={sectionRef} className="mx-auto max-w-5xl text-center">
-      <p className="t-eyebrow text-xs font-medium text-[#C41D3B]">{d.eyebrow}</p>
-      <h2 className="t-heading mt-3 text-balance text-[40px] font-medium sm:text-6xl">{d.headline}</h2>
-      <p className="mx-auto mt-5 max-w-xl text-balance text-lg leading-relaxed text-zinc-600">
-        <Phrases text={d.sub} />
-      </p>
-
+    <div ref={sectionRef} className="relative">
       {/* The device */}
-      <div className="relative mx-auto mt-6 h-[min(100vw,420px)] max-w-3xl sm:mt-8 sm:h-[480px]">
+      <div className="arc-3d relative mx-auto w-full max-w-4xl">
         {/* Soft contact shadow */}
-        <div className="pointer-events-none absolute bottom-[9%] left-1/2 h-8 w-[40%] -translate-x-1/2 rounded-[50%] bg-black/15 blur-2xl" />
+        <div className="pointer-events-none absolute bottom-[8%] left-1/2 aspect-[7/1] h-[6%] -translate-x-1/2 rounded-[50%] bg-black/20 blur-xl" />
 
-        {/* Flat screen: shown while the 3D model loads, and instead of it without WebGL */}
+        {/* A still of the same pose, shown until the live model takes over */}
         <div
-          className={`absolute left-1/2 top-1/2 aspect-square w-[min(72vw,360px)] -translate-x-1/2 -translate-y-1/2 rounded-full p-[3.2%] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] transition-opacity duration-700 [background:linear-gradient(145deg,#f4f4f5,#a1a1aa_45%,#e4e4e7_70%,#71717a)] ${
-            stage === "3d" ? "pointer-events-none opacity-0" : "opacity-100"
+          className={`pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
+            stage === "loading" ? "opacity-100" : "opacity-0"
           }`}
-          onClick={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            const mm = 55 / r.width;
-            handlers.current.touchScreen((e.clientX - r.left - r.width / 2) * mm, -(e.clientY - r.top - r.height / 2) * mm);
-          }}
         >
-          <div ref={flatRef} className="relative h-full w-full cursor-pointer rounded-full bg-black">
-            <span className="absolute left-1/2 top-1/2 h-[6%] w-[6%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E0233F]" />
-          </div>
+          <Image
+            src={poster}
+            alt="7on ARC"
+            priority
+            sizes="(min-width: 768px) 560px, 100vw"
+            className="aspect-square h-full max-h-full w-auto max-w-full select-none object-contain"
+          />
         </div>
 
-        <div ref={stageRef} className={`absolute inset-0 transition-opacity duration-700 ${stage === "3d" ? "opacity-100" : "opacity-0"}`} />
+        {/* Without WebGL: the screen on its own, still working */}
+        {stage === "flat" && (
+          <div
+            className="absolute left-1/2 top-1/2 aspect-square w-[min(66vw,320px)] -translate-x-1/2 -translate-y-1/2 rounded-full p-[3.2%] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] [background:linear-gradient(145deg,#f4f4f5,#a1a1aa_45%,#e4e4e7_70%,#71717a)]"
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              const mm = 55 / r.width;
+              handlers.current.touchScreen((e.clientX - r.left - r.width / 2) * mm, -(e.clientY - r.top - r.height / 2) * mm);
+            }}
+          >
+            <div ref={flatRef} className="relative h-full w-full cursor-pointer rounded-full bg-black" />
+          </div>
+        )}
+
+        <div ref={stageRef} className={`absolute inset-0 transition-opacity duration-500 ${stage === "3d" ? "opacity-100" : "opacity-0"}`} />
 
         {/* Button labels, following the buttons as the device turns */}
         {stage === "3d" &&
@@ -366,7 +380,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
               ref={(el) => {
                 labelRefs.current[id] = el;
               }}
-              className="pointer-events-none absolute left-0 top-0 hidden opacity-0 sm:block"
+              className="pointer-events-none absolute left-0 top-0 hidden opacity-0 md:block"
             >
               <span className="absolute left-3 top-0 flex -translate-y-1/2 items-center gap-2 whitespace-nowrap">
                 <span className="h-px w-6 bg-zinc-300" />
@@ -378,70 +392,56 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       </div>
 
       {/* What's happening, in words */}
-      <div className="mx-auto mt-2 flex min-h-[4.5rem] max-w-md flex-col items-center justify-start" aria-live="polite">
+      <div className="relative z-10 mx-auto flex min-h-[3.25rem] max-w-md flex-col items-center justify-center px-6 text-center" aria-live="polite">
         {caption.kind === "reply" ? (
           <>
             {caption.example && (
-              <span className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">{d.replyLabel}</span>
+              <span className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">{d.replyLabel}</span>
             )}
             {/* The full line holds the space; the visible copy fills in as Sunday speaks */}
-            <span className="grid text-balance text-lg leading-snug text-[#111]">
+            <span className="grid text-balance leading-snug text-[#111]">
               <span className="invisible col-start-1 row-start-1">{caption.text}</span>
               <span ref={replyRef} className="col-start-1 row-start-1" />
             </span>
           </>
         ) : (
-          <span className={`text-balance ${caption.kind === "listening" ? "text-[#C41D3B]" : "text-zinc-500"}`}>
-            <Phrases
-              text={
-                { tap: d.tap, listening: d.listening, locked: d.locked, muted: d.muted, noMic: d.noMic }[caption.kind]
-              }
-            />
-          </span>
+          <>
+            <span className={`text-balance text-sm ${caption.kind === "listening" ? "text-[#C41D3B]" : "text-zinc-500"}`}>
+              <Phrases
+                text={{ tap: d.tap, listening: d.listening, locked: d.locked, muted: d.muted, noMic: d.noMic }[caption.kind]}
+              />
+            </span>
+            {/* Said where it matters: while the mic is in use */}
+            {(caption.kind === "listening" || caption.kind === "noMic") && (
+              <span className="mt-1 text-balance text-[11px] text-zinc-400">
+                <Phrases text={d.privacy} />
+              </span>
+            )}
+          </>
         )}
       </div>
 
       {/* The same three things, as buttons: keyboard, screen readers, small screens */}
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
-        <button
-          type="button"
-          onClick={() => pressPwr("control")}
-          aria-pressed={locked}
-          className="flex h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
-        >
+      <div className="relative z-10 mt-2 flex items-center justify-center gap-2">
+        <button type="button" onClick={() => pressPwr("control")} aria-pressed={locked} className={pill}>
           {locked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-          <span className="text-[11px] font-semibold tracking-wider text-zinc-400">PWR</span>
+          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">PWR</span>
           {locked ? d.unlock : d.lock}
         </button>
-        <button
-          type="button"
-          onClick={() => pressBoot("control")}
-          aria-pressed={micOff}
-          className="flex h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
-        >
+        <button type="button" onClick={() => pressBoot("control")} aria-pressed={micOff} className={pill}>
           {micOff ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
-          <span className="text-[11px] font-semibold tracking-wider text-zinc-400">BOOT</span>
+          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">BOOT</span>
           {micOff ? d.micOn : d.micOff}
         </button>
         <button
           type="button"
           onClick={() => talk("control")}
-          className="flex h-11 items-center gap-2 rounded-full bg-[#C41D3B] px-5 text-sm font-medium text-white shadow-[0_10px_30px_-12px_rgba(196,29,59,0.7)] transition-colors hover:bg-[#a9182f]"
+          className="flex h-9 items-center gap-2 rounded-full bg-[#111] px-4 text-[13px] font-medium text-white transition-colors hover:bg-black sm:h-10 sm:px-5 sm:text-sm"
         >
-          <span className={`h-2.5 w-2.5 rounded-full bg-white ${busy ? "animate-pulse" : ""}`} />
+          <span className={`h-2 w-2 rounded-full bg-[#E0233F] ${busy ? "animate-pulse" : ""}`} />
           {busy ? d.stop : d.talk}
         </button>
       </div>
-
-      <p className="mx-auto mt-5 max-w-sm text-balance text-xs leading-relaxed text-zinc-400">
-        <Phrases text={d.privacy} />
-      </p>
-      <a
-        href="#get-specs"
-        className="mt-6 inline-block text-[15px] font-medium text-[#C41D3B] underline-offset-4 hover:underline"
-      >
-        {t.hero.cta} ›
-      </a>
     </div>
   );
 }

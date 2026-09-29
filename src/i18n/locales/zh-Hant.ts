@@ -67,9 +67,6 @@ export const zhHant: Dictionary = {
     cta: "索取 ARC 規格",
   },
   demo: {
-    eyebrow: "試試 ARC",
-    headline: "來，跟它說話。",
-    sub: "螢幕和按鍵的操作與真機一致。在 ARC 上，只要說「Sunday」。",
     tap: "輕點紅點，開口說話。",
     talk: "說話",
     stop: "停止",

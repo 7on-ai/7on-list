@@ -67,9 +67,6 @@ export const en: Dictionary = {
     cta: "Get the ARC specs",
   },
   demo: {
-    eyebrow: "Try ARC",
-    headline: "Go on. Talk to it.",
-    sub: "The screen and buttons work like the real ARC. On the device, you just say “Sunday.”",
     tap: "Tap the red dot and speak.",
     talk: "Talk",
     stop: "Stop",

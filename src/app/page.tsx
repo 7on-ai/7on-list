@@ -125,38 +125,40 @@ export default function Home() {
       </header>
 
       {/* ── Hero: the product first, then what it is, then the form ── */}
-      <section className="relative bg-gradient-to-b from-[#faf8f6] from-80% to-white pb-20 pt-20 sm:pb-28 sm:pt-24">
-        <FloatingArc />
+      {/* Phones: ARC, then the words and the form. Wide screens: side by side,
+          so ARC and the form share the first screen. */}
+      <section className="relative bg-gradient-to-b from-[#faf8f6] from-80% to-white pb-20 pt-20 sm:pb-28 sm:pt-24 lg:pb-24 lg:pt-28">
+        <div className="mx-auto lg:grid lg:max-w-6xl lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-4 lg:px-10">
+        {/* ARC itself, working: tap the dot, press PWR and BOOT */}
+        <div data-section="demo">
+          <ArcDemo />
+        </div>
 
-        <div className="relative z-10 mx-auto -mt-4 max-w-4xl px-6 text-center sm:-mt-8">
+        <div className="relative z-10 mx-auto mt-8 max-w-4xl px-6 text-center sm:mt-10 lg:mt-0 lg:px-0 lg:text-left">
           {invited && (
-            <p className="reveal mx-auto mb-5 w-fit rounded-full border border-[#C41D3B]/20 bg-[#C41D3B]/[0.06] px-3.5 py-1 text-sm font-medium text-[#C41D3B]">
+            <p className="reveal mx-auto mb-5 lg:mx-0 w-fit rounded-full border border-[#C41D3B]/20 bg-[#C41D3B]/[0.06] px-3.5 py-1 text-sm font-medium text-[#C41D3B]">
               {t.invite.invited}
             </p>
           )}
           <h1>
             <span className="reveal block text-lg font-semibold text-[#C41D3B] sm:text-xl">7on ARC</span>
-            <span className={`t-display mt-2 block text-balance font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en}`}>
+            <span className={`t-display mt-2 block text-balance font-medium ${DISPLAY_SIZE[locale] ?? DISPLAY_SIZE.en} lg:text-[64px] xl:text-[76px]`}>
               <SplitText delay={0.25}>{t.machine.tagline}</SplitText>
             </span>
           </h1>
 
-          <p className="reveal reveal-2 mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl">
+          <p className="reveal reveal-2 mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-zinc-600 sm:text-xl lg:mx-0">
             <Phrases text={t.hero.sub} />
           </p>
 
-          <div id="get-specs" className="reveal reveal-3 mx-auto mt-9 w-full max-w-md scroll-mt-40">
+          <div id="get-specs" className="reveal reveal-3 mx-auto mt-9 w-full max-w-md scroll-mt-40 lg:mx-0">
             <div className="rounded-2xl border border-zinc-200 bg-white/85 p-2 shadow-[0_20px_50px_-25px_rgba(196,29,59,0.35)] backdrop-blur-md">
               <SpecsForm />
             </div>
-            <p className="mt-3 text-balance px-4 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
+            <p className="mt-3 text-balance px-4 text-xs text-zinc-400 lg:px-1"><Phrases text={t.hero.note} /></p>
           </div>
         </div>
-      </section>
-
-      {/* ── Try it: the device, working ─────────────────────────── */}
-      <section data-section="demo" className="bg-white px-6 pb-20 pt-24 sm:pb-28 sm:pt-32">
-        <ArcDemo />
+        </div>
       </section>
 
       {/* ── One agent, everything around you ───────────────────── */}
@@ -265,6 +267,8 @@ export default function Home() {
 
         /* The stage shows the photo from just above the device to below its shadow */
         .arc-stage { height: clamp(300px, 48vh, 580px); }
+        .arc-3d { height: clamp(300px, 46vh, 540px); }
+        @media (min-width: 1024px) { .arc-3d { height: clamp(400px, 58vh, 600px); } }
         .arc-stage-sm { height: clamp(260px, 34vw, 420px); }
         .arc-frame { height: 122%; top: -16%; aspect-ratio: 2000 / 1116; }
 
