@@ -10,7 +10,7 @@ type Events = {
   form_error: { reason: "invalid" | "rejected" | "server" | "network" };
   demo_action: {
     action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag";
-    via: "device" | "control";
+    via: "device" | "label";
   };
   invite_shared: { method: "copy" | "share"; from: "form" | "invite_page" };
 };

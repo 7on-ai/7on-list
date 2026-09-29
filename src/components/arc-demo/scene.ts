@@ -23,6 +23,10 @@ export type SceneEvents = {
 export type ArcSceneHandle = {
   render(dt: number, screenChanged: boolean): void;
   press(button: ArcButton): void;
+  /* Pause the slow turn — while the pointer is over the device or a label */
+  hold(on: boolean): void;
+  /* Turn to face the viewer and stay — while Sunday is listening or talking */
+  focus(on: boolean): void;
   /* Where each button and the red dot are on the page, for their labels;
      facing < 0 when turned away */
   anchors(): Record<AnchorId, Anchor>;
@@ -35,6 +39,8 @@ const NODE = { pwr: "PWR button", boot: "BOOT button" } as const;
 
 /* Resting pose: screen turned a little to the right, as ARC faces on the page */
 const BASE_YAW = 0.5;
+/* Left alone, it turns slowly clockwise: once round in about 24 s */
+const AUTO_TURN = (Math.PI * 2) / 24;
 const BASE_PITCH = -0.1;
 
 export async function createArcScene(
@@ -178,7 +184,7 @@ export async function createArcScene(
   let dragPitch = 0;
   let spin = 0; // rad/s, carried on after a flick
   let prev = { x: 0, t: 0 };
-  let lastTouch = -10;
+  let lastTouch = -1; // the turn eases in a moment after it appears
   let clock = 0;
   let kick = 0; // a small recoil when a button is pressed
 
@@ -254,27 +260,48 @@ export async function createArcScene(
   const anchors: Record<AnchorId, Anchor> = { pwr: hidden, boot: hidden, dot: hidden };
   const up = new THREE.Vector3(0, 1, 0); // the screen's facing, in model space
 
+  let held = false;
+  let focused = false;
+
   const press = (id: ArcButton) => {
     const b = buttons.find((x) => x.id === id)!;
     b.pressedAt = clock;
     kick = id === "pwr" ? 1 : 0.7;
   };
 
-  const render = (dt: number, screenChanged: boolean) => {
-    dt = Math.min(dt, 1 / 20);
-    clock += dt;
+  const render = (elapsed: number, screenChanged: boolean) => {
+    // Timers and the slow turn run on real time; springs and easing take
+    // capped steps, so a slow frame doesn't make them jump
+    const real = Math.min(elapsed, 1);
+    const dt = Math.min(elapsed, 1 / 20);
+    clock += real;
 
-    // A flick keeps it turning, slowing down; left alone, it comes back
-    // to its pose the short way round
-    if (!down) {
+    // In a conversation it faces you (the short way round). Otherwise a
+    // flick keeps it turning, slowing down, and then it goes back to its
+    // own slow turn — unless the pointer is resting on it.
+    if (focused) {
+      spin = 0;
+      const home = Math.round(dragYaw / (Math.PI * 2)) * Math.PI * 2;
+      dragYaw += (home - dragYaw) * (1 - Math.exp(-4 * dt));
+      dragPitch *= Math.exp(-4 * dt);
+      lastTouch = clock;
+    } else if (!down) {
       dragYaw += spin * dt;
       spin *= Math.exp(-2.4 * dt);
-      if (Math.abs(spin) > 0.3) lastTouch = clock;
-      else if (clock - lastTouch > 3) {
-        const home = Math.round(dragYaw / (Math.PI * 2)) * Math.PI * 2;
-        dragYaw += (home - dragYaw) * (1 - Math.exp(-2 * dt));
-        dragPitch *= Math.exp(-2 * dt);
+      if (Math.abs(spin) > 0.3 || held) lastTouch = clock;
+      else if (clock - lastTouch > 2.5) {
+        // ease into the turn rather than jump
+        const ramp = Math.min(1, (clock - lastTouch - 2.5) / 1.5);
+        if (!reducedMotion) dragYaw += AUTO_TURN * ramp * real;
+        dragPitch *= Math.exp(-1.5 * dt);
       }
+    }
+    // Keep the numbers small as it goes round and round
+    if (Math.abs(dragYaw) > Math.PI * 4) {
+      const wrap = Math.sign(dragYaw) * Math.PI * 2;
+      dragYaw -= wrap;
+      yaw -= wrap;
+      if (down) down.yaw -= wrap;
     }
     const ease = 1 - Math.exp(-(reducedMotion ? 30 : 5) * dt);
     yaw += (BASE_YAW + dragYaw - yaw) * ease;
@@ -317,6 +344,12 @@ export async function createArcScene(
   return {
     render,
     press,
+    hold: (on) => {
+      held = on;
+    },
+    focus: (on) => {
+      focused = on;
+    },
     anchors: () => anchors,
     dispose() {
       observer.disconnect();

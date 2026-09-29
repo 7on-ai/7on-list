@@ -38,25 +38,26 @@ export type Dictionary = {
   };
   /* The working device in the hero: what to do, and what's happening */
   demo: {
-    /* Beside the red dot on the 3D model */
+    /* The red dot's label on the 3D model (a button) */
     dotHint: string;
     /* Under the device while nothing is happening */
     drag: string;
-    talk: string;
-    stop: string;
-    lock: string;
     unlock: string;
     micOff: string;
     micOn: string;
     listening: string;
-    replyLabel: string;
     locked: string;
     muted: string;
     noMic: string;
+    /* Shown while listening: where the voice goes */
     privacy: string;
-    /* Beside the buttons on the 3D model, after "PWR" and "PRIVACY" */
+    /* Sunday's voice backend isn't connected yet */
+    unavailable: string;
+    failed: string;
+    /* Rate-limited */
+    busy: string;
+    /* The PWR label on the 3D model, after "PWR" */
     pwrHint: string;
-    bootHint: string;
   };
   prefs: {
     title: string;
