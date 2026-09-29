@@ -83,6 +83,9 @@ export const fr: Dictionary = {
     busy: "Beaucoup de conversation ! Réessayez dans quelques minutes.",
     pwrHint: "Verrouiller l’écran",
     reminderHint: "Compte à rebours jusqu’au prochain rappel",
+    handsFree: "Mains libres : dites « Sunday »",
+    handsFreeOn: "À l’écoute de « Sunday »",
+    handsFreeNote: "La reconnaissance vocale de votre navigateur guette le mot « Sunday ».",
   },
   prefs: {
     title: "Préférences e-mail",

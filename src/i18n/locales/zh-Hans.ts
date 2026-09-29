@@ -82,6 +82,9 @@ export const zhHans: Dictionary = {
     busy: "聊了好多啦，过几分钟再试。",
     pwrHint: "锁屏",
     reminderHint: "倒数至下一个提醒",
+    handsFree: "免动手：说“Sunday”",
+    handsFreeOn: "正在等你说“Sunday”",
+    handsFreeNote: "由浏览器的语音识别来听“Sunday”这个词。",
   },
   prefs: {
     title: "邮件偏好",

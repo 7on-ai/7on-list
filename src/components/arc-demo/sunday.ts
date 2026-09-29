@@ -6,6 +6,8 @@ export type SundayAnswer = {
   audio: Blob;
   /* What Sunday said, when the backend sends it */
   text?: string;
+  /* A reminder the visitor just set: when, and what to say then */
+  reminder?: { inSeconds: number; text?: string };
 };
 
 export type SundayProblem = "unavailable" | "busy" | "failed";
@@ -49,14 +51,21 @@ export function httpAdapter(url = "/api/sunday/voice"): SundayAdapter {
       if (res.status === 503) throw new SundayError("unavailable");
       if (res.status === 429) throw new SundayError("busy");
       if (!res.ok) throw new SundayError("failed");
-      const header = res.headers.get("X-Sunday-Text");
-      let text: string | undefined;
-      try {
-        text = header ? decodeURIComponent(header) : undefined;
-      } catch {
-        text = header ?? undefined;
-      }
-      return { audio: await res.blob(), text };
+      const decode = (value: string | null) => {
+        if (!value) return undefined;
+        try {
+          return decodeURIComponent(value);
+        } catch {
+          return value;
+        }
+      };
+      const text = decode(res.headers.get("X-Sunday-Text"));
+      const seconds = Number(res.headers.get("X-Sunday-Reminder"));
+      const reminder =
+        Number.isFinite(seconds) && seconds > 0 && seconds <= 24 * 3600
+          ? { inSeconds: seconds, text: decode(res.headers.get("X-Sunday-Reminder-Text")) }
+          : undefined;
+      return { audio: await res.blob(), text, reminder };
     },
   };
 }

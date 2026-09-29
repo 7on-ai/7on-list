@@ -6,11 +6,15 @@ import { track as vercelTrack } from "@vercel/analytics";
 type Events = {
   cta_click: { location: "hero" | "machine" };
   section_view: { section: "demo" | "orbit" | "day" | "machine" };
-  spec_requested: { locale: string };
+  spec_requested: { locale: string; demo: "talked" | "tried" | "none" };
   form_error: { reason: "invalid" | "rejected" | "server" | "network" };
   demo_action: {
-    action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag" | "reminder";
-    via: "device" | "label";
+    action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag" | "reminder" | "hands_free";
+    via: "device" | "label" | "wake";
+  };
+  /* How far a conversation with Sunday got */
+  demo_turn: {
+    stage: "sent" | "answered" | "unavailable" | "busy" | "failed" | "no_mic";
   };
   invite_shared: { method: "copy" | "share"; from: "form" | "invite_page" };
 };

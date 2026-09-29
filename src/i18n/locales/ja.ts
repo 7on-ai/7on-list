@@ -82,6 +82,9 @@ export const ja: Dictionary = {
     busy: "たくさん話しましたね。数分後にまたどうぞ。",
     pwrHint: "画面ロック",
     reminderHint: "次のリマインダーまでのカウントダウン",
+    handsFree: "ハンズフリー：「Sunday」と呼ぶ",
+    handsFreeOn: "「Sunday」を待っています",
+    handsFreeNote: "ブラウザの音声認識が「Sunday」という言葉を聞き取ります。",
   },
   prefs: {
     title: "メール設定",

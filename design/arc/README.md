@@ -89,3 +89,24 @@ Two studio moods (`MOODS`), chosen per view:
   After changing the model, refresh it:
   `npx @gltf-transform/cli optimize arc.glb ../../public/models/arc.glb --compress meshopt --texture-compress webp --texture-size 512 --join false --instance false --simplify false --flatten false --palette false --prune false`
   (the demo finds the glass and buttons by name, so the meshes must stay separate).
+
+## Sounds
+
+ARC's sounds, synthesised from code (`src/components/arc-demo/tones.ts`) —
+the page plays them, and `sounds/` holds the same sounds for the device:
+16-bit mono WAV at 44.1 kHz (`sounds/44k/`) and 16 kHz (`sounds/16k/`).
+
+| Sound | When |
+|---|---|
+| `tap` | A touch that can't do anything right now (locked, mic off) |
+| `lock` / `unlock` | PWR locks or unlocks the screen |
+| `micOff` / `micOn` | The Privacy button turns the mic off or on |
+| `listen` | Sunday starts listening |
+| `sent` | Sunday heard you and is thinking |
+| `reminder` | A reminder arrives |
+| `error` | Sunday couldn't answer |
+
+One family: soft sine tones with a little overtone, notes from E major,
+quick to start and gently fading; peaks around −4 to −12 dBFS. Change a
+recipe in `tones.ts`, then rebuild the files with
+`bun scripts/export-tones.ts`.

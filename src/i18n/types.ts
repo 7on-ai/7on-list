@@ -60,6 +60,10 @@ export type Dictionary = {
     pwrHint: string;
     /* The reminder arc's label on the 3D model, after "REMINDER ARC" */
     reminderHint: string;
+    /* The hands-free switch under the device, off and on, and what it uses */
+    handsFree: string;
+    handsFreeOn: string;
+    handsFreeNote: string;
   };
   prefs: {
     title: string;

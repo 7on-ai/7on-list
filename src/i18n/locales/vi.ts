@@ -82,6 +82,9 @@ export const vi: Dictionary = {
     busy: "Bạn đã nói khá nhiều. Hãy thử lại sau vài phút.",
     pwrHint: "Khóa màn hình",
     reminderHint: "Đếm ngược đến lời nhắc tiếp theo",
+    handsFree: "Rảnh tay: gọi “Sunday”",
+    handsFreeOn: "Đang chờ bạn gọi “Sunday”",
+    handsFreeNote: "Nhận dạng giọng nói của trình duyệt sẽ nghe từ “Sunday”.",
   },
   prefs: {
     title: "Tùy chọn email",

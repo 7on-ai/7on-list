@@ -82,6 +82,9 @@ export const zhHant: Dictionary = {
     busy: "聊了好多了，過幾分鐘再試。",
     pwrHint: "鎖定螢幕",
     reminderHint: "倒數至下一個提醒",
+    handsFree: "免動手：說「Sunday」",
+    handsFreeOn: "正在等你說「Sunday」",
+    handsFreeNote: "由瀏覽器的語音辨識來聽「Sunday」這個詞。",
   },
   prefs: {
     title: "郵件偏好",

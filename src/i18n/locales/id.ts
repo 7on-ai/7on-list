@@ -82,6 +82,9 @@ export const id: Dictionary = {
     busy: "Sudah banyak bicara. Coba lagi beberapa menit lagi.",
     pwrHint: "Kunci layar",
     reminderHint: "Hitung mundur ke pengingat berikutnya",
+    handsFree: "Tanpa sentuh: panggil “Sunday”",
+    handsFreeOn: "Menunggu “Sunday”",
+    handsFreeNote: "Pengenalan suara browser Anda mendengarkan kata “Sunday”.",
   },
   prefs: {
     title: "Preferensi email",

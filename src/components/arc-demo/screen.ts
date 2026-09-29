@@ -8,7 +8,8 @@
      swells and settles with the voice
    - a mic-off icon in place of the mark while the mic is off (the Privacy button)
    - a small lock at the bottom while the screen is locked (PWR)
-   - the reminder arc: a thin ring 10 mm in from the edge of the display.
+   - the reminder arc: a thin ring halfway between the big orb and the edge
+     of the display.
      Red counting down to the next reminder, giving way to grey as time
      passes; all grey when nothing is coming up */
 
@@ -35,8 +36,10 @@ const DOT_MM = 3; // stands in for the mark until its image has loaded
    image; the mark itself is about 12.5 × 7 mm) */
 const LOGO_MM = 17;
 export const LOGO_HALF_HEIGHT_MM = 3.5;
-/* The reminder arc: its radius, 10 mm in from the display's edge */
-export const REMINDER_ARC_MM = DISPLAY_MM / 2 - 10;
+/* The orb, at rest, as a share of the display's radius */
+const ORB_SHARE = 0.42;
+/* The reminder arc: halfway between the orb's edge and the display's edge */
+export const REMINDER_ARC_MM = ((DISPLAY_MM / 2) * (1 + ORB_SHARE)) / 2;
 
 const ICON_MIC_OFF = [
   "M2 2l20 20",
@@ -138,7 +141,7 @@ export class ArcScreen {
     const c = S / 2;
     const displayR = (DISPLAY_MM / 2) * px;
     const dotR = (DOT_MM / 2) * px;
-    const orbR = displayR * 0.42;
+    const orbR = displayR * ORB_SHARE;
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
@@ -221,6 +224,18 @@ export class ArcScreen {
         r *= 1 + 0.2 * this.level * clamp(open) - 0.14 * this.think;
         this.drawOrb(c, c, r, clamp(open), visible);
       }
+    }
+
+    // A thin red glow where the display meets the edge of the glass: faint
+    // at rest, brighter while Sunday is with you or a reminder arrives
+    const edge = clamp(0.12 + 0.5 * clamp(open) + 0.3 * this.level * clamp(open) + 0.55 * this.due);
+    if (edge > 0.01) {
+      const g = ctx.createRadialGradient(c, c, displayR * 0.9, c, c, displayR);
+      g.addColorStop(0, "rgba(232, 38, 63, 0)");
+      g.addColorStop(0.75, `rgba(232, 38, 63, ${0.12 * edge})`);
+      g.addColorStop(1, `rgba(240, 50, 75, ${0.6 * edge})`);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, S, S);
     }
 
     // Mic off: the icon takes the mark's place

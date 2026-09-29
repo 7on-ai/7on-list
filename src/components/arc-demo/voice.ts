@@ -4,6 +4,8 @@
    is (for the orb). Voice: plays Sunday's spoken answer and measures that
    too, so the orb moves with Sunday's real voice. */
 
+import { renderTone, type ToneName } from "./tones";
+
 let shared: AudioContext | null = null;
 
 /* One audio context for the page. Browsers only let sound start from a tap
@@ -13,8 +15,30 @@ function audio() {
   return shared;
 }
 
-export function unlockAudio() {
-  void audio().resume().catch(() => {});
+export function unlockAudio(): Promise<void> {
+  return audio().resume().catch(() => {});
+}
+
+/* ARC's sounds (see tones.ts). They only play once the visitor has touched
+   the demo — never on their own. */
+const tones = new Map<ToneName, AudioBuffer>();
+
+export function playTone(name: ToneName, volume = 0.6) {
+  const ctx = shared;
+  if (!ctx || ctx.state !== "running") return;
+  let buffer = tones.get(name);
+  if (!buffer) {
+    const samples = renderTone(name, ctx.sampleRate);
+    buffer = ctx.createBuffer(1, samples.length, ctx.sampleRate);
+    buffer.copyToChannel(samples, 0);
+    tones.set(name, buffer);
+  }
+  const node = ctx.createBufferSource();
+  node.buffer = buffer;
+  const gain = ctx.createGain();
+  gain.gain.value = volume;
+  node.connect(gain).connect(ctx.destination);
+  node.start();
 }
 
 function levelOf(analyser: AnalyserNode, buffer: Float32Array<ArrayBuffer>) {

@@ -82,6 +82,9 @@ export const th: Dictionary = {
     busy: "คุยเยอะแล้ว ลองใหม่\u200Bในอีกไม่กี่นาที",
     pwrHint: "ล็อกจอ",
     reminderHint: "นับถอยหลังถึงการแจ้งเตือนถัดไป",
+    handsFree: "โหมดไม่ต้องแตะ: เรียก “Sunday”",
+    handsFreeOn: "กำลังรอฟังคำว่า “Sunday”",
+    handsFreeNote: "ระบบรู้จำเสียงของเบราว์เซอร์\u200Bจะฟังคำว่า “Sunday”",
   },
   prefs: {
     title: "การรับอีเมล",

@@ -1,6 +1,6 @@
 "use client";
 
-import { MoveHorizontal } from "lucide-react";
+import { AudioLines, MoveHorizontal } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -11,9 +11,10 @@ import { track } from "@/lib/track";
 import type { AnchorId, ArcButton, ArcSceneHandle } from "./scene";
 import { ArcScreen, LOGO_HALF_HEIGHT_MM, REMINDER_ARC_MM, type Mode } from "./screen";
 import { httpAdapter, SundayError, type SundayAdapter, type SundayProblem } from "./sunday";
-import { Mic, unlockAudio, Voice } from "./voice";
+import { Mic, playTone, unlockAudio, Voice } from "./voice";
+import { WakeWord, wakeWordSupported } from "./wake";
 
-type Via = "device" | "label";
+type Via = "device" | "label" | "wake";
 type Caption =
   | { kind: "idle" | "listening" | "locked" | "muted" | "noMic" | SundayProblem }
   | { kind: "said"; text: string };
@@ -24,6 +25,18 @@ const DOT_TOUCH_MM = 8;
 const LISTEN_MAX_S = 8;
 /* Sunday isn't connected yet: the orb opens briefly, then says so */
 const UNAVAILABLE_S = 1.6;
+
+/* Hands-free switches itself off after this long without hearing "Sunday" */
+const HANDS_FREE_S = 180;
+
+/* Remembered for this visit, so the specs request can say whether the demo was used */
+function noteDemo(value: "tried" | "talked") {
+  try {
+    if (value === "talked" || !sessionStorage.getItem("arc-demo")) sessionStorage.setItem("arc-demo", value);
+  } catch {
+    // storage unavailable: fine
+  }
+}
 
 /* The reminder arc's demo cycle, in seconds */
 const REMINDER = { count: 90, due: 3.5, empty: 8 };
@@ -47,6 +60,9 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   const [locked, setLocked] = useState(false);
   const [micOff, setMicOff] = useState(false);
   const [caption, setCaption] = useState<Caption>({ kind: "idle" });
+  const [ready, setReady] = useState(false);
+  const [handsFree, setHandsFree] = useState(false);
+  const [canHandsFree, setCanHandsFree] = useState(false);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const flatRef = useRef<HTMLDivElement>(null);
@@ -56,6 +72,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   const sceneRef = useRef<ArcSceneHandle | null>(null);
   const mic = useMemo(() => new Mic(), []);
   const voice = useMemo(() => new Voice(), []);
+  const wake = useMemo(() => new WakeWord(), []);
   const sunday = useMemo(() => adapter ?? httpAdapter(), [adapter]);
 
   // Everything the frame loop reads, without re-rendering React
@@ -78,12 +95,23 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     // spell with nothing coming up, and round again. Starts part-way down.
     reminderClock: REMINDER.count * 0.38,
     reminder: null as number | null,
+    reminderLeft: Infinity, // seconds to go
     reminderDue: false,
+    wasDue: false,
+    // A reminder the visitor set by talking to Sunday: it replaces the demo
+    real: null as { due: number; total: number; text?: string } | null,
+    chime: false, // ring when the next reminder arrives (only ones the visitor asked for)
+    handsFree: false,
+    heardWakeAt: 0,
   });
 
   useEffect(() => {
     live.current.session = crypto.randomUUID?.() ?? String(Math.random()).slice(2);
-    void sunday.ready().then((ready) => (live.current.ready = ready));
+    void sunday.ready().then((ready) => {
+      live.current.ready = ready;
+      setReady(ready);
+    });
+    setCanHandsFree(wakeWordSupported());
   }, [sunday]);
 
   const setMode = (mode: Mode) => {
@@ -99,7 +127,8 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     mic.stop();
     voice.stop();
     setMode("idle");
-  }, [mic, voice]);
+    if (l.handsFree && !l.micOff) wake.resume();
+  }, [mic, voice, wake]);
 
   /* The visitor stopped talking: send it, then play Sunday's answer */
   const finishListening = useCallback(async () => {
@@ -109,11 +138,13 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     if (!l.recording) {
       // Nothing recorded: Sunday isn't connected, or the mic was still being asked for
       toIdle();
+      if (l.ready === false) track("demo_turn", { stage: "unavailable" });
       setCaption({ kind: l.ready === false ? "unavailable" : "idle" });
       return;
     }
     l.recording = false;
     setMode("thinking");
+    playTone("sent");
     const said = await mic.finish();
     if (l.turn !== turn) return;
     if (!said || !l.heard) {
@@ -123,9 +154,17 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       return;
     }
     l.abort = new AbortController();
+    track("demo_turn", { stage: "sent" });
     try {
       const answer = await sunday.converse({ audio: said, locale, session: l.session }, l.abort.signal);
       if (l.turn !== turn) return;
+      track("demo_turn", { stage: "answered" });
+      noteDemo("talked");
+      if (answer.reminder) {
+        // "Remind me in 5 minutes": the arc counts down to it for real
+        l.real = { due: l.clock + answer.reminder.inSeconds, total: answer.reminder.inSeconds, text: answer.reminder.text };
+        l.chime = true;
+      }
       setMode("speaking");
       setCaption(answer.text ? { kind: "said", text: answer.text } : { kind: "idle" });
       await voice.play(answer.audio);
@@ -134,7 +173,10 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     } catch (err) {
       if (l.turn !== turn) return;
       toIdle();
-      setCaption({ kind: err instanceof SundayError ? err.problem : "failed" });
+      const problem = err instanceof SundayError ? err.problem : "failed";
+      track("demo_turn", { stage: problem });
+      if (problem !== "unavailable") playTone("error");
+      setCaption({ kind: problem });
     }
   }, [locale, mic, sunday, toIdle, voice]);
 
@@ -146,7 +188,10 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     l.heard = false;
     l.speech = l.silence = 0;
     l.listenFrom = l.clock;
-    unlockAudio(); // from this tap, so Sunday's answer can play later
+    noteDemo("tried");
+    wake.pause(); // the mic is the conversation's now
+    // From this tap, so sounds and Sunday's answer can play later
+    void unlockAudio().then(() => playTone("listen"));
     if (l.ready === false) {
       l.recording = false;
       setCaption({ kind: "idle" });
@@ -160,6 +205,8 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
     }
     if (!ok) {
       toIdle();
+      track("demo_turn", { stage: "no_mic" });
+      playTone("error");
       setCaption({ kind: "noMic" });
       return;
     }
@@ -172,11 +219,13 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       const l = live.current;
       if (l.locked) {
         screenRef.current?.nudge("lock");
+        void unlockAudio().then(() => playTone("tap"));
         setCaption({ kind: "locked" });
         return;
       }
       if (l.micOff) {
         screenRef.current?.nudge("mic");
+        void unlockAudio().then(() => playTone("tap"));
         setCaption({ kind: "muted" });
         return;
       }
@@ -199,6 +248,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       const l = live.current;
       l.locked = !l.locked;
       setLocked(l.locked);
+      void unlockAudio().then(() => playTone(l.locked ? "lock" : "unlock"));
       track("demo_action", { action: l.locked ? "lock" : "unlock", via });
       if (l.locked && l.mode !== "idle") toIdle();
       setCaption({ kind: l.locked ? "locked" : l.micOff ? "muted" : "idle" });
@@ -212,12 +262,49 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       const l = live.current;
       l.micOff = !l.micOff;
       setMicOff(l.micOff);
+      void unlockAudio().then(() => playTone(l.micOff ? "micOff" : "micOn"));
+      // Mic off means off: hands-free stops listening for "Sunday" too
+      if (l.micOff) wake.pause();
+      else if (l.handsFree) wake.resume();
       track("demo_action", { action: l.micOff ? "mic_off" : "mic_on", via });
       if (l.micOff && l.mode !== "idle") toIdle();
       setCaption({ kind: l.micOff ? "muted" : l.locked ? "locked" : "idle" });
     },
-    [toIdle]
+    [toIdle, wake]
   );
+
+  const stopHandsFree = useCallback(() => {
+    live.current.handsFree = false;
+    wake.stop();
+    setHandsFree(false);
+  }, [wake]);
+
+  /* Hands-free: say "Sunday" instead of tapping */
+  const toggleHandsFree = useCallback(() => {
+    const l = live.current;
+    if (l.handsFree) {
+      stopHandsFree();
+      return;
+    }
+    void unlockAudio();
+    const started = wake.start(
+      locale,
+      () => {
+        l.heardWakeAt = l.clock;
+        handlers.current.talk("wake");
+      },
+      () => {
+        stopHandsFree();
+        setCaption({ kind: "noMic" });
+      }
+    );
+    if (!started) return;
+    l.handsFree = true;
+    l.heardWakeAt = l.clock;
+    if (l.micOff) wake.pause();
+    setHandsFree(true);
+    track("demo_action", { action: "hands_free", via: "label" });
+  }, [locale, stopHandsFree, wake]);
 
   const touchScreen = useCallback(
     (x: number, y: number) => {
@@ -237,8 +324,8 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   }, [stage]);
 
   // The loop and listeners are set up once; these keep them calling the latest versions
-  const handlers = useRef({ talk, pressPwr, pressPrivacy, touchScreen, finishListening, toIdle });
-  handlers.current = { talk, pressPwr, pressPrivacy, touchScreen, finishListening, toIdle };
+  const handlers = useRef({ talk, pressPwr, pressPrivacy, touchScreen, finishListening, toIdle, stopHandsFree });
+  handlers.current = { talk, pressPwr, pressPrivacy, touchScreen, finishListening, toIdle, stopHandsFree };
 
   // ── Screen, frame loop, and the 3D model ─────────────────────
   useEffect(() => {
@@ -284,10 +371,32 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
         l.level = 0;
       }
 
+      // The reminder arc: a reminder the visitor set, or else the demo cycle
       l.reminderClock += real;
-      const r = l.reminderClock % REMINDER_CYCLE;
-      l.reminder = r < REMINDER.count ? 1 - r / REMINDER.count : null;
-      l.reminderDue = r >= REMINDER.count && r < REMINDER.count + REMINDER.due;
+      if (l.real) {
+        const left = l.real.due - l.clock;
+        l.reminderLeft = Math.max(0, left);
+        l.reminder = left > 0 ? left / l.real.total : null;
+        l.reminderDue = left <= 0 && left > -REMINDER.due;
+        if (left <= -REMINDER.due) {
+          l.real = null;
+          l.reminderClock = REMINDER.count + REMINDER.due; // then a quiet spell
+        }
+      } else {
+        const r = l.reminderClock % REMINDER_CYCLE;
+        l.reminder = r < REMINDER.count ? 1 - r / REMINDER.count : null;
+        l.reminderLeft = r < REMINDER.count ? REMINDER.count - r : Infinity;
+        l.reminderDue = r >= REMINDER.count && r < REMINDER.count + REMINDER.due;
+      }
+      if (l.reminderDue && !l.wasDue) {
+        // Only reminders the visitor asked for make a sound
+        if (l.chime) playTone("reminder", 0.8);
+        l.chime = false;
+        if (l.real?.text && l.mode === "idle") setCaption({ kind: "said", text: l.real.text });
+      }
+      l.wasDue = l.reminderDue;
+
+      if (l.handsFree && l.mode === "idle" && l.clock - l.heardWakeAt > HANDS_FREE_S) handlers.current.stopHandsFree();
 
       screen.update(l, dt);
       screen.draw();
@@ -295,7 +404,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       const stageEl = stageRef.current;
       if (scene && stageEl) {
         // Face the viewer while Sunday is with them, and as a reminder comes due
-        const dueSoon = (l.reminder !== null && l.reminder * REMINDER.count < 4) || l.reminderDue;
+        const dueSoon = l.reminderLeft < 4 || l.reminderDue;
         scene.focus(l.mode !== "idle" || dueSoon);
         scene.render(real, true);
         placeLabels(scene, stageEl.clientWidth, stageEl.clientHeight, l.mode === "idle", !l.locked && !l.micOff);
@@ -360,6 +469,8 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
         handlers.current.toIdle();
         setCaption({ kind: "idle" });
       }
+      // Scrolled away: stop listening for "Sunday"
+      if (!visible && live.current.handsFree) handlers.current.stopHandsFree();
     });
 
     // The still shows first; three.js and the model load once the page is idle
@@ -396,6 +507,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       io.disconnect();
       cancelAnimationFrame(raf);
       handlers.current.toIdle();
+      handlers.current.stopHandsFree();
       sceneRef.current?.dispose();
       sceneRef.current = null;
     };
@@ -483,7 +595,10 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
               onClick={() => {
                 const l = live.current;
                 const r = l.reminderClock % REMINDER_CYCLE;
-                if (r < REMINDER.count - 3) l.reminderClock += REMINDER.count - 3 - r;
+                void unlockAudio();
+                l.chime = true;
+                if (l.real) l.real.due = Math.min(l.real.due, l.clock + 3);
+                else if (r < REMINDER.count - 3) l.reminderClock += REMINDER.count - 3 - r;
                 else if (r >= REMINDER.count + REMINDER.due) l.reminderClock += REMINDER_CYCLE - r;
                 track("demo_action", { action: "reminder", via: "label" });
               }}
@@ -554,6 +669,30 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
           </>
         )}
       </div>
+
+      {/* Hands-free: once Sunday can talk, and where the browser can listen for the word */}
+      {ready && canHandsFree && stage !== "loading" && (
+        <div className="relative z-10 mt-1 flex flex-col items-center px-6 text-center">
+          <button
+            type="button"
+            onClick={toggleHandsFree}
+            aria-pressed={handsFree}
+            className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-colors ${
+              handsFree
+                ? "border-[#C41D3B]/25 bg-[#C41D3B]/[0.06] text-[#C41D3B]"
+                : "border-zinc-200 bg-white/80 text-zinc-600 hover:border-zinc-300 hover:bg-white"
+            }`}
+          >
+            <AudioLines className={`h-3.5 w-3.5 ${handsFree ? "animate-pulse" : ""}`} strokeWidth={1.8} />
+            {handsFree ? d.handsFreeOn : d.handsFree}
+          </button>
+          {handsFree && (
+            <span className="mt-1.5 max-w-xs text-balance text-[11px] text-zinc-400">
+              <Phrases text={d.handsFreeNote} />
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

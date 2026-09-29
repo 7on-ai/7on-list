@@ -17,6 +17,10 @@ import { type NextRequest, NextResponse } from "next/server";
      200, the answer as audio (audio/mpeg, audio/wav, audio/ogg …)
        optional header X-Sunday-Text: the answer as text, URI-encoded,
        shown under the device as Sunday speaks
+       optional header X-Sunday-Reminder: seconds until a reminder the
+       visitor just set (e.g. "remind me in 5 minutes" → 300); the
+       reminder arc counts down to it and chimes when it arrives
+       optional header X-Sunday-Reminder-Text: what to say then, URI-encoded
      any other status: the page says Sunday couldn't answer just now
 
    Until SUNDAY_VOICE_URL is set, this route answers 503 "not_configured"
@@ -77,7 +81,9 @@ export async function POST(request: NextRequest) {
     "Content-Type": answer.headers.get("Content-Type") ?? "audio/mpeg",
     "Cache-Control": "no-store",
   });
-  const text = answer.headers.get("X-Sunday-Text");
-  if (text) headers.set("X-Sunday-Text", text);
+  for (const name of ["X-Sunday-Text", "X-Sunday-Reminder", "X-Sunday-Reminder-Text"]) {
+    const value = answer.headers.get(name);
+    if (value) headers.set(name, value.slice(0, 2000));
+  }
   return new Response(answer.body, { status: 200, headers });
 }

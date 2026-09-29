@@ -54,7 +54,15 @@ export function SpecsForm({ location = "hero" }: { location?: "hero" | "machine"
       if (response.ok) {
         const result = (await response.json().catch(() => ({}))) as { invite?: string };
         form.reset();
-        track("spec_requested", { locale });
+        // Whether they talked to Sunday on the page first
+        let demo: "talked" | "tried" | "none" = "none";
+        try {
+          const seen = sessionStorage.getItem("arc-demo");
+          if (seen === "talked" || seen === "tried") demo = seen;
+        } catch {
+          // storage unavailable
+        }
+        track("spec_requested", { locale, demo });
         if (result.invite) setInvite(result.invite);
         else toast.success(t.form.success);
       } else if (response.status === 400 || response.status === 403) {
