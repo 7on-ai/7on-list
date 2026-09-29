@@ -186,7 +186,7 @@ def principled(name, color, metallic=0.0, roughness=0.5, **extra):
 
 
 def brushed(name, color, roughness, pattern, *, lines=12.0, streak=0.08, aniso=0.55,
-            bump=0.006, variation=0.22, tangent_axis="Z"):
+            bump=0.006, variation=0.22, tint=0.0, tangent_axis="Z"):
     """Machined aluminium: fine brushing lines, the odd deeper tool mark, and
     a little unevenness across the part — nothing looks computer-perfect.
 
@@ -196,6 +196,7 @@ def brushed(name, color, roughness, pattern, *, lines=12.0, streak=0.08, aniso=0
       "along-x" straight lines along the part's local X (the buttons)
     lines   — grooves per mm across the brushing
     streak  — how long each streak runs (smaller = longer), per mm
+    tint    — how much lighter or darker each line is
     """
     m = bpy.data.materials.new(name)
     m.use_nodes = True
@@ -270,6 +271,15 @@ def brushed(name, color, roughness, pattern, *, lines=12.0, streak=0.08, aniso=0
     bmp.inputs["Distance"].default_value = bump
     L.new(height, bmp.inputs["Height"])
     L.new(bmp.outputs["Normal"], b.inputs["Normal"])
+
+    # Each line also reflects a touch more or less, so the brushing still
+    # shows where the surroundings are plain
+    if tint:
+        shade = N.new("ShaderNodeVectorMath")
+        shade.operation = "SCALE"
+        shade.inputs[0].default_value = color
+        L.new(math("ADD", math("MULTIPLY", math("SUBTRACT", height, 0.35), tint), 1.0), shade.inputs["Scale"])
+        L.new(shade.outputs["Vector"], b.inputs["Base Color"])
 
     # Unevenness: slow, large patches of slightly different sheen
     patch = N.new("ShaderNodeTexNoise")
@@ -381,7 +391,7 @@ def engraving_material():
 # ── Build ─────────────────────────────────────────────────────────
 def build():
     scene = reset()
-    anodised = brushed("Brushed anodised aluminium", (0.80, 0.80, 0.82), 0.24, "around")
+    anodised = brushed("Brushed anodised aluminium", (0.80, 0.80, 0.82), 0.24, "around", tint=0.18)
     back_alu = brushed("Spun anodised aluminium", (0.78, 0.78, 0.80), 0.28, "spun", lines=10.0)
     polished = brushed("Brushed button", (0.86, 0.86, 0.88), 0.18, "along-x",
                        lines=16.0, streak=0.15, aniso=0.4, bump=0.004, variation=0.12, tangent_axis="Y")

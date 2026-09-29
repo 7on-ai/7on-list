@@ -62,7 +62,7 @@ Machined, not computer-perfect — `brushed()` in the script:
 
 To tune it, change the numbers passed to `brushed()` in `build()`: `lines`
 (lines per mm), `bump` (how deep they read), `variation` (how uneven the
-sheen is), `aniso` (how far reflections stretch). The lines are about 0.08 mm
+sheen is), `tint` (how much each line differs in tone), `aniso` (how far reflections stretch). The lines are about 0.08 mm
 apart, so they read as texture in the close-up and as a soft, stretched sheen
 in the full-product shots — as on a real part.
 
