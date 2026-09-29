@@ -4,6 +4,7 @@ Run with Blender 4.5 (or the `bpy` module):
     blender -b -P build_arc.py            # builds arc.blend, arc.glb and renders
     python build_arc.py --preview         # quick low-sample renders
     python build_arc.py --export-only     # arc.blend and arc.glb, no renders
+    python build_arc.py --only=hero,macro # just those renders
 
 Units: 1 Blender unit = 1 mm.
 Angles around the rim are measured clockwise from 12 o'clock, looking at the screen.
@@ -22,6 +23,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LOGO = os.path.join(HERE, "..", "..", "public", "logo.png")
 PREVIEW = "--preview" in sys.argv
 EXPORT_ONLY = "--export-only" in sys.argv   # rebuild arc.blend and arc.glb without rendering
+# --only=hero,macro renders just those views (and skips the .blend/.glb export)
+ONLY = next((a.split("=", 1)[1].split(",") for a in sys.argv if a.startswith("--only=")), None)
 
 # ── Dimensions (mm) ───────────────────────────────────────────────
 OUTER_D = 55.00     # widest point of the body
@@ -53,6 +56,7 @@ FEATURES = {
     "mic_2": (210, 8.0),
 }
 BACK_DIMPLES = [(300, 21.3), (60, 21.3), (180, 21.3)]
+EXPORT_MATERIALS = {}   # render material name → plain stand-in for the glTF
 LOGO_WIDTH = 17.0   # laser-engraved mark on the back cover
 
 
@@ -181,6 +185,110 @@ def principled(name, color, metallic=0.0, roughness=0.5, **extra):
     return m
 
 
+def brushed(name, color, roughness, pattern, *, lines=12.0, streak=0.08, aniso=0.55,
+            bump=0.006, variation=0.22, tangent_axis="Z"):
+    """Machined aluminium: fine brushing lines, the odd deeper tool mark, and
+    a little unevenness across the part — nothing looks computer-perfect.
+
+    pattern:
+      "around"  lines run around the rim (the body's circumferential brushing)
+      "spun"    concentric rings (the back cover, spun on a lathe)
+      "along-x" straight lines along the part's local X (the buttons)
+    lines   — grooves per mm across the brushing
+    streak  — how long each streak runs (smaller = longer), per mm
+    """
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    N, L = nt.nodes, nt.links
+    b = N["Principled BSDF"]
+    b.inputs["Base Color"].default_value = (*color, 1)
+    b.inputs["Metallic"].default_value = 1.0
+    b.inputs["Roughness"].default_value = roughness   # also what the glTF export falls back to
+    b.inputs["Anisotropic"].default_value = aniso
+
+    def math(op, a, bb=None, value=None):
+        n = N.new("ShaderNodeMath")
+        n.operation = op
+        for i, x in enumerate((a, bb)):
+            if x is None:
+                continue
+            if isinstance(x, (int, float)):
+                n.inputs[i].default_value = x
+            else:
+                L.new(x, n.inputs[i])
+        return n.outputs[0]
+
+    obj = N.new("ShaderNodeTexCoord").outputs["Object"]
+    sep = N.new("ShaderNodeSeparateXYZ")
+    L.new(obj, sep.inputs["Vector"])
+    x, y, z = sep.outputs["X"], sep.outputs["Y"], sep.outputs["Z"]
+
+    # Coordinates in which the grooves run along the first axis
+    if pattern in ("around", "spun"):
+        theta = math("ARCTAN2", y, x)
+        r = math("SQRT", math("ADD", math("MULTIPLY", x, x), math("MULTIPLY", y, y)))
+        along = math("MULTIPLY", theta, 27.5)         # arc length around the rim, mm
+        across = z if pattern == "around" else r
+    else:
+        along, across = x, y
+
+    def groove_set(freq, seed, rare=None):
+        """Straight parallel grooves, `freq` per mm, each with its own random
+        depth (rare: only an occasional groove, like a stray tool mark)."""
+        u = math("MULTIPLY", across, freq)
+        wn = N.new("ShaderNodeTexWhiteNoise")
+        wn.noise_dimensions = "1D"
+        L.new(math("ADD", math("FLOOR", u), seed), wn.inputs["W"])
+        depth = wn.outputs["Value"]
+        if rare is not None:
+            depth = math("GREATER_THAN", depth, rare)
+        f = math("FRACT", u)                                     # position across one groove
+        profile = math("SUBTRACT", 1.0, math("POWER", math("SUBTRACT", math("MULTIPLY", f, 2.0), 1.0), 2.0))
+        return math("MULTIPLY", depth, profile)
+
+    # Grooves fade in and out along their length, as the brush wears
+    wear = N.new("ShaderNodeTexNoise")
+    wear.inputs["Scale"].default_value = 1.0
+    wear.inputs["Detail"].default_value = 2.0
+    wc = N.new("ShaderNodeCombineXYZ")
+    L.new(math("MULTIPLY", along, streak), wc.inputs["X"])
+    L.new(math("MULTIPLY", across, lines * 0.04), wc.inputs["Y"])
+    L.new(wc.outputs["Vector"], wear.inputs["Vector"])
+    fade = N.new("ShaderNodeMapRange")
+    fade.inputs["To Min"].default_value = 0.35
+    L.new(wear.outputs["Fac"], fade.inputs["Value"])
+
+    lines_main = groove_set(lines, 11.0)
+    lines_fine = groove_set(lines * 2.7, 37.0)
+    marks = groove_set(lines * 0.3, 73.0, rare=0.9)
+    fine = math("MULTIPLY", math("ADD", lines_main, math("MULTIPLY", lines_fine, 0.45)), fade.outputs["Result"])
+    height = math("ADD", fine, math("MULTIPLY", marks, 1.2))
+
+    bmp = N.new("ShaderNodeBump")
+    bmp.inputs["Strength"].default_value = 1.0
+    bmp.inputs["Distance"].default_value = bump
+    L.new(height, bmp.inputs["Height"])
+    L.new(bmp.outputs["Normal"], b.inputs["Normal"])
+
+    # Unevenness: slow, large patches of slightly different sheen
+    patch = N.new("ShaderNodeTexNoise")
+    patch.inputs["Scale"].default_value = 0.12
+    patch.inputs["Detail"].default_value = 3.0
+    L.new(obj, patch.inputs["Vector"])
+    rough = math("ADD", roughness,
+                 math("ADD", math("MULTIPLY", math("SUBTRACT", fine, 0.5), variation),
+                      math("MULTIPLY", math("SUBTRACT", patch.outputs["Fac"], 0.5), variation * 0.8)))
+    L.new(rough, b.inputs["Roughness"])
+
+    # Reflections stretch across the grooves, as on real brushed metal
+    t = N.new("ShaderNodeTangent")
+    t.direction_type = "RADIAL"
+    t.axis = tangent_axis
+    L.new(t.outputs["Tangent"], b.inputs["Tangent"])
+    return m
+
+
 def screen_texture(path, size=2048):
     """The face: near-black glass with a glowing red orb in the middle,
     like ARC on the 7on page."""
@@ -273,9 +381,16 @@ def engraving_material():
 # ── Build ─────────────────────────────────────────────────────────
 def build():
     scene = reset()
-    anodised = principled("Anodised aluminium", (0.80, 0.80, 0.82), metallic=1.0, roughness=0.34)
-    back_alu = principled("Back cover aluminium", (0.78, 0.78, 0.80), metallic=1.0, roughness=0.38)
-    polished = principled("Polished aluminium", (0.88, 0.88, 0.90), metallic=1.0, roughness=0.12)
+    anodised = brushed("Brushed anodised aluminium", (0.80, 0.80, 0.82), 0.24, "around")
+    back_alu = brushed("Spun anodised aluminium", (0.78, 0.78, 0.80), 0.28, "spun", lines=10.0)
+    polished = brushed("Brushed button", (0.86, 0.86, 0.88), 0.18, "along-x",
+                       lines=16.0, streak=0.15, aniso=0.4, bump=0.004, variation=0.12, tangent_axis="Y")
+    # glTF can't carry procedural textures: the web model gets plain finishes
+    EXPORT_MATERIALS.update({
+        anodised.name: principled("Anodised aluminium", (0.80, 0.80, 0.82), metallic=1.0, roughness=0.34),
+        back_alu.name: principled("Back cover aluminium", (0.78, 0.78, 0.80), metallic=1.0, roughness=0.38),
+        polished.name: principled("Polished aluminium", (0.88, 0.88, 0.90), metallic=1.0, roughness=0.12),
+    })
     hole = principled("Hole", (0.004, 0.004, 0.004), roughness=0.9)
     silicone = principled("Silicone", (0.36, 0.36, 0.37), roughness=0.62)
 
@@ -433,6 +548,7 @@ def studio(scene):
     coord = nt.nodes.new("ShaderNodeTexCoord")
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.name = "Studio gradient"
     r = ramp.color_ramp
     r.elements[0].position, r.elements[0].color = 0.25, (0.17, 0.17, 0.175, 1)
     r.elements[1].position, r.elements[1].color = 0.95, (0.95, 0.95, 0.96, 1)
@@ -466,6 +582,20 @@ def studio(scene):
     area("Bounce", (0, -60, -240), 300, 0.9e5)
 
 
+MOODS = {
+    # below (floor), horizon, above
+    "light": [(0.17, 0.17, 0.175), (0.26, 0.26, 0.27), (0.95, 0.95, 0.96)],
+    # dark studio over a white table: grey metal with bright bands, black glass
+    "dark": [(0.55, 0.55, 0.56), (0.06, 0.06, 0.065), (0.03, 0.03, 0.035)],
+}
+
+
+def set_mood(scene, mood):
+    ramp = scene.world.node_tree.nodes["Studio gradient"].color_ramp
+    for element, color in zip(sorted(ramp.elements, key=lambda e: e.position), MOODS[mood]):
+        element.color = (*color, 1)
+
+
 def flatten(path, color=(0xFA, 0xF8, 0xF6)):
     """A copy of a transparent render placed on the page colour."""
     im = bpy.data.images.load(path)
@@ -481,9 +611,15 @@ def flatten(path, color=(0xFA, 0xF8, 0xF6)):
     out.save()
 
 
-def camera(scene, name, loc, target=(0, 0, 7.5), lens=85):
+def camera(scene, name, loc, target=(0, 0, 7.5), lens=85, fstop=None):
     cam_data = bpy.data.cameras.new(name)
     cam_data.lens = lens
+    if fstop:
+        # Blender sizes the aperture in metres; the scene is in millimetres,
+        # so a real f-number is divided by 1000
+        cam_data.dof.use_dof = True
+        cam_data.dof.focus_distance = (Vector(target) - Vector(loc)).length
+        cam_data.dof.aperture_fstop = fstop / 1000
     cam_data.clip_start, cam_data.clip_end = 1, 5000
     cam = bpy.data.objects.new(name, cam_data)
     scene.collection.objects.link(cam)
@@ -499,11 +635,31 @@ def render(scene, cam, path, w=1600, h=1000):
     bpy.ops.render.render(write_still=True)
 
 
+def rim_point(angle_deg, z, out=0.0):
+    a = math.radians(angle_deg)
+    r = radius_at(z) + out
+    return (math.sin(a) * r, math.cos(a) * r, z)
+
+
 def main():
     scene, root = build()
     studio(scene)
     out = os.path.join(HERE, "renders")
     os.makedirs(out, exist_ok=True)
+
+    # A floor that only catches the shadow, for the close-up resting on a table
+    bpy.ops.mesh.primitive_plane_add(size=600, location=(0, 0, -0.02))
+    floor = bpy.context.active_object
+    floor.name = "Shadow catcher"
+    floor.is_shadow_catcher = True
+    floor.hide_render = True
+
+    # Close-up like a product macro: low, near the rim by the BOOT button,
+    # the USB-C side falling away to the left, shallow depth of field
+    macro_focus = Vector(rim_point(172, 11.0, out=-3.0))
+    az, el, dist = math.radians(152), math.radians(32), 150.0
+    macro_cam = tuple(macro_focus + Vector((math.sin(az) * math.cos(el), math.cos(az) * math.cos(el), math.sin(el))) * dist)
+    macro_focus = tuple(macro_focus)
 
     views = {
         # Hero: floating, screen turned to the right, as on the page
@@ -515,19 +671,24 @@ def main():
         "side-pwr": dict(rot=(0, 0, math.radians(FEATURES["pwr"][0] - 180)), cam=(0, -280, 7.5), target=(0, 0, 7.5)),
         "detail-pwr": dict(rot=(0, 0, math.radians(FEATURES["pwr"][0] - 180)), cam=(0, -120, 9), target=(0, 0, 8)),
         "side-usb": dict(rot=(0, 0, math.radians(FEATURES["usb"][0] - 180)), cam=(0, -280, 7.5), target=(0, 0, 7.5)),
+        "macro": dict(rot=(0, 0, 0), cam=macro_cam, target=macro_focus, lens=100, fstop=11.0,
+                      size=(1200, 1680), floor=True, mood="dark"),
     }
     for name, v in views.items():
         root.rotation_euler = v["rot"]
         root.location = (0, 0, 0)
-        cam = camera(scene, f"Cam {name}", v["cam"], v["target"], lens=v.get("lens", 85))
-        if EXPORT_ONLY:
+        cam = camera(scene, f"Cam {name}", v["cam"], v["target"], lens=v.get("lens", 85), fstop=v.get("fstop"))
+        if EXPORT_ONLY or (ONLY and name not in ONLY):
             continue
+        floor.hide_render = not v.get("floor", False)
+        set_mood(scene, v.get("mood", "light"))
         path = os.path.join(out, f"arc-{name}.png")
-        render(scene, cam, path)
+        render(scene, cam, path, *v.get("size", (1600, 1000)))
         flatten(path)
 
     root.rotation_euler = (0, 0, 0)
-    if not PREVIEW:
+    floor.hide_render = True
+    if not PREVIEW and not ONLY:
         export(root)
 
 
@@ -537,12 +698,19 @@ def export(root):
     # and leave out the hidden cutters and helpers
     root.scale = (0.001, 0.001, 0.001)
     bpy.ops.object.select_all(action="DESELECT")
+    swapped = []
     for ob in [root, *root.children_recursive]:
         if ob.visible_get():
             ob.select_set(True)
+            for slot in getattr(ob, "material_slots", []):
+                if slot.material and slot.material.name in EXPORT_MATERIALS:
+                    swapped.append((slot, slot.material))
+                    slot.material = EXPORT_MATERIALS[slot.material.name]
     bpy.ops.export_scene.gltf(
         filepath=os.path.join(HERE, "arc.glb"), use_selection=True, export_apply=True,
     )
+    for slot, material in swapped:
+        slot.material = material
     root.scale = (1, 1, 1)
 
 
