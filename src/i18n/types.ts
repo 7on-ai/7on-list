@@ -38,7 +38,10 @@ export type Dictionary = {
   };
   /* The working device in the hero: what to do, and what's happening */
   demo: {
-    tap: string;
+    /* Beside the red dot on the 3D model */
+    dotHint: string;
+    /* Under the device while nothing is happening */
+    drag: string;
     talk: string;
     stop: string;
     lock: string;

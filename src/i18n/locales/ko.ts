@@ -67,7 +67,8 @@ export const ko: Dictionary = {
     cta: "ARC 스펙 받아보기",
   },
   demo: {
-    tap: "빨간 점을 탭하고 말하세요.",
+    dotHint: "탭해서 대화하거나 “Sunday”라고 부르세요",
+    drag: "드래그해서 360° 돌려 보기",
     talk: "말하기",
     stop: "중지",
     lock: "잠금",

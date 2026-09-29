@@ -67,7 +67,8 @@ export const zhHans: Dictionary = {
     cta: "获取 ARC 规格",
   },
   demo: {
-    tap: "轻点红点，开口说话。",
+    dotHint: "轻点即可对话，或直接说“Sunday”",
+    drag: "拖动，360° 查看",
     talk: "说话",
     stop: "停止",
     lock: "锁定",

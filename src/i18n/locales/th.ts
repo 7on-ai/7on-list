@@ -67,7 +67,8 @@ export const th: Dictionary = {
     cta: "รับสเปก ARC",
   },
   demo: {
-    tap: "แตะจุดแดง\u200Bแล้วพูดได้เลย",
+    dotHint: "แตะเพื่อคุย หรือแค่เรียก “Sunday”",
+    drag: "ลากเพื่อหมุนดูรอบเครื่อง",
     talk: "พูด",
     stop: "หยุด",
     lock: "ล็อก",

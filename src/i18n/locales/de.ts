@@ -67,7 +67,8 @@ export const de: Dictionary = {
     cta: "ARC-Datenblatt anfordern",
   },
   demo: {
-    tap: "Tippe auf den roten Punkt und sprich.",
+    dotHint: "Tippen zum Sprechen – oder „Sunday“ sagen",
+    drag: "Ziehen, um es zu drehen",
     talk: "Sprechen",
     stop: "Stopp",
     lock: "Sperren",

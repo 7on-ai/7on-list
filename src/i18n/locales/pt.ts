@@ -67,7 +67,8 @@ export const pt: Dictionary = {
     cta: "Receber a ficha do ARC",
   },
   demo: {
-    tap: "Toque no ponto vermelho e fale.",
+    dotHint: "Toque para falar, ou diga “Sunday”",
+    drag: "Arraste para girar",
     talk: "Falar",
     stop: "Parar",
     lock: "Bloquear",

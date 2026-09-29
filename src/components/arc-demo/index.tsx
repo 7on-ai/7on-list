@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock, LockOpen, Mic, MicOff } from "lucide-react";
+import { Lock, LockOpen, Mic, MicOff, MoveHorizontal } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -8,7 +8,7 @@ import poster from "@/assets/arc-3d.webp";
 import { Phrases } from "@/components/ui/phrases";
 import { useI18n } from "@/i18n/provider";
 import { track } from "@/lib/track";
-import type { ArcButton, ArcSceneHandle } from "./scene";
+import type { AnchorId, ArcButton, ArcSceneHandle } from "./scene";
 import { ArcScreen, type Mode } from "./screen";
 import { exampleAdapter, type SundayAdapter } from "./sunday";
 import { MicLevel, speakingLevel } from "./voice";
@@ -44,7 +44,8 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const flatRef = useRef<HTMLDivElement>(null);
   const replyRef = useRef<HTMLSpanElement>(null);
-  const labelRefs = useRef<Record<ArcButton, HTMLDivElement | null>>({ pwr: null, boot: null });
+  const labelRefs = useRef<Record<AnchorId, HTMLDivElement | null>>({ pwr: null, boot: null, dot: null });
+  const dotLineRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<ArcScreen | null>(null);
   const sceneRef = useRef<ArcSceneHandle | null>(null);
   const mic = useMemo(() => new MicLevel(), []);
@@ -266,12 +267,39 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       if (scene) {
         scene.render(dt, true);
         const anchors = scene.anchors();
+        const stageWidth = stageRef.current?.clientWidth ?? 0;
+        const fade = (facing: number) => String(Math.max(0, Math.min(1, (facing - 0.05) * 4)));
+
+        // PWR and BOOT: the label sits on whichever side the button is
         for (const id of ["pwr", "boot"] as ArcButton[]) {
           const el = labelRefs.current[id];
           if (!el) continue;
           const a = anchors[id];
+          const left = a.x < stageWidth / 2;
           el.style.transform = `translate(${a.x}px, ${a.y}px)`;
-          el.style.opacity = String(Math.max(0, Math.min(1, (a.facing - 0.05) * 4)));
+          el.style.opacity = fade(a.facing);
+          const inner = el.firstElementChild as HTMLElement;
+          inner.style.flexDirection = left ? "row-reverse" : "row";
+          inner.style.textAlign = left ? "right" : "left";
+          inner.style.transform = left ? "translate(calc(-100% - 10px), -50%)" : "translate(10px, -50%)";
+        }
+
+        // The red dot: its label above the device, a line down to the dot.
+        // Only while the dot is there to tap.
+        const dot = labelRefs.current.dot;
+        const line = dotLineRef.current;
+        if (dot && line) {
+          const a = anchors.dot;
+          const show = l.mode === "idle" && !l.locked && !l.micOff;
+          const opacity = show ? fade(a.facing) : "0";
+          const half = dot.offsetWidth / 2 + 8;
+          const x = Math.min(Math.max(a.x, half), stageWidth - half);
+          dot.style.transform = `translateX(${x}px) translateX(-50%)`;
+          dot.style.opacity = opacity;
+          const top = dot.offsetTop + dot.offsetHeight + 6;
+          line.style.transform = `translate(${a.x}px, ${top}px)`;
+          line.style.height = `${Math.max(0, a.y - top - 7)}px`;
+          line.style.opacity = opacity;
         }
       }
       raf = visible ? requestAnimationFrame(frame) : 0;
@@ -347,12 +375,13 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
             stage === "loading" ? "opacity-100" : "opacity-0"
           }`}
         >
+          {/* Phones show the device a little smaller (see layout.ts) */}
           <Image
             src={poster}
             alt="7on ARC"
             priority
             sizes="(min-width: 768px) 560px, 100vw"
-            className="aspect-square h-full max-h-full w-auto max-w-full select-none object-contain"
+            className="aspect-square h-full max-h-full w-auto max-w-full scale-[0.854] select-none object-contain sm:scale-100"
           />
         </div>
 
@@ -372,23 +401,42 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
 
         <div ref={stageRef} className={`absolute inset-0 transition-opacity duration-500 ${stage === "3d" ? "opacity-100" : "opacity-0"}`} />
 
-        {/* Button labels, following the buttons as the device turns */}
-        {stage === "3d" &&
-          (["pwr", "boot"] as ArcButton[]).map((id) => (
+        {/* Labels that follow the device as it turns */}
+        {stage === "3d" && (
+          <>
+            {(["pwr", "boot"] as ArcButton[]).map((id) => (
+              <div
+                key={id}
+                ref={(el) => {
+                  labelRefs.current[id] = el;
+                }}
+                className="pointer-events-none absolute left-0 top-0 opacity-0"
+              >
+                <span className="absolute left-0 top-0 flex items-center gap-1.5 whitespace-nowrap sm:gap-2">
+                  <span className="h-px w-4 shrink-0 bg-zinc-300 sm:w-6" />
+                  <span className="flex flex-col leading-tight sm:flex-row sm:items-center sm:gap-2">
+                    <span className="text-[10px] font-semibold tracking-wider text-zinc-500 sm:text-[11px]">{id.toUpperCase()}</span>
+                    <span className="text-[10px] text-zinc-400 sm:text-xs">{id === "pwr" ? d.pwrHint : d.bootHint}</span>
+                  </span>
+                </span>
+              </div>
+            ))}
+
+            {/* What the red dot does */}
             <div
-              key={id}
               ref={(el) => {
-                labelRefs.current[id] = el;
+                labelRefs.current.dot = el;
               }}
-              className="pointer-events-none absolute left-0 top-0 hidden opacity-0 md:block"
+              className="pointer-events-none absolute left-0 top-[3%] whitespace-nowrap text-xs font-medium text-zinc-600 opacity-0 transition-opacity duration-300 sm:text-[13px]"
             >
-              <span className="absolute left-3 top-0 flex -translate-y-1/2 items-center gap-2 whitespace-nowrap">
-                <span className="h-px w-6 bg-zinc-300" />
-                <span className="text-[11px] font-semibold tracking-wider text-zinc-500">{id.toUpperCase()}</span>
-                <span className="text-xs text-zinc-400">{id === "pwr" ? d.pwrHint : d.bootHint}</span>
-              </span>
+              <Phrases text={d.dotHint} />
             </div>
-          ))}
+            <div
+              ref={dotLineRef}
+              className="pointer-events-none absolute left-0 top-0 w-px bg-gradient-to-b from-zinc-300 to-[#E0233F]/70 opacity-0 transition-opacity duration-300"
+            />
+          </>
+        )}
       </div>
 
       {/* What's happening, in words */}
@@ -406,9 +454,20 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
           </>
         ) : (
           <>
-            <span className={`text-balance text-sm ${caption.kind === "listening" ? "text-[#C41D3B]" : "text-zinc-500"}`}>
+            <span
+              className={`flex items-center gap-1.5 text-balance text-sm ${caption.kind === "listening" ? "text-[#C41D3B]" : "text-zinc-500"}`}
+            >
+              {caption.kind === "tap" && stage === "3d" && <MoveHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.6} />}
               <Phrases
-                text={{ tap: d.tap, listening: d.listening, locked: d.locked, muted: d.muted, noMic: d.noMic }[caption.kind]}
+                text={
+                  {
+                    tap: stage === "3d" ? d.drag : d.dotHint,
+                    listening: d.listening,
+                    locked: d.locked,
+                    muted: d.muted,
+                    noMic: d.noMic,
+                  }[caption.kind]
+                }
               />
             </span>
             {/* Said where it matters: while the mic is in use */}

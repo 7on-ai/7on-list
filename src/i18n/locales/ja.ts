@@ -67,7 +67,8 @@ export const ja: Dictionary = {
     cta: "ARC のスペックを受け取る",
   },
   demo: {
-    tap: "赤い点をタップして、話しかけてください。",
+    dotHint: "タップで会話。「Sunday」と呼ぶだけでも",
+    drag: "ドラッグで 360° 回転",
     talk: "話す",
     stop: "停止",
     lock: "ロック",

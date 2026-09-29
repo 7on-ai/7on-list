@@ -67,7 +67,8 @@ export const en: Dictionary = {
     cta: "Get the ARC specs",
   },
   demo: {
-    tap: "Tap the red dot and speak.",
+    dotHint: "Tap to talk, or just say “Sunday”",
+    drag: "Drag to turn it around",
     talk: "Talk",
     stop: "Stop",
     lock: "Lock",

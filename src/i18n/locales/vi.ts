@@ -67,7 +67,8 @@ export const vi: Dictionary = {
     cta: "Nhận thông số ARC",
   },
   demo: {
-    tap: "Chạm vào chấm đỏ rồi nói.",
+    dotHint: "Chạm để nói, hoặc gọi “Sunday”",
+    drag: "Kéo để xoay 360°",
     talk: "Nói",
     stop: "Dừng",
     lock: "Khóa",

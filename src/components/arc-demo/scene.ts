@@ -6,10 +6,12 @@ import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+import { deviceFill } from "./layout";
 
 export type ArcButton = "pwr" | "boot";
 
 export type Anchor = { x: number; y: number; facing: number };
+export type AnchorId = ArcButton | "dot";
 
 export type SceneEvents = {
   onButton(button: ArcButton): void;
@@ -21,8 +23,9 @@ export type SceneEvents = {
 export type ArcSceneHandle = {
   render(dt: number, screenChanged: boolean): void;
   press(button: ArcButton): void;
-  /* Where each button is on the page, for its label; facing < 0 when hidden */
-  anchors(): Record<ArcButton, Anchor>;
+  /* Where each button and the red dot are on the page, for their labels;
+     facing < 0 when turned away */
+  anchors(): Record<AnchorId, Anchor>;
   dispose(): void;
 };
 
@@ -30,9 +33,8 @@ const MODEL_URL = "/models/arc.glb";
 const GLASS_MM = 48.96;
 const NODE = { pwr: "PWR button", boot: "BOOT button" } as const;
 
-/* Resting pose: screen towards you, turned a little so the buttons on the
-   right edge show */
-const BASE_YAW = -0.55;
+/* Resting pose: screen turned a little to the right, as ARC faces on the page */
+const BASE_YAW = 0.5;
 const BASE_PITCH = -0.1;
 
 export async function createArcScene(
@@ -96,12 +98,14 @@ export async function createArcScene(
     emissiveIntensity: 1,
   });
 
-  // ── Metal: brushed around the rim, spun on the back ────────────
+  // ── Metal: brushed around the rim ─────────────────────────────
   const brushed = brushedMaps(renderer);
-  for (const [name, spun] of [["Body", false], ["Back cover", true]] as const) {
+  // The rim only: on the flat back the fine rings alias into ripples at
+  // screen resolution, so the back keeps a plain satin finish
+  for (const name of ["Body"]) {
     const mesh = find(name);
     if (!mesh) continue;
-    cylinderUVs(mesh.geometry, spun);
+    cylinderUVs(mesh.geometry);
     const m = mesh.material as THREE.MeshStandardMaterial;
     mesh.material = new THREE.MeshStandardMaterial({
       color: m.color,
@@ -109,8 +113,23 @@ export async function createArcScene(
       roughness: 1, // the map holds the roughness
       roughnessMap: brushed.roughness,
       normalMap: brushed.normal,
-      normalScale: new THREE.Vector2(0.35, 0.35),
+      normalScale: new THREE.Vector2(0.22, 0.22),
     });
+  }
+  const back = find("Back cover");
+  if (back) {
+    const m = back.material as THREE.MeshStandardMaterial;
+    m.roughness = 0.42;
+    m.color.setScalar(0.66);
+  }
+  // The laser-engraved mark: matte, where the anodising was burnt off.
+  // A shade darker than it would read in a photo, so it shows on screen.
+  const logo = find("Engraved logo");
+  if (logo) {
+    const m = logo.material as THREE.MeshStandardMaterial;
+    m.color.setScalar(0.5);
+    m.metalness = 0;
+    m.roughness = 0.9;
   }
   for (const name of Object.values(NODE)) {
     const mesh = find(name);
@@ -137,7 +156,8 @@ export async function createArcScene(
     height = Math.max(1, container.clientHeight);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    const fit = 0.062 / 0.82; // the device, with room to turn, fills most of the short side
+    // The device fills most of the short side; less on phones, leaving room for the labels
+    const fit = 0.062 / deviceFill(width);
     const halfTan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     camera.position.set(0, 0, fit / (2 * halfTan * Math.min(1, camera.aspect)));
     camera.lookAt(0, 0, 0);
@@ -154,8 +174,10 @@ export async function createArcScene(
   const targets = [glass, ...buttons.map((b) => b.hit)];
   let down: { x: number; y: number; yaw: number; pitch: number; id: number; touch: boolean } | null = null;
   let dragging = false;
-  let dragYaw = 0;
+  let dragYaw = 0; // unbounded: it turns all the way round
   let dragPitch = 0;
+  let spin = 0; // rad/s, carried on after a flick
+  let prev = { x: 0, t: 0 };
   let lastTouch = -10;
   let clock = 0;
   let kick = 0; // a small recoil when a button is pressed
@@ -170,6 +192,8 @@ export async function createArcScene(
   const onDown = (e: PointerEvent) => {
     down = { x: e.clientX, y: e.clientY, yaw: dragYaw, pitch: dragPitch, id: e.pointerId, touch: e.pointerType === "touch" };
     dragging = false;
+    spin = 0;
+    prev = { x: e.clientX, t: performance.now() };
   };
   const onMove = (e: PointerEvent) => {
     if (down && e.pointerId === down.id) {
@@ -181,7 +205,10 @@ export async function createArcScene(
         events.onDrag();
       }
       if (dragging) {
-        dragYaw = THREE.MathUtils.clamp(down.yaw + dx * 0.009, -1.1, 1.3);
+        dragYaw = down.yaw + dx * 0.009;
+        const now = performance.now();
+        if (now > prev.t) spin = THREE.MathUtils.lerp(spin, ((e.clientX - prev.x) * 0.009 * 1000) / (now - prev.t), 0.5);
+        prev = { x: e.clientX, t: now };
         if (!down.touch) dragPitch = THREE.MathUtils.clamp(down.pitch + dy * 0.006, -0.5, 0.5);
         lastTouch = clock;
       }
@@ -195,7 +222,11 @@ export async function createArcScene(
     down = null;
     dragging = false;
     lastTouch = clock;
-    if (wasDrag) return;
+    if (wasDrag) {
+      if (performance.now() - prev.t > 80) spin = 0; // held still before letting go
+      spin = THREE.MathUtils.clamp(spin, -14, 14);
+      return;
+    }
     const hit = pick(e);
     if (!hit) return;
     if (hit.object === glass && hit.uv) {
@@ -219,7 +250,9 @@ export async function createArcScene(
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();
   const toCam = new THREE.Vector3();
-  const anchors: Record<ArcButton, Anchor> = { pwr: { x: 0, y: 0, facing: -1 }, boot: { x: 0, y: 0, facing: -1 } };
+  const hidden = { x: 0, y: 0, facing: -1 };
+  const anchors: Record<AnchorId, Anchor> = { pwr: hidden, boot: hidden, dot: hidden };
+  const up = new THREE.Vector3(0, 1, 0); // the screen's facing, in model space
 
   const press = (id: ArcButton) => {
     const b = buttons.find((x) => x.id === id)!;
@@ -231,10 +264,17 @@ export async function createArcScene(
     dt = Math.min(dt, 1 / 20);
     clock += dt;
 
-    // Let go, and it drifts back to its pose
-    if (!down && clock - lastTouch > 2.2) {
-      dragYaw *= Math.exp(-2.2 * dt);
-      dragPitch *= Math.exp(-2.2 * dt);
+    // A flick keeps it turning, slowing down; left alone, it comes back
+    // to its pose the short way round
+    if (!down) {
+      dragYaw += spin * dt;
+      spin *= Math.exp(-2.4 * dt);
+      if (Math.abs(spin) > 0.3) lastTouch = clock;
+      else if (clock - lastTouch > 3) {
+        const home = Math.round(dragYaw / (Math.PI * 2)) * Math.PI * 2;
+        dragYaw += (home - dragYaw) * (1 - Math.exp(-2 * dt));
+        dragPitch *= Math.exp(-2 * dt);
+      }
     }
     const ease = 1 - Math.exp(-(reducedMotion ? 30 : 5) * dt);
     yaw += (BASE_YAW + dragYaw - yaw) * ease;
@@ -265,6 +305,13 @@ export async function createArcScene(
       tmp.project(camera);
       anchors[b.id] = { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, facing };
     }
+    glass.getWorldPosition(tmp);
+    nrm.copy(up).transformDirection(root.matrixWorld);
+    tmp.addScaledVector(nrm, 0.00045); // the glass's top face
+    toCam.copy(camera.position).sub(tmp).normalize();
+    const dotFacing = nrm.dot(toCam);
+    tmp.project(camera);
+    anchors.dot = { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, facing: dotFacing };
   };
 
   return {
@@ -293,10 +340,9 @@ export async function createArcScene(
   };
 }
 
-/* UVs for brushing: u runs around the part (mirrored at the seam, so it
-   never jumps), v across the lines — height for the rim, radius for the
-   spun back. Model units are millimetres. */
-function cylinderUVs(geometry: THREE.BufferGeometry, spun: boolean) {
+/* UVs for brushing: u runs around the rim (mirrored at the seam, so it
+   never jumps), v across the lines, by height. Model units are millimetres. */
+function cylinderUVs(geometry: THREE.BufferGeometry) {
   const pos = geometry.attributes.position;
   const uv = new Float32Array(pos.count * 2);
   for (let i = 0; i < pos.count; i++) {
@@ -304,7 +350,7 @@ function cylinderUVs(geometry: THREE.BufferGeometry, spun: boolean) {
     const y = pos.getY(i);
     const z = pos.getZ(i);
     uv[i * 2] = Math.abs(Math.atan2(z, x)) / Math.PI;
-    uv[i * 2 + 1] = spun ? Math.hypot(x, z) / 28 : y / 15;
+    uv[i * 2 + 1] = y / 15;
   }
   geometry.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
 }

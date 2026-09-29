@@ -67,7 +67,8 @@ export const id: Dictionary = {
     cta: "Dapatkan spesifikasi ARC",
   },
   demo: {
-    tap: "Ketuk titik merah, lalu bicara.",
+    dotHint: "Ketuk untuk bicara, atau panggil “Sunday”",
+    drag: "Seret untuk memutar 360°",
     talk: "Bicara",
     stop: "Berhenti",
     lock: "Kunci",
