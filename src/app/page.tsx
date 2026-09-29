@@ -129,7 +129,7 @@ export default function Home() {
           so ARC and the form share the first screen. */}
       <section className="relative bg-gradient-to-b from-[#faf8f6] from-80% to-white pb-20 pt-20 sm:pb-28 sm:pt-24 lg:pb-24 lg:pt-28">
         <div className="mx-auto lg:grid lg:max-w-6xl lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-4 lg:px-10">
-        {/* ARC itself, working: tap the dot, press PWR and BOOT */}
+        {/* ARC itself, working: tap the dot, press PWR and Privacy */}
         <div data-section="demo">
           <ArcDemo />
         </div>

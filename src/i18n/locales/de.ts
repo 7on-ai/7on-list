@@ -78,7 +78,7 @@ export const de: Dictionary = {
     listening: "Hört zu…",
     replyLabel: "Beispielantwort",
     locked: "Gesperrt. Drücke PWR zum Entsperren.",
-    muted: "Das Mikro ist aus. Drücke BOOT zum Einschalten.",
+    muted: "Das Mikro ist aus. Drücke die Privacy-Taste zum Einschalten.",
     noMic: "Kein Mikro? Dann sieh einfach, wie der Orb zuhört.",
     privacy: "Deine Stimme bleibt in diesem Browser. Nichts wird aufgenommen oder gesendet.",
     pwrHint: "Bildschirm sperren",

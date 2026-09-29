@@ -79,7 +79,7 @@ export const fr: Dictionary = {
     listening: "À l’écoute…",
     replyLabel: "Exemple de réponse",
     locked: "Verrouillé. Appuyez sur PWR pour déverrouiller.",
-    muted: "Le micro est coupé. Appuyez sur BOOT pour l’activer.",
+    muted: "Le micro est coupé. Appuyez sur le bouton Privacy pour l’activer.",
     noMic: "Pas de micro : regardez simplement l’orbe écouter.",
     privacy: "Votre voix reste dans ce navigateur. Rien n’est enregistré ni envoyé.",
     pwrHint: "Verrouiller l’écran",

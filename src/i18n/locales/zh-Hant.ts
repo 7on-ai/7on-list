@@ -78,7 +78,7 @@ export const zhHant: Dictionary = {
     listening: "正在聆聽…",
     replyLabel: "範例回覆",
     locked: "已鎖定。按 PWR 解鎖。",
-    muted: "麥克風已關閉。按 BOOT 開啟。",
+    muted: "麥克風已關閉。按 Privacy 鍵開啟。",
     noMic: "沒有麥克風也沒關係，看看光球如何聆聽。",
     privacy: "你的聲音只留在這個瀏覽器，不會錄音，也不會上傳。",
     pwrHint: "鎖定螢幕",

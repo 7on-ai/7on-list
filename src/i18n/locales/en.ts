@@ -78,7 +78,7 @@ export const en: Dictionary = {
     listening: "Listening…",
     replyLabel: "Example reply",
     locked: "Locked. Press PWR to unlock.",
-    muted: "The mic is off. Press BOOT to turn it on.",
+    muted: "The mic is off. Press the Privacy button to turn it on.",
     noMic: "No mic here, so just watch how the orb listens.",
     privacy: "Your voice stays in this browser. Nothing is recorded or sent.",
     pwrHint: "Lock screen",

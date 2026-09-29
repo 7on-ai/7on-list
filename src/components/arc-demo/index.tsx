@@ -19,6 +19,10 @@ type Stage = "loading" | "3d" | "flat";
 
 /* Touches this close to the middle of the glass count as touching the dot */
 const DOT_TOUCH_MM = 8;
+
+/* What each button is called on the page. The mic button is BOOT on the
+   development board; for people it's the privacy button. */
+const BUTTON_NAME: Record<ArcButton, string> = { pwr: "PWR", boot: "PRIVACY" };
 const LISTEN_MAX_S = 8;
 const NO_MIC_LISTEN_S = 2.6;
 
@@ -29,7 +33,7 @@ function speakingTime(text: string) {
 }
 
 /* The device, working: tap the red dot and speak; PWR locks the screen;
-   BOOT turns the mic off. Everything the screen shows comes from ArcScreen. */
+   Privacy (BOOT on the board) turns the mic off. Everything the screen shows comes from ArcScreen. */
 export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
   const { t, locale } = useI18n();
   const reduce = useReducedMotion() ?? false;
@@ -270,7 +274,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
         const stageWidth = stageRef.current?.clientWidth ?? 0;
         const fade = (facing: number) => String(Math.max(0, Math.min(1, (facing - 0.05) * 4)));
 
-        // PWR and BOOT: the label sits on whichever side the button is
+        // PWR and Privacy: the label sits on whichever side the button is
         for (const id of ["pwr", "boot"] as ArcButton[]) {
           const el = labelRefs.current[id];
           if (!el) continue;
@@ -415,7 +419,7 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
                 <span className="absolute left-0 top-0 flex items-center gap-1.5 whitespace-nowrap sm:gap-2">
                   <span className="h-px w-4 shrink-0 bg-zinc-300 sm:w-6" />
                   <span className="flex flex-col leading-tight sm:flex-row sm:items-center sm:gap-2">
-                    <span className="text-[10px] font-semibold tracking-wider text-zinc-500 sm:text-[11px]">{id.toUpperCase()}</span>
+                    <span className="text-[10px] font-semibold tracking-wider text-zinc-500 sm:text-[11px]">{BUTTON_NAME[id]}</span>
                     <span className="text-[10px] text-zinc-400 sm:text-xs">{id === "pwr" ? d.pwrHint : d.bootHint}</span>
                   </span>
                 </span>
@@ -484,12 +488,12 @@ export function ArcDemo({ adapter }: { adapter?: SundayAdapter }) {
       <div className="relative z-10 mt-2 flex items-center justify-center gap-2">
         <button type="button" onClick={() => pressPwr("control")} aria-pressed={locked} className={pill}>
           {locked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">PWR</span>
+          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">{BUTTON_NAME.pwr}</span>
           {locked ? d.unlock : d.lock}
         </button>
         <button type="button" onClick={() => pressBoot("control")} aria-pressed={micOff} className={pill}>
           {micOff ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
-          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">BOOT</span>
+          <span className="text-[10px] font-semibold tracking-wider text-zinc-400 sm:text-[11px]">{BUTTON_NAME.boot}</span>
           {micOff ? d.micOn : d.micOff}
         </button>
         <button

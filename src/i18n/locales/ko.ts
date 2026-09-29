@@ -78,7 +78,7 @@ export const ko: Dictionary = {
     listening: "듣는 중…",
     replyLabel: "답변 예시",
     locked: "잠겨 있습니다. PWR을 눌러 해제하세요.",
-    muted: "마이크가 꺼져 있습니다. BOOT를 눌러 켜세요.",
+    muted: "마이크가 꺼져 있습니다. Privacy 버튼을 눌러 켜세요.",
     noMic: "마이크가 없어도 오브가 듣는 모습을 볼 수 있습니다.",
     privacy: "목소리는 이 브라우저 안에만 머뭅니다. 녹음하거나 전송하지 않습니다.",
     pwrHint: "화면 잠금",

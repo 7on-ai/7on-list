@@ -78,7 +78,7 @@ export const ja: Dictionary = {
     listening: "聞いています…",
     replyLabel: "返答の例",
     locked: "ロック中。PWR を押して解除。",
-    muted: "マイクはオフです。BOOT を押してオンに。",
+    muted: "マイクはオフです。Privacy ボタンを押してオンに。",
     noMic: "マイクがなくても、オーブが聞く様子をご覧いただけます。",
     privacy: "声はこのブラウザの中だけ。録音も送信もしません。",
     pwrHint: "画面ロック",

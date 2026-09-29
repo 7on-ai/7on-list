@@ -54,7 +54,7 @@ export type Dictionary = {
     muted: string;
     noMic: string;
     privacy: string;
-    /* Beside the buttons on the 3D model, after "PWR" and "BOOT" */
+    /* Beside the buttons on the 3D model, after "PWR" and "PRIVACY" */
     pwrHint: string;
     bootHint: string;
   };

@@ -78,7 +78,7 @@ export const id: Dictionary = {
     listening: "Mendengarkan…",
     replyLabel: "Contoh jawaban",
     locked: "Terkunci. Tekan PWR untuk membuka.",
-    muted: "Mik mati. Tekan BOOT untuk menyalakan.",
+    muted: "Mik mati. Tekan tombol Privacy untuk menyalakan.",
     noMic: "Tanpa mik, lihat saja cara orb mendengarkan.",
     privacy: "Suara Anda tetap di browser ini. Tidak direkam atau dikirim.",
     pwrHint: "Kunci layar",

@@ -78,7 +78,7 @@ export const zhHans: Dictionary = {
     listening: "正在聆听…",
     replyLabel: "示例回复",
     locked: "已锁定。按 PWR 解锁。",
-    muted: "麦克风已关闭。按 BOOT 打开。",
+    muted: "麦克风已关闭。按 Privacy 键打开。",
     noMic: "没有麦克风也没关系，看看光球如何聆听。",
     privacy: "你的声音只留在此浏览器中，不会录音，也不会上传。",
     pwrHint: "锁屏",

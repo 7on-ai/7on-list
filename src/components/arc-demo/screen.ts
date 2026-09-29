@@ -5,7 +5,7 @@
    - a small red dot, 3 mm across, in the middle: waiting for "Sunday"
    - the dot opening into the big red orb: Sunday is listening; the orb
      swells and settles with the voice
-   - a mic-off icon in place of the dot while the mic is off (BOOT)
+   - a mic-off icon in place of the dot while the mic is off (the Privacy button)
    - a small lock at the bottom while the screen is locked (PWR) */
 
 export type Mode = "idle" | "listening" | "thinking" | "speaking";

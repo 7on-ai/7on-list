@@ -78,7 +78,7 @@ export const es: Dictionary = {
     listening: "Escuchando…",
     replyLabel: "Respuesta de ejemplo",
     locked: "Bloqueado. Pulsa PWR para desbloquear.",
-    muted: "El micro está apagado. Pulsa BOOT para encenderlo.",
+    muted: "El micro está apagado. Pulsa el botón Privacy para encenderlo.",
     noMic: "Sin micro, mira cómo escucha el orbe.",
     privacy: "Tu voz se queda en este navegador. No se graba ni se envía.",
     pwrHint: "Bloquear pantalla",

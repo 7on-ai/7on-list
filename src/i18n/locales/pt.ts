@@ -78,7 +78,7 @@ export const pt: Dictionary = {
     listening: "Ouvindo…",
     replyLabel: "Exemplo de resposta",
     locked: "Bloqueado. Pressione PWR para desbloquear.",
-    muted: "O micro está desligado. Pressione BOOT para ligar.",
+    muted: "O micro está desligado. Pressione o botão Privacy para ligar.",
     noMic: "Sem micro, veja como a esfera escuta.",
     privacy: "Sua voz fica neste navegador. Nada é gravado nem enviado.",
     pwrHint: "Bloquear tela",

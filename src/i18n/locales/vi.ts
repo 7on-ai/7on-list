@@ -78,7 +78,7 @@ export const vi: Dictionary = {
     listening: "Đang nghe…",
     replyLabel: "Câu trả lời mẫu",
     locked: "Đã khóa. Nhấn PWR để mở khóa.",
-    muted: "Mic đang tắt. Nhấn BOOT để bật.",
+    muted: "Mic đang tắt. Nhấn nút Privacy để bật.",
     noMic: "Không có mic, hãy xem quả cầu lắng nghe thế nào.",
     privacy: "Giọng nói của bạn chỉ ở trong trình duyệt này. Không ghi âm, không gửi đi.",
     pwrHint: "Khóa màn hình",
