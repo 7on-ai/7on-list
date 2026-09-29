@@ -5,9 +5,13 @@ import { track as vercelTrack } from "@vercel/analytics";
    once the project is on Vercel Pro; on Hobby these calls are ignored. */
 type Events = {
   cta_click: { location: "hero" | "machine" };
-  section_view: { section: "orbit" | "day" | "machine" };
+  section_view: { section: "demo" | "orbit" | "day" | "machine" };
   spec_requested: { locale: string };
   form_error: { reason: "invalid" | "rejected" | "server" | "network" };
+  demo_action: {
+    action: "talk" | "lock" | "unlock" | "mic_off" | "mic_on" | "drag";
+    via: "device" | "control";
+  };
   invite_shared: { method: "copy" | "share"; from: "form" | "invite_page" };
 };
 

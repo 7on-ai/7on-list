@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import device from "@/assets/arc-device.webp";
 import shadow from "@/assets/arc-shadow.webp";
+import { ArcDemo } from "@/components/arc-demo";
 import { DayWithSunday } from "@/components/day-with-sunday";
 import { Orbit } from "@/components/orbit";
 import { Phrases } from "@/components/ui/phrases";
@@ -86,7 +87,7 @@ function usePageInsights() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          const section = (e.target as HTMLElement).dataset.section as "orbit" | "day" | "machine";
+          const section = (e.target as HTMLElement).dataset.section as "demo" | "orbit" | "day" | "machine";
           if (e.isIntersecting && !seen.has(section)) {
             seen.add(section);
             track("section_view", { section });
@@ -151,6 +152,11 @@ export default function Home() {
             <p className="mt-3 text-balance px-4 text-xs text-zinc-400"><Phrases text={t.hero.note} /></p>
           </div>
         </div>
+      </section>
+
+      {/* ── Try it: the device, working ─────────────────────────── */}
+      <section data-section="demo" className="bg-white px-6 pb-20 pt-24 sm:pb-28 sm:pt-32">
+        <ArcDemo />
       </section>
 
       {/* ── One agent, everything around you ───────────────────── */}

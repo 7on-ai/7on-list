@@ -36,6 +36,29 @@ export type Dictionary = {
     points: { title: string; line: string }[];
     cta: string;
   };
+  /* The working device, just under the hero */
+  demo: {
+    eyebrow: string;
+    headline: string;
+    sub: string;
+    /* Under the device: what to do, and what's happening */
+    tap: string;
+    talk: string;
+    stop: string;
+    lock: string;
+    unlock: string;
+    micOff: string;
+    micOn: string;
+    listening: string;
+    replyLabel: string;
+    locked: string;
+    muted: string;
+    noMic: string;
+    privacy: string;
+    /* Beside the buttons on the 3D model, after "PWR" and "BOOT" */
+    pwrHint: string;
+    bootHint: string;
+  };
   prefs: {
     title: string;
     intro: string;

@@ -85,3 +85,7 @@ Two studio moods (`MOODS`), chosen per view:
 - **Web:** `arc.glb` works with `<model-viewer>` or three.js — checked in
   three.js: real size, screen and engraving show. glTF is Y-up, so the screen
   faces +Y there.
+- **The page's demo** uses `public/models/arc.glb`, a compressed copy (~310 KB).
+  After changing the model, refresh it:
+  `npx @gltf-transform/cli optimize arc.glb ../../public/models/arc.glb --compress meshopt --texture-compress webp --texture-size 512 --join false --instance false --simplify false --flatten false --palette false --prune false`
+  (the demo finds the glass and buttons by name, so the meshes must stay separate).
